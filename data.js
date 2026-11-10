@@ -629,6 +629,10 @@ const terms = [
                             {
                                 "title": "پاسخ",
                                 "file": "files/98-99-1/hw1-solution.pdf"
+                            },
+                            {
+                                "title": "بخش عملی",
+                                "file": "files/98-99-1/hw1-practical.pdf"
                             }
                         ]
                     },
@@ -639,6 +643,10 @@ const terms = [
                             {
                                 "title": "پاسخ",
                                 "file": "files/98-99-1/hw2-solution.pdf"
+                            },
+                            {
+                                "title": "بخش عملی",
+                                "file": "files/98-99-1/hw2-practical.pdf"
                             }
                         ]
                     },
@@ -858,7 +866,7 @@ const terms = [
     {
         "id": "98-99-2",
         "name": "بهار ۹۸-۹۹",
-        "summary": "۶ تمرین با پاسخ، کوئیز اول، میان‌ترم برخط، پایان‌ترم کتبی و شفاهی، چالش و پروژۀ ویکی",
+        "summary": "۶ تمرین با پاسخ، ۶ کوئیز، میان‌ترم برخط، پایان‌ترم کتبی و شفاهی، چالش و پروژۀ ویکی",
         "groups": [
             {
                 "title": "تمرین‌ها",
@@ -933,6 +941,26 @@ const terms = [
                     {
                         "title": "کوئیز ۱",
                         "file": "files/98-99-2/quiz1.pdf"
+                    },
+                    {
+                        "title": "کوئیز ۲",
+                        "file": "files/98-99-2/quiz2.pdf"
+                    },
+                    {
+                        "title": "کوئیز ۳",
+                        "file": "files/98-99-2/quiz3.pdf"
+                    },
+                    {
+                        "title": "کوئیز ۴",
+                        "file": "files/98-99-2/quiz4.pdf"
+                    },
+                    {
+                        "title": "کوئیز ۵",
+                        "file": "files/98-99-2/quiz5.pdf"
+                    },
+                    {
+                        "title": "کوئیز ۶",
+                        "file": "files/98-99-2/quiz6.pdf"
                     }
                 ]
             },
@@ -971,7 +999,13 @@ const terms = [
                 "items": [
                     {
                         "title": "چالش: نقشه",
-                        "file": "files/98-99-2/challenge.pdf"
+                        "file": "files/98-99-2/challenge.pdf",
+                        "extra": [
+                            {
+                                "title": "صورت مسئله در کوئرا",
+                                "file": "files/98-99-2/challenge-quera.pdf"
+                            }
+                        ]
                     }
                 ]
             },
@@ -982,6 +1016,14 @@ const terms = [
                     {
                         "title": "شرح پروژۀ ویکی (پاییز ۹۸-۹۹)",
                         "file": "files/98-99-1/wiki.html"
+                    },
+                    {
+                        "title": "تحویل اول پروژۀ ویکی",
+                        "file": "files/98-99-2/wiki-delivery1.pdf"
+                    },
+                    {
+                        "title": "تحویل دوم پروژۀ ویکی",
+                        "file": "files/98-99-2/wiki-delivery2.pdf"
                     }
                 ]
             }
@@ -1236,7 +1278,7 @@ const terms = [
     {
         "id": "00-01-1",
         "name": "پاییز ۱۴۰۰-۱۴۰۱",
-        "summary": "۳ تمرین با پاسخ، کوئیز اول، میان‌ترم، پایان‌ترم با پاسخ و فاز اول چالش",
+        "summary": "۵ تمرین (سه تمرین اول با پاسخ)، ۵ کوئیز، میان‌ترم، پایان‌ترم با پاسخ و چالش دوفازی",
         "groups": [
             {
                 "title": "تمرین‌ها",
@@ -1248,6 +1290,10 @@ const terms = [
                             {
                                 "title": "پاسخ",
                                 "file": "files/00-01-1/hw1-solution.pdf"
+                            },
+                            {
+                                "title": "بخش عملی",
+                                "file": "files/00-01-1/hw1-practical.pdf"
                             }
                         ]
                     },
@@ -1258,6 +1304,10 @@ const terms = [
                             {
                                 "title": "پاسخ",
                                 "file": "files/00-01-1/hw2-solution.pdf"
+                            },
+                            {
+                                "title": "بخش عملی",
+                                "file": "files/00-01-1/hw2-practical.pdf"
                             }
                         ]
                     },
@@ -1268,8 +1318,20 @@ const terms = [
                             {
                                 "title": "پاسخ",
                                 "file": "files/00-01-1/hw3-solution.pdf"
+                            },
+                            {
+                                "title": "بخش عملی",
+                                "file": "files/00-01-1/hw3-practical.pdf"
                             }
                         ]
+                    },
+                    {
+                        "title": "تمرین ۴ (بخش عملی)",
+                        "file": "files/00-01-1/hw4-practical.pdf"
+                    },
+                    {
+                        "title": "تمرین ۵ (بخش عملی)",
+                        "file": "files/00-01-1/hw5-practical.pdf"
                     }
                 ],
                 "intro": "<p class=\"meta\">تمرین‌های نظری تحویل گرفته نمی‌شد و کوئیزها از روی آن‌ها طرح می‌شد. تمرین‌های عملی در <a href=\"https://quera.ir/course/9121\">کوئرا</a> بود. فقط سه تمرین اول پیدا شده است.</p>"
@@ -1280,6 +1342,22 @@ const terms = [
                     {
                         "title": "کوئیز ۱",
                         "file": "files/00-01-1/quiz1.pdf"
+                    },
+                    {
+                        "title": "کوئیز ۲",
+                        "file": "files/00-01-1/quiz2.pdf"
+                    },
+                    {
+                        "title": "کوئیز ۳",
+                        "file": "files/00-01-1/quiz3.pdf"
+                    },
+                    {
+                        "title": "کوئیز ۴",
+                        "file": "files/00-01-1/quiz4.pdf"
+                    },
+                    {
+                        "title": "کوئیز ۵",
+                        "file": "files/00-01-1/quiz5.pdf"
                     }
                 ]
             },
@@ -1313,6 +1391,10 @@ const terms = [
                     {
                         "title": "چالش، فاز اول: طراحی یک موتور جست‌وجوی ساده",
                         "file": "files/00-01-1/challenge-phase1.pdf"
+                    },
+                    {
+                        "title": "چالش، فاز دوم",
+                        "file": "files/00-01-1/challenge-phase2.pdf"
                     }
                 ]
             }
@@ -1418,8 +1500,33 @@ const terms = [
     {
         "id": "00-01-2",
         "name": "بهار ۱۴۰۰-۱۴۰۱",
-        "summary": "از این ترم فقط کوئیز اول پیدا شده است؛ بقیۀ مطالب در کوئرا بود و هنوز به آرشیو اضافه نشده است.",
+        "summary": "۵ تمرین، ۵ کوئیز، میان‌ترم و چالش",
         "groups": [
+            {
+                "title": "تمرین‌ها",
+                "items": [
+                    {
+                        "title": "تمرین ۱",
+                        "file": "files/00-01-2/hw1.pdf"
+                    },
+                    {
+                        "title": "تمرین ۲",
+                        "file": "files/00-01-2/hw2.pdf"
+                    },
+                    {
+                        "title": "تمرین ۳",
+                        "file": "files/00-01-2/hw3.pdf"
+                    },
+                    {
+                        "title": "تمرین ۴",
+                        "file": "files/00-01-2/hw4.pdf"
+                    },
+                    {
+                        "title": "تمرین ۵",
+                        "file": "files/00-01-2/hw5.pdf"
+                    }
+                ]
+            },
             {
                 "title": "کوئیزها",
                 "intro": "<p class=\"meta\">تمرین‌های این ترم در <a href=\"https://quera.org/course/10605\">کوئرا</a> بود.</p>",
@@ -1427,6 +1534,40 @@ const terms = [
                     {
                         "title": "کوئیز ۱",
                         "file": "files/00-01-2/quiz1.pdf"
+                    },
+                    {
+                        "title": "کوئیز ۲",
+                        "file": "files/00-01-2/quiz2.pdf"
+                    },
+                    {
+                        "title": "کوئیز ۳",
+                        "file": "files/00-01-2/quiz3.pdf"
+                    },
+                    {
+                        "title": "کوئیز ۴",
+                        "file": "files/00-01-2/quiz4.pdf"
+                    },
+                    {
+                        "title": "کوئیز ۵",
+                        "file": "files/00-01-2/quiz5.pdf"
+                    }
+                ]
+            },
+            {
+                "title": "میان‌ترم",
+                "items": [
+                    {
+                        "title": "آزمون میان‌ترم",
+                        "file": "files/00-01-2/midterm.pdf"
+                    }
+                ]
+            },
+            {
+                "title": "چالش",
+                "items": [
+                    {
+                        "title": "چالش",
+                        "file": "files/00-01-2/challenge.pdf"
                     }
                 ]
             }
@@ -1518,8 +1659,42 @@ const terms = [
     {
         "id": "01-02-1",
         "name": "پاییز ۱۴۰۱-۱۴۰۲",
-        "summary": "میان‌ترم و پایان‌ترم با پاسخ؛ تمرین‌ها و کوئیزها در کوئرا بود و هنوز به آرشیو اضافه نشده است.",
+        "summary": "بخش عملی ۵ تمرین، کوئیز چهارم، میان‌ترم، پایان‌ترم با پاسخ و چالش دوفازی",
         "groups": [
+            {
+                "title": "تمرین‌ها",
+                "items": [
+                    {
+                        "title": "تمرین ۱ (بخش عملی)",
+                        "file": "files/01-02-1/hw1-practical.pdf"
+                    },
+                    {
+                        "title": "تمرین ۲ (بخش عملی)",
+                        "file": "files/01-02-1/hw2-practical.pdf"
+                    },
+                    {
+                        "title": "تمرین ۳ (بخش عملی)",
+                        "file": "files/01-02-1/hw3-practical.pdf"
+                    },
+                    {
+                        "title": "تمرین ۴ (بخش عملی)",
+                        "file": "files/01-02-1/hw4-practical.pdf"
+                    },
+                    {
+                        "title": "تمرین ۵ (بخش عملی)",
+                        "file": "files/01-02-1/hw5-practical.pdf"
+                    }
+                ]
+            },
+            {
+                "title": "کوئیزها",
+                "items": [
+                    {
+                        "title": "کوئیز ۴",
+                        "file": "files/01-02-1/quiz4.pdf"
+                    }
+                ]
+            },
             {
                 "title": "میان‌ترم",
                 "items": [
@@ -1541,6 +1716,19 @@ const terms = [
                                 "file": "files/01-02-1/final-solution.pdf"
                             }
                         ]
+                    }
+                ]
+            },
+            {
+                "title": "چالش",
+                "items": [
+                    {
+                        "title": "چالش، فاز اول",
+                        "file": "files/01-02-1/challenge-phase1.pdf"
+                    },
+                    {
+                        "title": "چالش، فاز دوم",
+                        "file": "files/01-02-1/challenge-phase2.pdf"
                     }
                 ]
             }
