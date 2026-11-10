@@ -86,7 +86,7 @@ def sparse_query(M, j, k):
 <ul>
 <li>تعریف (یادآوری از جلسۀ ۱۹): در درخت دکارتی (Cartesian tree) یک آرایه، عنصر کمینه در ریشه است، زیردرخت چپ به صورت بازگشتی از عناصر سمت چپ آن و زیردرخت راست به صورت بازگشتی از عناصر سمت راست آن ساخته می‌شود.</li>
 <li>پس درخت دکارتی از نظر مقدارها یک هرم کمینه و از نظر اندیس‌ها یک درخت دودویی جست‌وجوست: پیمایش میان‌ترتیب آن خود آرایه را می‌دهد.</li>
-<li>مثال برای لیست <code>[9, 3, 7, 1, 8, 12, 10, 20, 15, 18, 5]</code>: ریشه ۱ است، زیردرخت چپ از <code>[9, 3, 7]</code> با ریشۀ ۳ و زیردرخت راست از <code>[8, 12, 10, 20, 15, 18, 5]</code> با ریشۀ ۵ ساخته می‌شود.</li>
+<li>مثال برای لیست <code>[9, 3, 7, 1, 8, 12, 10, 20, 15, 18, 5]</code>: ریشه ۱ است، زیردرخت چپ از <code>[9, 3, 7]</code> با ریشۀ ۳ و زیردرخت راست از <code>[8, 12, 10, 20, 15, 18, 5]</code> با ریشۀ ۵ ساخته می‌شود. <div class="dj" data-ex="s20cart"></div></li>
 <li>ساخت مستقیم بازگشتی در بدترین حالت <span class="m"><i>O</i>(<i>n</i><sup>2</sup>)</span> است (مثل مرتب‌سازی سریع روی آرایۀ مرتب).</li>
 </ul>
 
@@ -143,7 +143,16 @@ def lca(parent, u, v):
 def rmq_lca(A, parent, j, k):
   return A[lca(parent, j, k)]
 </pre>
+<p>در اجرای زیر کمینۀ <span class="m"><i>A</i>[5 … 9]</span> در همان آرایه با پیدا کردن جد مشترک رأس‌های ۵ و ۹ به دست می‌آید.</p>
+<div class="dj" data-ex="s20rmq"></div>
 
+<script src="js/run.js"></script>
+<script src="js/examples.js"></script>
+<script src="js/ex-a.js"></script>
+<script src="js/ex-b.js"></script>
+<script src="js/ex-c.js"></script>
+<script src="js/ex-d.js"></script>
+<script src="js/ex-e.js"></script>
     <hr>
     <p class="mycenter"><a href="lec19.html">جلسۀ قبل</a> - <a href="index.html">صفحۀ اصلی درس</a> - <a href="lec21.html">جلسۀ بعد</a></p>
   </div>

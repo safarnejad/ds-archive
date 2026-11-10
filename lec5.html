@@ -68,6 +68,10 @@ def pop(L):
 <ul>
 <li>در پایتون <code>list</code>، در سی‌پلاس‌پلاس <code>vector</code> و در جاوا <code>ArrayList</code>.</li>
 <li>اجازه می‌دهیم اندازۀ آرایه به جای <span class="m"><i>n</i></span>، <span class="m">Θ(<i>n</i>)</span> باشد. هر وقت آرایه پر شد، طول آن را دو برابر می‌کنیم.</li>
+</ul>
+<p>نه بار <code>insert_right</code> روی آرایه‌ای با طول اولیۀ ۱؛ نمودار پایین هزینۀ هر درج (یک نوشتن به اضافۀ تعداد کپی‌ها) را نشان می‌دهد.</p>
+<div class="dj" data-ex="s05dynArray"></div>
+<ul>
 <li><code>insert_right</code> ممکن است <span class="m">Θ(<i>n</i>)</span> طول بکشد، ولی این فقط وقتی اتفاق می‌افتد که <span class="m"><i>n</i></span> توانی از ۲ باشد. در مجموع <span class="m"><i>n</i></span> درج <span class="m"><i>n</i> + (1 + 2 + 4 + … + <i>n</i>) &lt; 3<i>n</i> = Θ(<i>n</i>)</span> طول می‌کشد و بنابراین هر درج به صورت سرشکن <span class="m">Θ(1)</span> است.</li>
 <li>اگر <code>delete_right</code> را بدون تغییر اندازۀ آرایه انجام دهیم، ممکن است حافظه دیگر <span class="m">Θ(<i>n</i>)</span> نباشد. وقتی تعداد اعضا یک‌چهارم طول آرایه شد، آرایه را نصف می‌کنیم. (هر عدد ثابت بزرگ‌تر از ۲ را می‌توان به جای ۴ گذاشت، ولی نه خود ۲: چرا؟)</li>
 </ul>
@@ -105,6 +109,13 @@ def resize(D, size):
 <li>واسط صف اولویت حالت خاصی از این‌هاست و موضوع جلسۀ ۷ است.</li>
 </ul>
 
+<script src="js/run.js"></script>
+<script src="js/examples.js"></script>
+<script src="js/ex-a.js"></script>
+<script src="js/ex-b.js"></script>
+<script src="js/ex-c.js"></script>
+<script src="js/ex-d.js"></script>
+<script src="js/ex-e.js"></script>
     <hr>
     <p class="mycenter"><a href="lec4.html">جلسۀ قبل</a> - <a href="index.html">صفحۀ اصلی درس</a> - <a href="lec6.html">جلسۀ بعد</a></p>
   </div>

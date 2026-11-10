@@ -37,7 +37,7 @@
 <ul>
 <li>رابطه را چند بار باز می‌کنیم تا الگو پیدا شود و سپس جمع را حساب می‌کنیم.</li>
 <li>مثال برج هانوی: <span class="m"><i>T</i>(<i>n</i>) = 2<i>T</i>(<i>n</i> − 1) + 1 = 4<i>T</i>(<i>n</i> − 2) + 2 + 1 = … = 2<sup><i>n</i></sup> − 1</span>.</li>
-<li>درخت بازگشت برای <span class="m"><i>T</i>(<i>n</i>) = 2<i>T</i>(<i>n</i>/2) + <i>cn</i></span>: در هر سطح جمع کارها <span class="m"><i>cn</i></span> است و <span class="m">log<sub>2</sub> <i>n</i></span> سطح داریم، پس <span class="m"><i>T</i>(<i>n</i>) = Θ(<i>n</i> log <i>n</i>)</span>.</li>
+<li>درخت بازگشت برای <span class="m"><i>T</i>(<i>n</i>) = 2<i>T</i>(<i>n</i>/2) + <i>cn</i></span>: در هر سطح جمع کارها <span class="m"><i>cn</i></span> است و <span class="m">log<sub>2</sub> <i>n</i></span> سطح داریم، پس <span class="m"><i>T</i>(<i>n</i>) = Θ(<i>n</i> log <i>n</i>)</span>.<div class="dj" data-ex="s03recTree"></div></li>
 </ul>
 <pre>
 def hanoi(n, src, dst, tmp):
@@ -64,6 +64,13 @@ def hanoi(n, src, dst, tmp):
 <li>مثال فیبوناچی: <span class="m"><i>F</i><sub><i>n</i></sub> = <i>F</i><sub><i>n</i>−1</sub> + <i>F</i><sub><i>n</i>−2</sub></span>، معادلۀ مشخصه <span class="m"><i>r</i><sup>2</sup> = <i>r</i> + 1</span> و ریشه‌ها <span class="m">φ = (1 + √5)/2</span> و <span class="m">(1 − √5)/2</span>، پس <span class="m"><i>F</i><sub><i>n</i></sub> = (φ<sup><i>n</i></sup> − (1 − φ)<sup><i>n</i></sup>)/√5 = Θ(φ<sup><i>n</i></sup>)</span>.</li>
 </ul>
 
+<script src="js/run.js"></script>
+<script src="js/examples.js"></script>
+<script src="js/ex-a.js"></script>
+<script src="js/ex-b.js"></script>
+<script src="js/ex-c.js"></script>
+<script src="js/ex-d.js"></script>
+<script src="js/ex-e.js"></script>
     <hr>
     <p class="mycenter"><a href="lec2.html">جلسۀ قبل</a> - <a href="index.html">صفحۀ اصلی درس</a> - <a href="lec4.html">جلسۀ بعد</a></p>
   </div>

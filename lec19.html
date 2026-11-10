@@ -55,6 +55,9 @@ def lcp_array(t, sa):
       h = 0
   return lcp
 </pre>
+<ul>
+<li>مثال: آرایۀ پسوندی و آرایۀ LCP رشتۀ <code>banana$</code> کنار پسوندهای مرتب‌شده. <div class="dj" data-ex="s19sa"></div></li>
+</ul>
 
 <h4 id="s3">تطابق رشته‌ها با آرایۀ پسوندی</h4>
 <ul>
@@ -144,9 +147,13 @@ def distinct_substrings(t):
 <h4 id="s7">تبدیل باروز-ویلر</h4>
 <ul>
 <li>اگر جلوی هر خانۀ آرایۀ پسوندی، رشتۀ چرخش‌یافته‌ای را بنویسیم که از همان مکان شروع می‌شود، حروف آخر این سطرها تبدیل باروز-ویلر (Burrows-Wheeler transform) رشته را تشکیل می‌دهند. یعنی حرف آخر هر سطر <code>t[sa[r] - 1]</code> است.</li>
-<li>مثال: تبدیل <code>banana$</code> برابر <code>annb$aa</code> است.</li>
+<li>مثال: تبدیل <code>banana$</code> برابر <code>annb$aa</code> است. جدول چرخش‌های مرتب‌شدۀ آن در شکل زیر است. <div class="dj" data-ex="s19bwt"></div></li>
 <li>نکتۀ جالب این است که این تبدیل وارون‌پذیر است و از روی آن خود رشته (و در نتیجه آرایۀ پسوندی) بازسازی می‌شود.</li>
 <li>روش وارون کردن: اگر <span class="m"><i>i</i></span> ستون اول جدول چرخش‌های مرتب را داشته باشیم، تبدیل را به عنوان ستون قبل از آن‌ها می‌گذاریم (چرخش هر سطر) و سطرها را مرتب می‌کنیم. این‌طور <span class="m"><i>i</i> + 1</span> ستون اول به دست می‌آید. بعد از <span class="m"><i>n</i></span> مرحله کل جدول را داریم و رشته سطری است که به <code>$</code> ختم می‌شود.</li>
+</ul>
+<p>در اجرای زیر جدول چرخش‌های <code>banana$</code> فقط از روی تبدیل آن، ستون به ستون بازسازی می‌شود.</p>
+<div class="dj" data-ex="s19ibwt"></div>
+<ul>
 <li>بسیاری از روش‌های فشرده‌سازی (مثل bzip2) از این تبدیل استفاده می‌کنند زیرا اغلب حروف مشابه را کنار هم قرار می‌دهد. ولی لزوماً این‌طور نیست، مثلاً <code>BWT(appelee$) = e$elpepa</code>.</li>
 </ul>
 <pre>
@@ -163,6 +170,13 @@ def inverse_bwt(b):
       return row
 </pre>
 
+<script src="js/run.js"></script>
+<script src="js/examples.js"></script>
+<script src="js/ex-a.js"></script>
+<script src="js/ex-b.js"></script>
+<script src="js/ex-c.js"></script>
+<script src="js/ex-d.js"></script>
+<script src="js/ex-e.js"></script>
     <hr>
     <p class="mycenter"><a href="lec18.html">جلسۀ قبل</a> - <a href="index.html">صفحۀ اصلی درس</a> - <a href="lec20.html">جلسۀ بعد</a></p>
   </div>

@@ -24,7 +24,7 @@
 <div class="formula"><i>ab</i> = <i>a</i><sub>1</sub><i>b</i><sub>1</sub> <i>r</i><sup><i>d</i></sup> + (<i>a</i><sub>0</sub><i>b</i><sub>1</sub> + <i>a</i><sub>1</sub><i>b</i><sub>0</sub>) <i>r</i><sup><i>d</i>/2</sup> + <i>a</i><sub>0</sub><i>b</i><sub>0</sub> = <i>c</i><sub>2</sub> <i>r</i><sup><i>d</i></sup> + <i>c</i><sub>1</sub> <i>r</i><sup><i>d</i>/2</sup> + <i>c</i><sub>0</sub></div></li>
 <li>دو ضریب <span class="m"><i>c</i><sub>0</sub> = <i>a</i><sub>0</sub><i>b</i><sub>0</sub></span> و <span class="m"><i>c</i><sub>2</sub> = <i>a</i><sub>1</sub><i>b</i><sub>1</sub></span> به راحتی (به صورت بازگشتی) به دست می‌آیند. برای ضریب سوم توجه کنید که <span class="m"><i>c</i><sub>1</sub> = (<i>a</i><sub>0</sub> + <i>a</i><sub>1</sub>)(<i>b</i><sub>0</sub> + <i>b</i><sub>1</sub>) − <i>c</i><sub>0</sub> − <i>c</i><sub>2</sub></span>.</li>
 <li>پس به جای چهار ضرب به سه ضرب با طول <span class="m"><i>d</i>/2</span> و تعدادی جمع با طول حداکثر <span class="m"><i>d</i></span> نیاز داریم:
-<div class="formula"><i>T</i>(<i>d</i>) = 3<i>T</i>(<i>d</i>/2) + Θ(<i>d</i>) = Θ(<i>d</i><sup>log<sub>2</sub> 3</sup>) = Θ(<i>d</i><sup>1.5849…</sup>)</div></li>
+<div class="formula"><i>T</i>(<i>d</i>) = 3<i>T</i>(<i>d</i>/2) + Θ(<i>d</i>) = Θ(<i>d</i><sup>log<sub>2</sub> 3</sup>) = Θ(<i>d</i><sup>1.5849…</sup>)</div> مثال: درخت بازگشت کاراتسوبا برای یک ضرب چهاررقمی. <div class="dj" data-ex="s17karatsuba"></div></li>
 <li>در کد زیر مبنا <span class="m"><i>r</i> = 2</span> است و نصف کردن عدد با شیفت بیتی انجام می‌شود. اعداد کوچک را مستقیم ضرب می‌کنیم.</li>
 </ul>
 <pre>

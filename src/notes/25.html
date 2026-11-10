@@ -7,6 +7,7 @@
 <h3>گراف مؤلفه‌ها</h3>
 <ul>
 <li>اگر هر مؤلفۀ قویاً همبند را به یک رأس منقبض کنیم، گراف مؤلفه‌ها <span class="m"><i>G</i><sup>SCC</sup></span> به دست می‌آید که یک گراف جهت‌دار بدون دور (DAG) است؛ چون اگر دور داشت، مؤلفه‌های روی دور باید یکی می‌بودند.</li>
+<li>مثال: گرافی با هشت رأس و چهار مؤلفه و گراف مؤلفه‌های آن.<div class="dj" data-ex="s25components"></div></li>
 <li>ترانهادۀ گراف <span class="m"><i>G</i><sup>T</sup></span>: همۀ یال‌ها را برعکس می‌کنیم. <span class="m"><i>G</i></span> و <span class="m"><i>G</i><sup>T</sup></span> دقیقاً مؤلفه‌های قویاً همبند یکسانی دارند. ساختن <span class="m"><i>G</i><sup>T</sup></span> از لیست مجاورت <span class="m">Θ(<i>n</i> + <i>e</i>)</span> طول می‌کشد.</li>
 <li>لم: اگر <span class="m"><i>C</i></span> و <span class="m"><i>C</i>′</span> دو مؤلفه باشند و یالی از <span class="m"><i>C</i></span> به <span class="m"><i>C</i>′</span> باشد، بیشترین زمان پایان در DFS روی <span class="m"><i>G</i></span> در <span class="m"><i>C</i></span> بیشتر از بیشترین زمان پایان در <span class="m"><i>C</i>′</span> است. (مشابه اثبات مرتب‌سازی توپولوژیکی، دو حالت: اول رأسی از <span class="m"><i>C</i></span> دیده شود یا اول رأسی از <span class="m"><i>C</i>′</span>.)</li>
 </ul>
@@ -46,6 +47,8 @@ def SCC(V, Adj):
       assign(s, s)
   return comp
 </pre>
+<p>اجرای این کد روی همان گراف هشت‌رأسی؛ عدد کنار هر رأس شمارۀ پایان آن در مرحلۀ اول است.</p>
+<div class="dj" data-ex="s25scc"></div>
 <ul>
 <li><code>comp[u]</code> نمایندۀ مؤلفۀ رأس <span class="m"><i>u</i></span> است (اولین رأسی که مؤلفه از آن پیدا شد).</li>
 <li>زمان اجرا: دو بار DFS و یک بار ساختن ترانهاده، یعنی <span class="m">Θ(<i>n</i> + <i>e</i>)</span>.</li>

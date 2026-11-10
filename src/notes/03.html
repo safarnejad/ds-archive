@@ -22,7 +22,7 @@
 <ul>
 <li>رابطه را چند بار باز می‌کنیم تا الگو پیدا شود و سپس جمع را حساب می‌کنیم.</li>
 <li>مثال برج هانوی: <span class="m"><i>T</i>(<i>n</i>) = 2<i>T</i>(<i>n</i> − 1) + 1 = 4<i>T</i>(<i>n</i> − 2) + 2 + 1 = … = 2<sup><i>n</i></sup> − 1</span>.</li>
-<li>درخت بازگشت برای <span class="m"><i>T</i>(<i>n</i>) = 2<i>T</i>(<i>n</i>/2) + <i>cn</i></span>: در هر سطح جمع کارها <span class="m"><i>cn</i></span> است و <span class="m">log<sub>2</sub> <i>n</i></span> سطح داریم، پس <span class="m"><i>T</i>(<i>n</i>) = Θ(<i>n</i> log <i>n</i>)</span>.</li>
+<li>درخت بازگشت برای <span class="m"><i>T</i>(<i>n</i>) = 2<i>T</i>(<i>n</i>/2) + <i>cn</i></span>: در هر سطح جمع کارها <span class="m"><i>cn</i></span> است و <span class="m">log<sub>2</sub> <i>n</i></span> سطح داریم، پس <span class="m"><i>T</i>(<i>n</i>) = Θ(<i>n</i> log <i>n</i>)</span>.<div class="dj" data-ex="s03recTree"></div></li>
 </ul>
 <pre>
 def hanoi(n, src, dst, tmp):

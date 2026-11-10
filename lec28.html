@@ -75,7 +75,9 @@ def dijkstra(V, Adj, w, s):
 <li>ادعا: وقتی <span class="m"><i>u</i></span> از صف خارج می‌شود، <span class="m"><i>d</i>[<i>u</i>] = δ(<i>s</i>, <i>u</i>)</span>.</li>
 <li>فرض کنید <span class="m"><i>u</i></span> اولین رأسی باشد که این‌طور نیست. کوتاه‌ترین مسیر از <span class="m"><i>s</i></span> به <span class="m"><i>u</i></span> را درنظر بگیرید و <span class="m"><i>y</i></span> اولین رأس این مسیر بیرون از مجموعه و <span class="m"><i>x</i></span> رأس قبل از آن باشد. <span class="m"><i>x</i></span> نهایی شده و یال <span class="m">(<i>x</i>, <i>y</i>)</span> relax شده، پس <span class="m"><i>d</i>[<i>y</i>] = δ(<i>s</i>, <i>y</i>)</span>. چون وزن‌ها نامنفی‌اند، <span class="m">δ(<i>s</i>, <i>y</i>) ≤ δ(<i>s</i>, <i>u</i>) &lt; <i>d</i>[<i>u</i>]</span>، پس <span class="m"><i>y</i></span> باید زودتر از <span class="m"><i>u</i></span> از صف خارج می‌شد؛ تناقض.</li>
 <li>با یال منفی این استدلال درست نیست و دکسترا ممکن است جواب غلط بدهد.</li>
+<li>مثال: <span class="m"><i>a</i></span> زودتر از <span class="m"><i>b</i></span> نهایی می‌شود و کاهش بعدی <span class="m"><i>d</i>[<i>a</i>]</span> دیگر به <span class="m"><i>c</i></span> نمی‌رسد.</li>
 </ul>
+<div class="dj" data-ex="s28negative"></div>
 
 <h4 id="s4">زمان اجرا</h4>
 <ul>
@@ -97,6 +99,11 @@ def dijkstra(V, Adj, w, s):
 
 <script src="js/run.js"></script>
 <script src="js/examples.js"></script>
+<script src="js/ex-a.js"></script>
+<script src="js/ex-b.js"></script>
+<script src="js/ex-c.js"></script>
+<script src="js/ex-d.js"></script>
+<script src="js/ex-e.js"></script>
     <hr>
     <p class="mycenter"><a href="lec27.html">جلسۀ قبل</a> - <a href="index.html">صفحۀ اصلی درس</a> - <a href="lec29.html">جلسۀ بعد</a></p>
   </div>

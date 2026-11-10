@@ -40,6 +40,7 @@
 <li>پس‌ترتیب (postorder): <span class="m">Post(<i>T</i>) = Post(<i>T</i><sub>1</sub>), …, Post(<i>T</i><sub><i>k</i></sub>), <i>r</i></span></li>
 </ul></li>
 <li>هر پیمایش <span class="m"><i>O</i>(<i>n</i>)</span> طول می‌کشد.</li>
+<li>مثال: سه پیمایش یک درخت دودویی نُه‌رأسی.<div class="dj" data-ex="s06traversal"></div></li>
 </ul>
 <pre>
 def preorder(node, out):
@@ -110,6 +111,10 @@ def postfix_to_tree(tokens):
       S.append(new_node(key=t, left=None, right=None))
   return S.pop()
 </pre>
+<ul>
+<li>مثال: ساخت قدم به قدم درخت عبارت <code>a b + c d e + * *</code>؛ زیر نوار نمادها درخت‌های داخل پشته از پایین (چپ) به بالا (راست) دیده می‌شوند.</li>
+</ul>
+<div class="dj" data-ex="s06postfix"></div>
 <ul>
 <li>ساخت درخت عبارت از نگارش میان‌وندی با پرانتزگذاری کامل: با هر <code>(</code> یک فرزند چپ می‌سازیم و پایین می‌رویم، با هر عملگر برچسب رأس فعلی را می‌گذاریم و به فرزند راست جدید می‌رویم، با هر مقدار برچسب را می‌گذاریم و بالا می‌رویم و با هر <code>)</code> بالا می‌رویم.</li>
 </ul>

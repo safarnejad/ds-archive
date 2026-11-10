@@ -72,6 +72,8 @@ def DAG_shortest_paths(V, Adj, w, s):
       relax(u, v, w, d, parent)
   return d, parent
 </pre>
+<p>اجرای این کد روی یک DAG با یال‌های منفی و مبدأ <span class="m"><i>s</i></span>؛ رأس‌ها به ترتیب توپولوژیکی چیده شده‌اند و همۀ یال‌ها به راست می‌روند.</p>
+<div class="dj" data-ex="s26dag"></div>
 <ul>
 <li>درستی: با استقرا روی ترتیب توپولوژیکی. وقتی به <span class="m"><i>v</i></span> می‌رسیم، همۀ رأس‌های قبل از آن روی یک کوتاه‌ترین مسیر به <span class="m"><i>v</i></span> پیش‌تر نهایی شده‌اند و یال ورودی آخر این مسیر relax شده است؛ با ناوردای قوی، <span class="m"><i>d</i>[<i>v</i>] = δ(<i>s</i>, <i>v</i>)</span>.</li>
 <li>زمان اجرا: مرتب‌سازی توپولوژیکی و یک بار relax کردن هر یال، یعنی <span class="m">Θ(<i>n</i> + <i>e</i>)</span>.</li>

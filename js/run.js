@@ -1,8 +1,8 @@
 // step-by-step algorithm runs inside notes: draws one recorded step at a time (graph + code line + message)
 (function () {
   const NS = 'http://www.w3.org/2000/svg', R = 19;
-  const fa = n => n === Infinity ? '∞' : n === -Infinity ? '−∞'
-    : String(n).replace('-', '−').replace(/\d/g, c => '۰۱۲۳۴۵۶۷۸۹'[c]);
+  const fa = n => n === Infinity ? '∞' : n === -Infinity ? '\u2066−∞\u2069'
+    : n < 0 ? '\u2066−' + fa(-n) + '\u2069' : String(n).replace(/\d/g, c => '۰۱۲۳۴۵۶۷۸۹'[c]);
   const ltr = h => `<span dir="ltr" class="dj-ltr">${h}</span>`;
   const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
