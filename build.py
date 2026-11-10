@@ -59,13 +59,16 @@ LEC = '''<!DOCTYPE html>
     <p class="lec-nav">{prev}<a href="index.html">صفحۀ اصلی درس</a>{next}</p>
     <h3 class="nomargintop">جلسۀ {ord}: {title}</h3>
     <p><small>مطالعۀ بیشتر: {reading}</small></p>
-{toc}{content}
+{toc}{content}{scripts}
     <hr>
     <p class="mycenter">{prev}<a href="index.html">صفحۀ اصلی درس</a>{next}</p>
   </div>
 </body>
 </html>
 '''
+
+
+SCRIPTS = '\n<script src="js/run.js"></script>\n<script src="js/examples.js"></script>'
 
 
 def load(name):
@@ -92,7 +95,8 @@ def build_lectures(sessions):
         prev = f'<a href="lec{s["n"] - 1}.html">جلسۀ قبل</a> - ' if i > 0 else ''
         nxt = f' - <a href="lec{s["n"] + 1}.html">جلسۀ بعد</a>' if i + 1 < len(sessions) else ''
         write(f'lec{s["n"]}.html', LEC.format(ord=ORDINAL[s['n'] - 1], title=s['title'], reading=s['reading'],
-                                               content=content, toc=toc, prev=prev, next=nxt))
+                                               content=content, toc=toc, prev=prev, next=nxt,
+                                               scripts=SCRIPTS if 'data-ex=' in content else ''))
 
 
 def build_data(sessions, terms):

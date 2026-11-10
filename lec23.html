@@ -20,7 +20,7 @@
 <li><span class="m"><i>V</i></span> مجموعۀ رأس‌ها و <span class="m"><i>E</i></span> مجموعۀ یال‌هاست. تعداد رأس‌ها را <span class="m"><i>n</i></span> و تعداد یال‌ها را <span class="m"><i>e</i></span> می‌نامیم.</li>
 <li>اگر گراف جهت‌دار باشد، هر یال یک زوج مرتب از دو رأس است.</li>
 <li>اگر گراف بدون جهت باشد، هر یال یک زیرمجموعۀ دوتایی از رأس‌هاست.</li>
-<li>مثالی از گراف‌های جهت‌دار و بدون جهت.</li>
+<li>مثال:<div class="dj" data-ex="graphs"></div></li>
 </ul></li>
 </ul>
 
@@ -86,7 +86,10 @@ def BFS(Adj, s):
   return level, parent
 </pre>
 <ul>
-<li>مثال اجرای مرحله به مرحلۀ الگوریتم روی یک گراف ۸ رأسی.</li>
+<li>مثال: اجرای خط به خط روی یک گراف ۸ رأسی از رأس <span class="m"><i>s</i></span>. رأس‌های آبی مجموعۀ مرزی‌اند، رأس‌های خط‌چین در <code>next</code> و رأس‌های تیره قبلاً پیمایش شده‌اند. عدد کنار هر رأس لایۀ آن است.</li>
+</ul>
+<div class="dj" data-ex="bfs"></div>
+<ul>
 <li>زمان اجرای الگوریتم <span class="m">Θ(<i>n</i> + <i>e</i>)</span> است (برای رأس‌هایی که از <span class="m"><i>s</i></span> قابل دسترسی‌اند)، چون هر رأس یک بار وارد <code>frontier</code> می‌شود و <code>Adj</code> آن یک بار بررسی می‌شود و مجموع اندازۀ <code>Adj</code>ها <span class="m">Θ(<i>e</i>)</span> است.</li>
 <li>در برخی کاربردها رأس‌هایی را که از <span class="m"><i>s</i></span> قابل دسترسی نیستند در لایۀ <span class="m">∞</span> درنظر می‌گیرند.</li>
 </ul>
@@ -109,6 +112,8 @@ def path(parent, v):
 <li>یال‌هایی از گراف که در درخت BFS نیستند، بین لایه‌های متوالی یا درون یک لایه‌اند. (در گراف جهت‌دار ممکن است یالی به لایه‌های قبلی هم برگردد، ولی هیچ یالی بیش از یک لایه جلو نمی‌رود.)</li>
 </ul>
 
+<script src="js/run.js"></script>
+<script src="js/examples.js"></script>
     <hr>
     <p class="mycenter"><a href="lec22.html">جلسۀ قبل</a> - <a href="index.html">صفحۀ اصلی درس</a> - <a href="lec24.html">جلسۀ بعد</a></p>
   </div>

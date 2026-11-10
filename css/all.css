@@ -1380,3 +1380,13 @@ details.tas > summary { cursor: pointer; font-size: 14px; }
 .dj-pill.ch { fill: #fef3c7; stroke: #d97706; }
 .dj-d { font-size: 13px; fill: #334155; }
 .dj-n .dj-pill.ch + .dj-d { fill: #92400e; }
+.dj-graph { max-width: 100%; }
+.dj-n.next circle:not(.dj-ring) { fill: #fff; stroke: #3b82f6; stroke-dasharray: 3 2; }
+.dj-n.red circle:not(.dj-ring) { fill: #dc2626; stroke: #dc2626; }
+.dj-n.black circle:not(.dj-ring) { fill: #1e293b; stroke: #1e293b; }
+.dj-n.red .dj-v, .dj-n.black .dj-v { fill: #fff; }
+.dj-v.num { font-style: normal; font-family: inherit; font-size: 16px; }
+.dj-e.path path { stroke: #1e3a8a; stroke-width: 2.5; }
+.dj-e.path path.dj-head { fill: #1e3a8a; }
+.dj-graph { direction: ltr; }
+.dj-code { white-space: pre; overflow-x: auto; }

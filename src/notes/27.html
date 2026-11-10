@@ -30,7 +30,10 @@ def bellman_ford(V, E, w, s):
   return d, parent
 </pre>
 <ul>
-<li>مثال اجرای الگوریتم بلمن-فورد روی یک گراف ۶ رأسی.</li>
+<li>مثال: اجرای خط به خط روی گراف شکل ۲۴٫۴ کتاب CLRS از رأس <span class="m"><i>s</i></span>، با یال‌های منفی. عدد کنار هر رأس <code>d</code> فعلی آن است و یالی که relax می‌شود نارنجی است. با این ترتیب یال‌ها <code>d[z]</code> تازه در دور چهارم به مقدار نهایی −۲ می‌رسد؛ یعنی هر چهار دور لازم است. ترتیب دیگری از یال‌ها ممکن است زودتر به جواب برسد.</li>
+</ul>
+<div class="dj" data-ex="bellman"></div>
+<ul>
 <li>اثبات درستی: با استقرا روی <span class="m"><i>i</i></span>، پس از دور <span class="m"><i>i</i></span>اُم <code>d[v]</code> کمتر یا مساوی وزن کوتاه‌ترین مسیر از <span class="m"><i>s</i></span> به <span class="m"><i>v</i></span> با حداکثر <span class="m"><i>i</i></span> یال است. اگر دور منفی نباشد، کوتاه‌ترین مسیرها ساده‌اند و حداکثر <span class="m"><i>n</i> − 1</span> یال دارند، پس پس از <span class="m"><i>n</i> − 1</span> دور (با ناوردای <span class="m"><i>d</i>[<i>v</i>] ≥ δ(<i>s</i>, <i>v</i>)</span>) داریم <span class="m"><i>d</i>[<i>v</i>] = δ(<i>s</i>, <i>v</i>)</span>.</li>
 <li>زمان اجرا: <span class="m"><i>O</i>(<i>n e</i>)</span>.</li>
 </ul>
