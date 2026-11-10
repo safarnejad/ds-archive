@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>جلسۀ بیستم</title>
+  <link rel="stylesheet" href="css/all.css" type="text/css" />
+</head>
+<body>
+  <div id="page" class="container mynarrow">
+    <h3 class="nomargintop">جلسۀ بیستم: پرسش کمینۀ یک محدوده و درخت دکارتی</h3>
+    <p><small>مطالعۀ بیشتر: خارج از مراجع</small></p>
+<h4>مسئلۀ پرسش کمینۀ یک محدوده</h4>
+<ul>
+<li>یک لیست <span class="m"><i>A</i></span> به طول <span class="m"><i>n</i></span> داده شده و هر بار کمینۀ یک محدودۀ <span class="m"><i>A</i>[<i>j</i> … <i>k</i>]</span> از لیست پرسیده می‌شود (range minimum query یا RMQ).</li>
+<li>هر راه‌حل را با سه معیار می‌سنجیم: زمان پیش‌پردازش، حافظۀ اضافه و زمان پاسخ به هر پرسش.</li>
+</ul>
+
+<h4>۱. راه‌حل ساده</h4>
+<ul>
+<li>هر بار کل محدوده را بررسی می‌کنیم. پیش‌پردازش <span class="m"><i>O</i>(1)</span>، حافظۀ اضافه <span class="m"><i>O</i>(1)</span> و پاسخ به پرسش <span class="m"><i>O</i>(<i>n</i>)</span>.</li>
+</ul>
+<pre>
+def rmq_naive(A, j, k):
+  return min(A[j:k + 1])
+</pre>
+
+<h4>۲. ایدۀ جذر</h4>
+<ul>
+<li>لیست را به قسمت‌های <span class="m">√<i>n</i></span>تایی افراز می‌کنیم و کمینۀ هر قسمت را در پیش‌پردازش حساب می‌کنیم. برای پاسخ، قسمت‌های کاملی را که داخل محدوده‌اند از این اطلاعات می‌خوانیم و دو تکۀ ناقص دو سر محدوده را عنصر به عنصر بررسی می‌کنیم.</li>
+<li>پیش‌پردازش <span class="m"><i>O</i>(<i>n</i>)</span>، حافظۀ اضافه <span class="m"><i>O</i>(√<i>n</i>)</span> و پاسخ به پرسش <span class="m"><i>O</i>(√<i>n</i>)</span>.</li>
+</ul>
+<pre>
+def sqrt_build(A):
+  b = max(1, int(len(A) ** 0.5))
+  return b, [min(A[i:i + b]) for i in range(0, len(A), b)]
+
+def sqrt_query(A, b, M, j, k):
+  result = A[j]
+  while j &lt;= k and j % b != 0:
+    result = min(result, A[j])
+    j += 1
+  while j + b - 1 &lt;= k:
+    result = min(result, M[j // b])
+    j += b
+  while j &lt;= k:
+    result = min(result, A[j])
+    j += 1
+  return result
+</pre>
+
+<h4>۳. ایدۀ توان‌های ۲ (جدول پراکنده)</h4>
+<ul>
+<li>برای هر عنصر، قسمت‌هایی را در نظر می‌گیریم که با آن عنصر شروع می‌شوند و طول <span class="m">2<sup><i>i</i></sup></span> دارند، و کمینۀ هر کدام را در پیش‌پردازش حساب می‌کنیم (جدول پراکنده یا sparse table).</li>
+<li>پیش‌پردازش: هر قسمت به طول <span class="m">2<sup><i>i</i></sup></span> از دو قسمت به طول <span class="m">2<sup><i>i</i>−1</sup></span> تشکیل شده است:
+<div class="formula">min <i>A</i>[<i>j</i> … <i>j</i> + 2<sup><i>i</i></sup> − 1] = min(min <i>A</i>[<i>j</i> … <i>j</i> + 2<sup><i>i</i>−1</sup> − 1], min <i>A</i>[<i>j</i> + 2<sup><i>i</i>−1</sup> … <i>j</i> + 2<sup><i>i</i></sup> − 1])</div></li>
+<li>پاسخ به پرسش: اگر <span class="m"><i>i</i> = ⌊log<sub>2</sub>(<i>k</i> − <i>j</i> + 1)⌋</span>، دو قسمت به طول <span class="m">2<sup><i>i</i></sup></span> که یکی از <span class="m"><i>j</i></span> شروع و دیگری به <span class="m"><i>k</i></span> ختم می‌شود کل محدوده را می‌پوشانند (با هم‌پوشانی، که برای کمینه اشکالی ندارد):
+<div class="formula">min <i>A</i>[<i>j</i> … <i>k</i>] = min(min <i>A</i>[<i>j</i> … <i>j</i> + 2<sup><i>i</i></sup> − 1], min <i>A</i>[<i>k</i> − 2<sup><i>i</i></sup> + 1 … <i>k</i>])</div></li>
+<li>پیش‌پردازش <span class="m"><i>O</i>(<i>n</i> log <i>n</i>)</span>، حافظۀ اضافه <span class="m"><i>O</i>(<i>n</i> log <i>n</i>)</span> و پاسخ به پرسش <span class="m"><i>O</i>(1)</span>.</li>
+</ul>
+<pre>
+def sparse_build(A):
+  M = [A[:]]
+  i = 1
+  while 2 ** i &lt;= len(A):
+    prev, h = M[i - 1], 2 ** (i - 1)
+    M.append([min(prev[j], prev[j + h]) for j in range(len(A) - 2 ** i + 1)])
+    i += 1
+  return M
+
+def sparse_query(M, j, k):
+  i = (k - j + 1).bit_length() - 1
+  return min(M[i][j], M[i][k - 2 ** i + 1])
+</pre>
+
+<h4>۴ و ۵. راه‌حل‌های دیگر</h4>
+<ul>
+<li>۴. درخت پاره‌خطی (جلسۀ ۲۱): پیش‌پردازش <span class="m"><i>O</i>(<i>n</i>)</span>، حافظۀ اضافه <span class="m"><i>O</i>(<i>n</i>)</span> و پاسخ به پرسش <span class="m"><i>O</i>(log <i>n</i>)</span>. مزیت آن این است که تغییر مقدار عناصر را هم پشتیبانی می‌کند.</li>
+<li>۵. راه‌حل بهینه که در این درس گفته نمی‌شود: پیش‌پردازش <span class="m"><i>O</i>(<i>n</i>)</span>، حافظۀ اضافه <span class="m"><i>O</i>(<i>n</i>)</span> و پاسخ به پرسش <span class="m"><i>O</i>(1)</span>.</li>
+</ul>
+
+<h4>درخت دکارتی</h4>
+<ul>
+<li>تعریف (یادآوری از جلسۀ ۱۹): در درخت دکارتی (Cartesian tree) یک آرایه، عنصر کمینه در ریشه است، زیردرخت چپ به صورت بازگشتی از عناصر سمت چپ آن و زیردرخت راست به صورت بازگشتی از عناصر سمت راست آن ساخته می‌شود.</li>
+<li>پس درخت دکارتی از نظر مقدارها یک هرم کمینه و از نظر اندیس‌ها یک درخت دودویی جست‌وجوست: پیمایش میان‌ترتیب آن خود آرایه را می‌دهد.</li>
+<li>مثال برای لیست <code>[9, 3, 7, 1, 8, 12, 10, 20, 15, 18, 5]</code>: ریشه ۱ است، زیردرخت چپ از <code>[9, 3, 7]</code> با ریشۀ ۳ و زیردرخت راست از <code>[8, 12, 10, 20, 15, 18, 5]</code> با ریشۀ ۵ ساخته می‌شود.</li>
+<li>ساخت مستقیم بازگشتی در بدترین حالت <span class="m"><i>O</i>(<i>n</i><sup>2</sup>)</span> است (مثل مرتب‌سازی سریع روی آرایۀ مرتب).</li>
+</ul>
+
+<h4>ساخت درخت دکارتی در زمان خطی با پشته</h4>
+<ul>
+<li>عناصر را از چپ به راست اضافه می‌کنیم. مسیر راست درخت (از ریشه تا راست‌ترین رأس) را در یک پشته نگه می‌داریم.</li>
+<li>برای عنصر جدید <span class="m"><i>x</i></span> از بالای پشته عناصر بزرگ‌تر از <span class="m"><i>x</i></span> را بیرون می‌آوریم. آخرین عنصری که بیرون آمد فرزند چپ <span class="m"><i>x</i></span> می‌شود و <span class="m"><i>x</i></span> فرزند راست عنصری می‌شود که بالای پشته مانده است (اگر پشته خالی شد، <span class="m"><i>x</i></span> ریشه است). سپس <span class="m"><i>x</i></span> را در پشته می‌گذاریم.</li>
+<li>هر عنصر حداکثر یک بار وارد و یک بار از پشته خارج می‌شود، پس کل زمان <span class="m"><i>O</i>(<i>n</i>)</span> است (تحلیل سرشکن، جلسۀ ۲۲).</li>
+<li>کد زیر برای هر اندیس، اندیس پدر و فرزند چپ و راست را برمی‌گرداند (<code>None</code> یعنی وجود ندارد).</li>
+</ul>
+<pre>
+def cartesian_tree(A):
+  n = len(A)
+  parent, left, right = [None] * n, [None] * n, [None] * n
+  stack = []
+  for i in range(n):
+    last = None
+    while stack and A[stack[-1]] &gt; A[i]:
+      last = stack.pop()
+    if last is not None:
+      left[i] = last
+      parent[last] = i
+    if stack:
+      right[stack[-1]] = i
+      parent[i] = stack[-1]
+    stack.append(i)
+  return parent, left, right
+</pre>
+
+<h4>تبدیل پرسش کمینۀ یک محدوده به پایین‌ترین جد مشترک</h4>
+<ul>
+<li>کمینۀ <span class="m"><i>A</i>[<i>j</i> … <i>k</i>]</span> برابر مقدار پایین‌ترین جد مشترک (lowest common ancestor یا LCA) رأس‌های <span class="m"><i>j</i></span> و <span class="m"><i>k</i></span> در درخت دکارتی است.</li>
+<li>دلیل: جد مشترک پایین‌ترین رأسی است که <span class="m"><i>j</i></span> و <span class="m"><i>k</i></span> در دو طرف آن (یا خود آن) قرار دارند. پس اندیس آن بین <span class="m"><i>j</i></span> و <span class="m"><i>k</i></span> است و چون کل زیردرختش (که محدوده را در بر می‌گیرد) از آن بزرگ‌تر است، کمینۀ محدوده است.</li>
+<li>بنابراین هر داده‌ساختار برای LCA یک داده‌ساختار برای RMQ می‌دهد (و برعکس). کد زیر نسخۀ سادۀ این ایده است که با بالا رفتن از دو رأس، جد مشترک را در زمان ارتفاع درخت پیدا می‌کند.</li>
+</ul>
+<pre>
+def depth(parent, v):
+  d = 0
+  while parent[v] is not None:
+    v = parent[v]
+    d += 1
+  return d
+
+def lca(parent, u, v):
+  du, dv = depth(parent, u), depth(parent, v)
+  while du &gt; dv:
+    u, du = parent[u], du - 1
+  while dv &gt; du:
+    v, dv = parent[v], dv - 1
+  while u != v:
+    u, v = parent[u], parent[v]
+  return u
+
+def rmq_lca(A, parent, j, k):
+  return A[lca(parent, j, k)]
+</pre>
+
+    <hr>
+    <p class="mycenter"><a href="lec19.html">جلسۀ قبل</a> - <a href="index.html">صفحۀ اصلی درس</a> - <a href="lec21.html">جلسۀ بعد</a></p>
+  </div>
+</body>
+</html>

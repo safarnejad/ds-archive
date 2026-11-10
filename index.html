@@ -1,33 +1,245 @@
-<!doctype html>
-<html lang="fa" dir="rtl">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ساختمان داده‌ها و الگوریتم‌ها — آرشیو</title>
-<link rel="stylesheet" href="assets/style.css">
-</head>
-<body>
-<div class="page">
-<nav class="top">
-  <a class="home" href="index.html">ساختمان داده‌ها و الگوریتم‌ها</a>
-  <a href="index.html#notes">درس‌نامه</a>
-  <a href="index.html#terms">ترم‌ها</a>
-  <a href="tas.html">دستیاران آموزشی</a>
-</nav>
-<h1>ساختمان داده‌ها و الگوریتم‌ها (۴۰۲۵۴)</h1>
-<p class="sub">آرشیو درسی که از بهار ۱۳۹۸ تا پاییز ۱۴۰۱ در دانشکدۀ مهندسی کامپیوتر دانشگاه صنعتی شریف ارائه کردم.</p>
-<p>این صفحه همۀ آن چیزی است که از این درس مانده: درس‌نامۀ کامل جلسه به جلسه، تمرین‌ها، کوئیزها، امتحان‌ها و چالش‌های هر ترم به همراه پاسخ‌ها، و نام همۀ کسانی که در این سال‌ها دستیار آموزشی درس بودند.
-مرجع اصلی درس کتاب <a href="https://fatemi.ir/book/داده‌ساختارها-و-مبانی-الگوریتم‌ها">داده‌ساختارها و مبانی الگوریتم‌ها</a> نوشتۀ دکتر محمد قدسی است و از کتاب CLRS هم استفاده می‌شد.</p>
-<h2 id="notes">درس‌نامه</h2>
-<table>
-<tr><th></th><th>جلسه</th><th>مطالعۀ بیشتر</th></tr>
-<tr class="part"><td colspan="3">تفکر الگوریتمی</td></tr><tr><td class="num">۱</td><td><a href="notes/01.html">تفکر الگوریتمی، حل مسئله</a></td><td class="meta">۱-۱ از قدسی و ۱، ۲.۳ و ۴.۱ از CLRS</td></tr><tr><td class="num">۲</td><td><a href="notes/02.html">مدل محاسبات، رشد توابع</a></td><td class="meta">۳-۱ و ۳-۳ از قدسی و ۳ از CLRS</td></tr><tr><td class="num">۳</td><td><a href="notes/03.html">حل روابط بازگشتی</a></td><td class="meta">۳-۴ تا ۳-۶ از قدسی و ۴.۳ تا ۴.۶ از CLRS</td></tr><tr class="part"><td colspan="3">مرتب‌سازی</td></tr><tr><td class="num">۴</td><td><a href="notes/04.html">مرتب‌سازی درجی و ادغامی</a></td><td class="meta">۱-۳، ۲-۳ از قدسی و ۲ از CLRS</td></tr><tr class="part"><td colspan="3">داده‌ساختارهای پایه</td></tr><tr><td class="num">۵</td><td><a href="notes/05.html">واسط و داده‌ساختار، آرایه، لیست پیوندی، پشته و صف</a></td><td class="meta">۲-۱ و ۴-۱ تا ۴-۳ از قدسی و ۱۰ و ۱۷.۴ از CLRS</td></tr><tr><td class="num">۶</td><td><a href="notes/06.html">درخت‌ها، پیمایش درخت و درخت عبارت</a></td><td class="meta">۴-۴ از قدسی و ۱۰.۴ از CLRS</td></tr><tr class="part"><td colspan="3">درخت‌ها</td></tr><tr><td class="num">۷</td><td><a href="notes/07.html">هرم و مرتب‌سازی هرمی</a></td><td class="meta">۶-۴ و ۶-۳-۳ از قدسی و ۶ از CLRS</td></tr><tr><td class="num">۸</td><td><a href="notes/08.html">درخت دودویی جست‌وجو و مرتب‌سازی با آن</a></td><td class="meta">۴-۴ (تا آخر ۴-۴-۶) و ۴-۵ از قدسی و ۱۲ از CLRS</td></tr><tr><td class="num">۹</td><td><a href="notes/09.html">درخت‌های دودویی متوازن: درخت اِی‌وی‌اِل</a></td><td class="meta">۴-۳-۷ از قدسی و ۱۳.۲، ۱۴.۱ و ۱۴.۲ از CLRS</td></tr><tr><td class="num">۱۰</td><td><a href="notes/10.html">درخت قرمز-سیاه، درخت ۲-۳ و درخت بی</a></td><td class="meta">۳-۷ (تا آخر ۷-۳-۳) از قدسی و ۱۳ و ۱۸ از CLRS</td></tr><tr class="part"><td colspan="3">مرتب‌سازی</td></tr><tr><td class="num">۱۱</td><td><a href="notes/11.html">مرتب‌سازی سریع، پیدا کردن میانه و تحلیل تصادفی</a></td><td class="meta">۱-۳-۶، ۲-۳-۶ و ۶-۵-۳ از قدسی و ۷ و ۹ از CLRS</td></tr><tr><td class="num">۱۲</td><td><a href="notes/12.html">کران پایین مرتب‌سازی</a></td><td class="meta">۱-۶ از قدسی و ۸.۱ از CLRS</td></tr><tr><td class="num">۱۳</td><td><a href="notes/13.html">مرتب‌سازی‌های خطی</a></td><td class="meta">۲-۶ و ۶-۴ از قدسی و ۸.۲ تا ۸.۴ از CLRS</td></tr><tr class="part"><td colspan="3">درهم‌سازی</td></tr><tr><td class="num">۱۴</td><td><a href="notes/14.html">درهم‌سازی: مقدمات، زنجیره، درهم‌سازی سراسری و پویا</a></td><td class="meta">۱-۵ تا ۵-۵ و ۵-۸ از قدسی و ۱۱.۱ تا ۱۱.۳ از CLRS</td></tr><tr><td class="num">۱۵</td><td><a href="notes/15.html">درهم‌سازی: آدرس‌دهی باز و تطابق رشته‌ها</a></td><td class="meta">۶-۵ از قدسی و ۱۱.۴ و ۳۲.۲ از CLRS</td></tr><tr><td class="num">۱۶</td><td><a href="notes/16.html">درهم‌سازی کامل، فیلتر بلوم، درهم‌سازی کوکو و درهم‌سازی در رمزنگاری</a></td><td class="meta">۷-۵ از قدسی و ۱۱.۵ از CLRS</td></tr><tr class="part"><td colspan="3">مباحث دیگر</td></tr><tr><td class="num">۱۷</td><td><a href="notes/17.html">اعداد بزرگ: ضرب کاراتسوبا، تقسیم و جذر با روش نیوتون</a></td><td class="meta">خارج از مراجع</td></tr><tr><td class="num">۱۸</td><td><a href="notes/18.html">ترای و درخت پسوندی</a></td><td class="meta">خارج از مراجع</td></tr><tr><td class="num">۱۹</td><td><a href="notes/19.html">آرایۀ پسوندی و تبدیل باروز-ویلر</a></td><td class="meta">خارج از مراجع</td></tr><tr><td class="num">۲۰</td><td><a href="notes/20.html">پرسش کمینۀ یک محدوده و درخت دکارتی</a></td><td class="meta">خارج از مراجع</td></tr><tr><td class="num">۲۱</td><td><a href="notes/21.html">داده‌ساختارهای افزوده: درخت مرتبه آماری، درخت پاره‌خطی و درخت فنویک</a></td><td class="meta">۱۴ از CLRS</td></tr><tr><td class="num">۲۲</td><td><a href="notes/22.html">مجموعه‌های مجزا و تحلیل سرشکن</a></td><td class="meta">۱-۷ و ۷-۳ از قدسی و ۱۷ و ۲۱ از CLRS</td></tr><tr class="part"><td colspan="3">گراف</td></tr><tr><td class="num">۲۳</td><td><a href="notes/23.html">جست‌وجوی سطح اول</a></td><td class="meta">۲۲.۱ و ۲۲.۲ از CLRS</td></tr><tr><td class="num">۲۴</td><td><a href="notes/24.html">جست‌وجوی عمق اول و کاربردهای آن</a></td><td class="meta">۲۲.۳ و ۲۲.۴ از CLRS</td></tr><tr><td class="num">۲۵</td><td><a href="notes/25.html">مؤلفه‌های قویاً همبند</a></td><td class="meta">۲۲.۵ از CLRS</td></tr><tr><td class="num">۲۶</td><td><a href="notes/26.html">کوتاه‌ترین مسیر در گراف وزن‌دار و گراف بدون دور</a></td><td class="meta">مقدمۀ ۲۴، ۲۴.۲ و ۲۴.۵ از CLRS</td></tr><tr><td class="num">۲۷</td><td><a href="notes/27.html">الگوریتم بلمن-فورد</a></td><td class="meta">۲۴.۱ و ۲۴.۴ از CLRS</td></tr><tr><td class="num">۲۸</td><td><a href="notes/28.html">الگوریتم دایسترا</a></td><td class="meta">۲۴.۳ از CLRS</td></tr><tr class="part"><td colspan="3">جمع‌بندی</td></tr><tr><td class="num">۲۹</td><td><a href="notes/29.html">مرور مطالب و معرفی مباحث پیشرفته</a></td><td class="meta">خارج از مراجع</td></tr>
-</table>
-<h2 id="terms">ترم‌ها</h2>
-<p>تمرین‌ها، کوئیزها، امتحان‌ها، چالش و پروژۀ ویکی هر ترم، همه با پاسخ.</p>
-<div class="cards"><a class="card" href="terms/97-98-2.html"><b>بهار ۹۷-۹۸</b><span class="meta">۶ تمرین (نظری و عملی)، ۶ کوئیز، میان‌ترم و پایان‌ترم، همه با پاسخ؛ چالش و پروژۀ ویکی</span></a><a class="card" href="terms/98-99-1.html"><b>پاییز ۹۸-۹۹</b><span class="meta">۶ تمرین با پاسخ، ۶ کوئیز، میان‌ترم با پاسخ، دو آزمون پایان‌ترم، چالش سه‌مرحله‌ای و پروژۀ ویکی</span></a><a class="card" href="terms/98-99-2.html"><b>بهار ۹۸-۹۹</b><span class="meta">۶ تمرین با پاسخ، کوئیز اول، میان‌ترم برخط، پایان‌ترم کتبی و شفاهی، چالش و پروژۀ ویکی</span></a><a class="card" href="terms/99-00-2.html"><b>بهار ۹۹-۱۴۰۰</b><span class="meta">این ترم را با دکتر محمد قدسی ارائه کردیم: نیمۀ اول درس را دکتر قدسی تدریس کرد. ۵ تمرین با پاسخ، کوئیز اول با پاسخ، میان‌ترم با پاسخ و پایان‌ترم دوبخشی</span></a><a class="card" href="terms/00-01-1.html"><b>پاییز ۱۴۰۰-۱۴۰۱</b><span class="meta">۳ تمرین با پاسخ، میان‌ترم، پایان‌ترم با پاسخ و فاز اول چالش</span></a><a class="card" href="terms/00-01-2.html"><b>بهار ۱۴۰۰-۱۴۰۱</b><span class="meta">از این ترم فقط کوئیز اول پیدا شده است؛ بقیۀ مطالب در کوئرا بود و هنوز به آرشیو اضافه نشده است.</span></a><a class="card" href="terms/01-02-1.html"><b>پاییز ۱۴۰۱-۱۴۰۲</b><span class="meta">میان‌ترم و پایان‌ترم با پاسخ؛ تمرین‌ها و کوئیزها در کوئرا بود و هنوز به آرشیو اضافه نشده است.</span></a></div>
-<footer>مهدی صفرنژاد، دانشکدۀ مهندسی کامپیوتر دانشگاه صنعتی شریف، ۱۳۹۷ تا ۱۴۰۱.
-محتوای این سایت تحت مجوز <a href="https://creativecommons.org/licenses/by/4.0/deed.fa">CC BY 4.0</a> منتشر شده است.</footer>
-</div>
-</body>
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+
+    <link rel="stylesheet" href="css/all.css" type="text/css" />
+
+    <script src="data.js"></script>
+    <script src="https://unpkg.com/vue@3.2.37/dist/vue.global.prod.js"></script>
+  </head>
+
+  <body>
+    <div id="page" class="container">
+      <div class="row-fluid marginbottom">
+        <div class="span12" style="margin-bottom: 30px;">
+          <h1 class="nomargintop">{{ info.courseTitle }} ({{ info.courseNum }})</h1>
+          <h4 class="nomargintop">{{ info.department }}</h4>
+          <h4 class="nomargintop marginbottom">{{ info.semester }}</h4>
+          <div class="row-fluid">
+            <div class="span7">
+              <div class="row-fluid">
+                <div>
+                  <h2>{{ info.professor }}</h2>
+                  <blockquote class="quote">
+                    <template v-if="info.virtualClass">
+                      <a :href="info.virtualClass.link">{{
+                        info.virtualClass.title }}</a>
+                      - {{ info.virtualClass.note }}
+                      <br />
+                    </template>
+                    <template v-if="info.inPersonClass">
+                      {{ info.inPersonClass }}
+                      <br />
+                    </template>
+                    <template v-if="info.virtualTaClass">
+                      <small style="color: #000;">
+                        <a :href="info.virtualTaClass.link">{{
+                          info.virtualTaClass.title }}</a>
+                        - {{ info.virtualTaClass.note }}
+                      </small>
+                    </template>
+                    <template v-if="info.inPersonTaClass">
+                      <small style="color: #000;">
+                        {{ info.inPersonTaClass }}
+                      </small>
+                    </template>
+                  </blockquote>
+                </div>
+              </div>
+              <h5>سایت‌های درس:</h5>
+              <blockquote class="quote">
+                <template v-for="homepage in info.homepages">
+                  <a :href="homepage.link">{{ homepage.title }}</a> - {{
+                  homepage.note }}
+                  <br />
+                </template>
+              </blockquote>
+
+              <h5>مراجع:</h5>
+              <blockquote class="quote">
+                <template v-for="reference in info.references">
+                  <template v-if="reference.isLatin">
+                    <div class="myleft myltr mypadleft">
+                      <a :href="reference.link">{{ reference.title }}</a>{{
+                      reference.note }}
+                    </div>
+                  </template>
+                  <template v-else>
+                    <a :href="reference.link">{{ reference.title }}</a>{{
+                    reference.note }}
+                  </template>
+                  <br />
+                </template>
+              </blockquote>
+              <div class="row-fluid marginbottom margintop" v-if="marks.length">
+                <h5>نمره‌دهی:</h5>
+                <blockquote class="quote">
+                  <table>
+                    <tr v-for="item in marks">
+                      <td>{{ item.name }}: &nbsp; </td>
+                      <td>
+                        {{ item.mark }} نمره
+                        <template v-if="item.note">
+                          ({{ item.note }})
+                        </template>
+                      </td>
+                    </tr>
+                  </table>
+                </blockquote>
+              </div>
+              <div class="row-fluid marginbottom margintop">
+                <h5><a :href="info.rulePage">قوانین کلاس</a></h5>
+              </div>
+            </div>
+            <div class="span5" style="padding-right: 2em">
+              <p>
+                <img class="refimg" :src="info.bookCover.image"
+                  :alt="info.bookCover.alt" />
+              </p>
+            </div>
+          </div>
+          <hr>
+
+          <div class="row-fluid">
+            <div class="span7">
+              <h4 class="mycenter mypadbot">تقویم درس</h4>
+              <table class="table table-bordered mytable myfullwidth">
+                <thead>
+                  <tr class="aval">
+                    <th style="text-align: center; width: 17%;">جلسه</th>
+                    <th style="text-align: center; width: 30%;">عناوین</th>
+                    <th style="text-align: center; width: 13%;">رئوس مطالب</th>
+                    <th style="text-align: center; width: 30%;">مطالعۀ بیشتر</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="session in sessions">
+                    <template v-if="session.isHoliday === true">
+                      <td class="tatil" colspan=4>
+                        <b>{{ session.subject }}</b>
+                      </td>
+                    </template>
+                    <template v-else-if="session.isExam === true">
+                      <td class="exam" colspan=4>
+                        <b>{{ session.subject }}</b>
+                        {{ session.further }}
+                      </td>
+                    </template>
+                    <template v-else-if="session.isQuiz === true">
+                      <td class="quiz" colspan=4>
+                        <b>{{ session.subject }}</b>
+                      </td>
+                    </template>
+                    <template v-else>
+                      <td>
+                        {{ session.num }}
+                        <template v-if="session.date">
+                          <br />
+                          ({{ session.date }})
+                        </template>
+                      </td>
+                      <td>{{ session.subject }}</td>
+                      <td>
+                        <template v-for="note in session.notes">
+                          <a :href="note.link">
+                            {{ note.name }}
+                          </a>
+                          <br />
+                        </template>
+                      </td>
+                      <td>{{ session.further }}</td>
+                    </template>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+            <div class="span5">
+              <template v-for="term in terms">
+                <h4 :id="term.id">{{ term.name }}</h4>
+                <p v-if="term.summary">{{ term.summary }}</p>
+                <template v-for="group in term.groups">
+                  <div class="mybold">{{ group.title }}:</div>
+                  <div v-if="group.intro" v-html="group.intro"></div>
+                  <ul>
+                    <li v-for="item in group.items">
+                      <a :href="item.file">{{ item.title }}</a>
+                      <template v-for="extra in item.extra || []">
+                        - <a :href="extra.file">{{ extra.title }}</a>
+                      </template>
+                    </li>
+                  </ul>
+                </template>
+                <table class="table table-condensed">
+                  <tr>
+                    <td>
+                      <h5>دستیاران تدریس</h5>
+                    </td>
+                  </tr>
+                  <tr v-for="ta in term.tas">
+                    <td>
+                      {{ ta.name }}
+                      <template v-if="ta.role">
+                        ({{ ta.role }})
+                      </template>
+                    </td>
+                  </tr>
+                  <tr v-if="term.tasNote">
+                    <td><small>{{ term.tasNote }}</small></td>
+                  </tr>
+                </table>
+                <hr>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        کلیه حقوق این سایت متعلق به دانشگاه صنعتی شریف است.
+        <a href="https://creativecommons.org/licenses/by/3.0/deed.fa"
+          rel="license"><img width="15" src="img/cc.png"
+            alt="CC Attribution 3.0 Unported" /></a>
+      </div>
+    </div>
+
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async
+        src="https://www.googletagmanager.com/gtag/js?id=UA-134050452-1">
+    </script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'UA-134050452-1');
+    </script>
+  </body>
+
+  <script>
+    const MyHomePage = {
+      data() {
+        return {
+          info,
+          sessions,
+          marks,
+          terms
+        };
+      },
+      created() {
+        document.title = info.pageTitle;
+      }
+    };
+
+    Vue.createApp(MyHomePage).mount('#page');
+  </script>
+
 </html>
