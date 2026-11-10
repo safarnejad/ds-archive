@@ -1318,7 +1318,6 @@ pre { direction: ltr; text-align: left; unicode-bidi: isolate; font-family: deja
 .formula { direction: ltr; text-align: center; margin: 6px 0; font-family: "Times New Roman", serif; }
 
 /* archive layout: term index, collapsible terms, sticky calendar, mobile */
-.refimg { max-width: 260px; }
 .term-chips { position: sticky; top: 0; z-index: 2; background: #fff; padding: 6px 0; margin-bottom: 8px; border-bottom: 1px solid #eee; }
 .term-chips a { display: inline-block; margin: 2px 0 2px 10px; white-space: nowrap; }
 details.term { border-bottom: 1px solid #eee; padding: 8px 0; scroll-margin-top: 48px; }
@@ -1337,7 +1336,17 @@ details.tas > summary { cursor: pointer; font-size: 14px; }
   .span5 { padding-right: 0 !important; }
   h1 { font-size: 24px; line-height: 1.4; }
   .scroll-x { overflow-x: auto; }
-  .refimg { max-width: 140px; }
   .ta-list { columns: 1; }
   .quote { word-break: break-word; }
 }
+
+/* step-by-step algorithm figures inside notes */
+.steps { display: flex; flex-wrap: wrap; gap: 8px 16px; justify-content: center; margin: 8px 0 14px; }
+.steps figure { margin: 0; text-align: center; }
+.steps svg { display: block; max-width: 100%; height: auto; }
+.steps figcaption { font-size: 13px; }
+.steps text { text-anchor: middle; font-family: "Times New Roman", serif; }
+.steps .v { font-size: 16px; font-style: italic; }
+.steps .w { font-size: 12px; fill: #555; }
+.steps .d { font-size: 14px; fill: #021a40; font-weight: bold; }
+.steps .ch { fill: #c0392b; }

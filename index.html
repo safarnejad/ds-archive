@@ -93,7 +93,7 @@
                 </blockquote>
               </div>
               <div class="row-fluid marginbottom margintop">
-                <h5><a :href="info.rulePage">قوانین کلاس</a></h5>
+                <h5><a :href="info.rulePage">قوانین کلاس</a> - <a :href="info.gradingPage">نکاتی دربارۀ تمرین‌ها</a></h5>
               </div>
             </div>
             <div class="span5" style="padding-right: 2em">
@@ -238,6 +238,7 @@
       },
       created() {
         document.title = info.pageTitle;
+        addEventListener('hashchange', () => { this.open = location.hash.slice(1); });
       }
     };
 
