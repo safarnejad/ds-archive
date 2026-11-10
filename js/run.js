@@ -52,6 +52,31 @@
     }
   }
 
+  // free shapes for arrays, bars, grids and tables:
+  // {t: 'rect', x, y, w, h, cls, label, sub} | {t: 'text', x, y, s, cls} | {t: 'poly', pts: [[x, y], ...], cls, label} | {t: 'line', x1, y1, x2, y2, cls, dir}
+  function drawShape(svg, s) {
+    const g = el('g', { class: 'dj-s ' + (s.cls || '') }, svg);
+    if (s.t === 'rect') {
+      el('rect', { x: s.x, y: s.y, width: s.w, height: s.h, rx: s.rx === undefined ? 3 : s.rx }, g);
+      if (s.label !== undefined) el('text', { x: s.x + s.w / 2, y: s.y + s.h / 2 + 5, class: 'dj-sl' }, g).textContent = typeof s.label === 'number' ? fa(s.label) : s.label;
+      if (s.sub !== undefined) el('text', { x: s.x + s.w / 2, y: s.y + s.h + 14, class: 'dj-ss' }, g).textContent = typeof s.sub === 'number' ? fa(s.sub) : s.sub;
+    } else if (s.t === 'text') {
+      el('text', { x: s.x, y: s.y, class: 'dj-st' }, g).textContent = typeof s.s === 'number' ? fa(s.s) : s.s;
+    } else if (s.t === 'poly') {
+      el('polygon', { points: s.pts.map(p => p.join(',')).join(' ') }, g);
+      if (s.label !== undefined) {
+        const cx = s.pts.reduce((a, p) => a + p[0], 0) / s.pts.length, cy = s.pts.reduce((a, p) => a + p[1], 0) / s.pts.length;
+        el('text', { x: cx, y: cy + 5, class: 'dj-sl' }, g).textContent = s.label;
+      }
+    } else if (s.t === 'line') {
+      el('path', { d: `M${s.x1},${s.y1}L${s.x2},${s.y2}`, fill: 'none' }, g);
+      if (s.dir) {
+        const [tx, ty] = unit(s.x2 - s.x1, s.y2 - s.y1), x = s.x2, y = s.y2, bx = x - tx * 9, by = y - ty * 9;
+        el('path', { class: 'dj-head', d: `M${x},${y}L${bx - ty * 4},${by + tx * 4}L${x - tx * 6},${y - ty * 6}L${bx + ty * 4},${by - tx * 4}z` }, g);
+      }
+    }
+  }
+
   // cfg: {view: [w, h], code: [lines] | null, steps: [{line, msg, nodes: {id: {x, y, label, cls, badge, pos, ch}}, edges: [{a, b, w, dir, cls, c, lp}], state}]}
   window.AlgoRun = function (root, cfg) {
     const many = cfg.steps.length > 1;
@@ -66,8 +91,10 @@
       const S = cfg.steps[k];
       root.querySelectorAll('.dj-code span').forEach(s => s.classList.toggle('on', +s.dataset.l === S.line));
       while (svg.firstChild) svg.removeChild(svg.firstChild);
-      S.edges.forEach(e => drawEdge(svg, e, S.nodes, S.edges));
-      Object.values(S.nodes).forEach(n => drawNode(svg, n));
+      (S.shapes || []).filter(s => !s.top).forEach(s => drawShape(svg, s));
+      (S.edges || []).forEach(e => drawEdge(svg, e, S.nodes, S.edges));
+      Object.values(S.nodes || {}).forEach(n => drawNode(svg, n));
+      (S.shapes || []).filter(s => s.top).forEach(s => drawShape(svg, s));
       root.querySelector('.dj-msg').innerHTML = S.msg || '';
       root.querySelector('.dj-queue').innerHTML = S.state || '';
       if (many) root.querySelector('.dj-count').textContent = `${fa(k + 1)} از ${fa(cfg.steps.length)}`;
@@ -91,5 +118,9 @@
     draw();
   };
   AlgoRun.fa = fa;
+  window.EX = window.EX || {};
+  addEventListener('DOMContentLoaded', () => document.querySelectorAll('[data-ex]').forEach(e => {
+    if (EX[e.dataset.ex]) AlgoRun(e, EX[e.dataset.ex]());
+  }));
   AlgoRun.ltr = ltr;
 })();

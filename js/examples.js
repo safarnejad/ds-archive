@@ -6,7 +6,7 @@
   const list = (title, xs) => `${title}: ` + (xs.length ? xs.map(x => `<span>${x}</span>`).join('') : '<span class="empty">خالی</span>');
   const nodesOf = (P, f) => Object.fromEntries(Object.keys(P).map(v => [v, { x: P[v][0], y: P[v][1], label: v, ...f(v) }]));
 
-  const EX = {};
+  const EX = window.EX;
 
   // ---------- session 23: a directed and an undirected graph ----------
   EX.graphs = () => {
@@ -279,5 +279,4 @@
     return { view: [440, 300], code: null, steps };
   };
 
-  document.querySelectorAll('[data-ex]').forEach(e => AlgoRun(e, EX[e.dataset.ex]()));
 })();

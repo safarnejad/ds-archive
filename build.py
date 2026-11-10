@@ -68,7 +68,8 @@ LEC = '''<!DOCTYPE html>
 '''
 
 
-SCRIPTS = '\n<script src="js/run.js"></script>\n<script src="js/examples.js"></script>'
+SCRIPTS = ''.join(f'\n<script src="js/{f}"></script>' for f in ['run.js', 'examples.js'] + sorted(
+    f for f in os.listdir(os.path.join(ROOT, 'js')) if f.startswith('ex-')))
 
 
 def load(name):
