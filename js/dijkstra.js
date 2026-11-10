@@ -75,9 +75,9 @@
   const svg = root.querySelector('svg'), NS = 'http://www.w3.org/2000/svg';
   const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || svg).appendChild(e); return e; };
   const defs = el('defs', {});
-  [['ar', '#b8c2d0'], ['arb', '#021a40'], ['arh', '#e08a00']].forEach(([id, c]) => {
-    const m = el('marker', { id, viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto' }, defs);
-    el('path', { d: 'M0,1L9,5L0,9z', fill: c }, m);
+  [['ar', '#cbd5e1'], ['arb', '#1e3a8a'], ['arh', '#d97706']].forEach(([id, c]) => {
+    const m = el('marker', { id, viewBox: '0 0 12 10', refX: 12, refY: 5, markerWidth: 12, markerHeight: 10, markerUnits: 'userSpaceOnUse', orient: 'auto' }, defs);
+    el('path', { d: 'M0,0L12,5L0,10L3,5z', fill: c, 'shape-rendering': 'geometricPrecision' }, m);
   });
   const R = 19, edges = {};
   for (const [a, b, w] of E) {
@@ -87,7 +87,7 @@
     else {
       const L = Math.hypot(x2 - x1, y2 - y1), ux = (x2 - x1) / L, uy = (y2 - y1) / L;
       const twin = E.some(e => e[0] === b && e[1] === a), o = twin ? 7 : 0, ox = -uy * o, oy = ux * o;
-      const sx = x1 + ux * R + ox, sy = y1 + uy * R + oy, ex = x2 - ux * (R + 3) + ox, ey = y2 - uy * (R + 3) + oy;
+      const sx = x1 + ux * R + ox, sy = y1 + uy * R + oy, ex = x2 - ux * (R + 1) + ox, ey = y2 - uy * (R + 1) + oy;
       path = `M${sx},${sy}L${ex},${ey}`; lx = (sx + ex) / 2 + ox * 1.9; ly = (sy + ey) / 2 + oy * 1.9;
       if (a === 'y' && b === 'x') { lx -= 14; ly += 14; }
     }

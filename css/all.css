@@ -1341,37 +1341,39 @@ details.tas > summary { cursor: pointer; font-size: 14px; }
 }
 
 /* interactive algorithm runs inside notes */
-.dj { border: 1px solid #dfe4ec; border-radius: 10px; padding: 14px 16px 12px; margin: 10px 0 18px; background: #fbfcfe; }
+.dj { border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 18px 14px; margin: 10px 0 18px; background: #fff; box-shadow: 0 1px 3px rgba(15, 23, 42, .06); }
+.dj, .dj * { font-weight: normal; }
 .dj-panes { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: center; }
 .dj-graph { width: 360px; max-width: 100%; height: auto; }
-.dj-code { flex: 1 1 300px; margin: 0; font-size: 13px; line-height: 1.75; background: #fff; border: 1px solid #e6eaf0; border-radius: 8px; padding: 8px 0; }
+.dj-code { flex: 1 1 300px; margin: 0; font-size: 13px; line-height: 1.8; color: #334155; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 0; }
 .dj-code span { display: block; padding: 0 12px; border-left: 3px solid transparent; }
-.dj-code span.on { background: #fff4e0; border-left-color: #e08a00; }
-.dj-msg { min-height: 1.8em; margin: 10px 0 4px; font-weight: bold; color: #021a40; }
-.dj-msg i, .dj-queue i { font-family: "Times New Roman", serif; }
-.dj-queue { font-size: 13px; color: #555; }
-.dj-queue span { display: inline-block; margin: 0 4px; padding: 0 8px; border-radius: 10px; background: #e8eef7; color: #021a40; }
-.dj-queue span.empty { background: none; color: #999; }
-.dj-bar { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-.dj-bar button { font-family: inherit; font-size: 13px; padding: 4px 14px; border: 1px solid #c9d1dc; border-radius: 16px; background: #fff; color: #021a40; cursor: pointer; }
-.dj-bar button.dj-main { background: #021a40; border-color: #021a40; color: #fff; }
-.dj-count { margin-right: auto; font-size: 12px; color: #888; }
-.dj-graph text { text-anchor: middle; }
-.dj-e path { stroke: #b8c2d0; stroke-width: 1.5; transition: stroke .2s; }
-.dj-e.tree path { stroke: #021a40; stroke-width: 3; }
-.dj-e.hot path { stroke: #e08a00; stroke-width: 3; }
-.dj-wbg { fill: #fbfcfe; }
-.dj-w { font-size: 12px; fill: #7a8699; }
-.dj-e.hot .dj-w { fill: #e08a00; font-weight: bold; }
-.dj-n circle { fill: #fff; stroke: #021a40; stroke-width: 1.5; transition: fill .2s; }
-.dj-n .dj-ring { fill: none; stroke: none; }
-.dj-n.cur .dj-ring { stroke: #e08a00; stroke-width: 3; }
-.dj-n.seen circle:not(.dj-ring) { fill: #e8eef7; }
-.dj-n.done circle:not(.dj-ring) { fill: #021a40; }
-.dj-v { font: italic 18px "Times New Roman", serif; fill: #021a40; }
-.dj-n.done .dj-v { fill: #fff; }
-.dj-pill { fill: #fff; stroke: #c9d1dc; }
-.dj-pill.ch { fill: #e08a00; stroke: #e08a00; }
-.dj-d { font-size: 13px; font-weight: bold; fill: #021a40; }
-.dj-n .dj-pill.ch + .dj-d { fill: #fff; }
+.dj-code span.on { background: #fef3c7; border-left-color: #d97706; color: #0f172a; }
+.dj-msg { min-height: 1.8em; margin: 12px 0 4px; color: #0f172a; }
+.dj-msg i, .dj-queue i { font-family: "Times New Roman", serif; font-style: italic; }
+.dj-queue { font-size: 13px; color: #64748b; }
+.dj-queue span { display: inline-block; margin: 0 3px; padding: 0 8px; border-radius: 10px; background: #eff6ff; color: #1e3a8a; }
+.dj-queue span.empty { background: none; color: #94a3b8; }
 .dj-ltr { unicode-bidi: isolate; display: inline-block; }
+.dj-bar { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.dj-bar button { font-family: inherit; font-size: 13px; padding: 4px 14px; border: 1px solid #cbd5e1; border-radius: 16px; background: #fff; color: #1e293b; cursor: pointer; }
+.dj-bar button:hover { background: #f1f5f9; }
+.dj-bar button.dj-main { background: #1e3a8a; border-color: #1e3a8a; color: #fff; }
+.dj-count { margin-right: auto; font-size: 12px; color: #94a3b8; }
+.dj-graph text { text-anchor: middle; }
+.dj-e path { stroke: #cbd5e1; stroke-width: 1.5; }
+.dj-e.tree path { stroke: #1e3a8a; stroke-width: 2.5; }
+.dj-e.hot path { stroke: #d97706; stroke-width: 2.5; }
+.dj-wbg { fill: #fff; }
+.dj-w { font-size: 12px; fill: #64748b; }
+.dj-e.hot .dj-w { fill: #b45309; }
+.dj-n circle { fill: #fff; stroke: #94a3b8; stroke-width: 1.5; }
+.dj-n .dj-ring { fill: none; stroke: none; }
+.dj-n.cur .dj-ring { stroke: #d97706; stroke-width: 2.5; }
+.dj-n.seen circle:not(.dj-ring) { fill: #eff6ff; stroke: #3b82f6; }
+.dj-n.done circle:not(.dj-ring) { fill: #1e3a8a; stroke: #1e3a8a; }
+.dj-v { font: italic 18px "Times New Roman", serif; fill: #1e293b; }
+.dj-n.done .dj-v { fill: #fff; }
+.dj-pill { fill: #fff; stroke: #e2e8f0; }
+.dj-pill.ch { fill: #fef3c7; stroke: #d97706; }
+.dj-d { font-size: 13px; fill: #334155; }
+.dj-n .dj-pill.ch + .dj-d { fill: #92400e; }
