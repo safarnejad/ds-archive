@@ -45,18 +45,3 @@ def radix_sort(A, b):
 <li>سؤال باز: اگر <span class="m"><i>k</i></span> بزرگ باشد، آیا هنوز می‌توان در زمان خطی مرتب کرد؟ بهترین الگوریتم شناخته‌شده زمان مورد انتظار <span class="m"><i>O</i>(<i>n</i> √(log log <i>n</i>))</span> دارد.</li>
 </ul>
 
-<h3>مرتب‌سازی سطلی</h3>
-<ul>
-<li>اگر ورودی <span class="m"><i>n</i></span> عدد حقیقی در بازۀ <span class="m">[0, 1)</span> با توزیع یکنواخت و مستقل باشد، بازه را به <span class="m"><i>n</i></span> سطل هم‌اندازه تقسیم می‌کنیم، هر عدد را در سطل خودش می‌گذاریم، هر سطل را با مرتب‌سازی درجی (جلسۀ ۴) مرتب می‌کنیم و سطل‌ها را به ترتیب پشت هم می‌گذاریم.</li>
-<li>به طور میانگین در هر سطل <span class="m"><i>O</i>(1)</span> عنصر می‌افتد و امید ریاضی زمان کل <span class="m">Θ(<i>n</i>)</span> است. در بدترین حالت (همه در یک سطل) زمان <span class="m">Θ(<i>n</i><sup>2</sup>)</span> است.</li>
-</ul>
-<pre>
-def bucket_sort(A):
-  n = len(A)
-  B = [[] for _ in range(n)]
-  for a in A:
-    B[int(n * a)].append(a)
-  for b in B:
-    insertion_sort(b)
-  return [a for b in B for a in b]
-</pre>
