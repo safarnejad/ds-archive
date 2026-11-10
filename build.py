@@ -33,6 +33,17 @@ ORDINAL = ['اول', 'دوم', 'سوم', 'چهارم', 'پنجم', 'ششم', 'ه
            'بیست و یکم', 'بیست و دوم', 'بیست و سوم', 'بیست و چهارم', 'بیست و پنجم', 'بیست و ششم',
            'بیست و هفتم', 'بیست و هشتم', 'بیست و نهم']
 
+# union of the grading schemes of the terms whose sites survive (97-98-2, 99-00-2, 01-02-1)
+marks = [
+    {'name': 'تمرین‌های نظری', 'mark': '۰ تا ۳٫۵', 'note': 'در ترم‌های آخر بدون نمره؛ کوئیزها از روی آن‌ها طرح می‌شد'},
+    {'name': 'تمرین‌های عملی', 'mark': '۳٫۵ تا ۵'},
+    {'name': 'کوئیزها', 'mark': '۱ تا ۴', 'note': 'با اطلاع قبلی'},
+    {'name': 'میان‌ترم', 'mark': '۵ تا ۶'},
+    {'name': 'پایان‌ترم', 'mark': '۶ تا ۷'},
+    {'name': 'چالش', 'mark': '۱ تا ۲', 'note': 'در ترم‌های بعد امتیازی'},
+    {'name': 'پروژۀ ویکی‌پدیا', 'mark': '۱', 'note': 'در ترم‌هایی که برگزار شد'},
+]
+
 LEC = '''<!DOCTYPE html>
 <html dir="rtl" lang="fa">
 <head>
@@ -91,7 +102,7 @@ def build_data(sessions, terms):
         if 'tas_note' in t:
             t['tasNote'] = re.sub(r'<[^>]+>', '', t.pop('tas_note'))
     js = ''.join(f'const {k} = {json.dumps(v, ensure_ascii=False, indent=4)}\n\n'
-                 for k, v in [('info', info), ('sessions', rows), ('marks', []), ('terms', terms)])
+                 for k, v in [('info', info), ('sessions', rows), ('marks', marks), ('terms', terms)])
     write('data.js', js)
 
 

@@ -1340,13 +1340,38 @@ details.tas > summary { cursor: pointer; font-size: 14px; }
   .quote { word-break: break-word; }
 }
 
-/* step-by-step algorithm figures inside notes */
-.steps { display: flex; flex-wrap: wrap; gap: 8px 16px; justify-content: center; margin: 8px 0 14px; }
-.steps figure { margin: 0; text-align: center; }
-.steps svg { display: block; max-width: 100%; height: auto; }
-.steps figcaption { font-size: 13px; }
-.steps text { text-anchor: middle; font-family: "Times New Roman", serif; }
-.steps .v { font-size: 16px; font-style: italic; }
-.steps .w { font-size: 12px; fill: #555; }
-.steps .d { font-size: 14px; fill: #021a40; font-weight: bold; }
-.steps .ch { fill: #c0392b; }
+/* interactive algorithm runs inside notes */
+.dj { border: 1px solid #dfe4ec; border-radius: 10px; padding: 14px 16px 12px; margin: 10px 0 18px; background: #fbfcfe; }
+.dj-panes { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: center; }
+.dj-graph { width: 360px; max-width: 100%; height: auto; }
+.dj-code { flex: 1 1 300px; margin: 0; font-size: 13px; line-height: 1.75; background: #fff; border: 1px solid #e6eaf0; border-radius: 8px; padding: 8px 0; }
+.dj-code span { display: block; padding: 0 12px; border-left: 3px solid transparent; }
+.dj-code span.on { background: #fff4e0; border-left-color: #e08a00; }
+.dj-msg { min-height: 1.8em; margin: 10px 0 4px; font-weight: bold; color: #021a40; }
+.dj-msg i, .dj-queue i { font-family: "Times New Roman", serif; }
+.dj-queue { font-size: 13px; color: #555; }
+.dj-queue span { display: inline-block; margin: 0 4px; padding: 0 8px; border-radius: 10px; background: #e8eef7; color: #021a40; }
+.dj-queue span.empty { background: none; color: #999; }
+.dj-bar { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.dj-bar button { font-family: inherit; font-size: 13px; padding: 4px 14px; border: 1px solid #c9d1dc; border-radius: 16px; background: #fff; color: #021a40; cursor: pointer; }
+.dj-bar button.dj-main { background: #021a40; border-color: #021a40; color: #fff; }
+.dj-count { margin-right: auto; font-size: 12px; color: #888; }
+.dj-graph text { text-anchor: middle; }
+.dj-e path { stroke: #b8c2d0; stroke-width: 1.5; transition: stroke .2s; }
+.dj-e.tree path { stroke: #021a40; stroke-width: 3; }
+.dj-e.hot path { stroke: #e08a00; stroke-width: 3; }
+.dj-wbg { fill: #fbfcfe; }
+.dj-w { font-size: 12px; fill: #7a8699; }
+.dj-e.hot .dj-w { fill: #e08a00; font-weight: bold; }
+.dj-n circle { fill: #fff; stroke: #021a40; stroke-width: 1.5; transition: fill .2s; }
+.dj-n .dj-ring { fill: none; stroke: none; }
+.dj-n.cur .dj-ring { stroke: #e08a00; stroke-width: 3; }
+.dj-n.seen circle:not(.dj-ring) { fill: #e8eef7; }
+.dj-n.done circle:not(.dj-ring) { fill: #021a40; }
+.dj-v { font: italic 18px "Times New Roman", serif; fill: #021a40; }
+.dj-n.done .dj-v { fill: #fff; }
+.dj-pill { fill: #fff; stroke: #c9d1dc; }
+.dj-pill.ch { fill: #e08a00; stroke: #e08a00; }
+.dj-d { font-size: 13px; font-weight: bold; fill: #021a40; }
+.dj-n .dj-pill.ch + .dj-d { fill: #fff; }
+.dj-ltr { unicode-bidi: isolate; display: inline-block; }
