@@ -1363,6 +1363,9 @@ details.tas > summary { cursor: pointer; font-size: 14px; }
 .dj-e path { stroke: #cbd5e1; stroke-width: 1.5; }
 .dj-e.tree path { stroke: #1e3a8a; stroke-width: 2.5; }
 .dj-e.hot path { stroke: #d97706; stroke-width: 2.5; }
+.dj-e path.dj-head { stroke: none; fill: #cbd5e1; }
+.dj-e.tree path.dj-head { fill: #1e3a8a; }
+.dj-e.hot path.dj-head { fill: #d97706; }
 .dj-wbg { fill: #fff; }
 .dj-w { font-size: 12px; fill: #64748b; }
 .dj-e.hot .dj-w { fill: #b45309; }

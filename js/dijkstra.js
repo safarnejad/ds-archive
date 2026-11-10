@@ -74,25 +74,23 @@
     </div>`;
   const svg = root.querySelector('svg'), NS = 'http://www.w3.org/2000/svg';
   const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || svg).appendChild(e); return e; };
-  const defs = el('defs', {});
-  [['ar', '#cbd5e1'], ['arb', '#1e3a8a'], ['arh', '#d97706']].forEach(([id, c]) => {
-    const m = el('marker', { id, viewBox: '0 0 12 10', refX: 12, refY: 5, markerWidth: 12, markerHeight: 10, markerUnits: 'userSpaceOnUse', orient: 'auto' }, defs);
-    el('path', { d: 'M0,0L12,5L0,10L3,5z', fill: c, 'shape-rendering': 'geometricPrecision' }, m);
-  });
   const R = 19, edges = {};
   for (const [a, b, w] of E) {
     const [x1, y1] = P[a], [x2, y2] = P[b];
-    let path, lx, ly;
-    if (a === 'z' && b === 's') { path = 'M300,236 C260,298 70,300 46,166'; lx = 175; ly = 282; }
+    let path, lx, ly, tip, dir;
+    if (a === 'z' && b === 's') { path = 'M300,236 C260,298 70,300 46,166'; lx = 175; ly = 282; tip = [46, 166]; dir = [-24, -134]; }
     else {
       const L = Math.hypot(x2 - x1, y2 - y1), ux = (x2 - x1) / L, uy = (y2 - y1) / L;
       const twin = E.some(e => e[0] === b && e[1] === a), o = twin ? 7 : 0, ox = -uy * o, oy = ux * o;
       const sx = x1 + ux * R + ox, sy = y1 + uy * R + oy, ex = x2 - ux * (R + 1) + ox, ey = y2 - uy * (R + 1) + oy;
-      path = `M${sx},${sy}L${ex},${ey}`; lx = (sx + ex) / 2 + ox * 1.9; ly = (sy + ey) / 2 + oy * 1.9;
+      path = `M${sx},${sy}L${ex},${ey}`; tip = [ex, ey]; dir = [ux, uy]; lx = (sx + ex) / 2 + ox * 1.9; ly = (sy + ey) / 2 + oy * 1.9;
       if (a === 'y' && b === 'x') { lx -= 14; ly += 14; }
     }
     const g = el('g', { class: 'dj-e' });
     const p = el('path', { d: path, fill: 'none' }, g);
+    const dl = Math.hypot(...dir), [hx, hy] = [dir[0] / dl, dir[1] / dl], [tx, ty] = tip;
+    const bx = tx - hx * 11, by = ty - hy * 11;
+    el('path', { class: 'dj-head', d: `M${tx},${ty}L${bx - hy * 4.5},${by + hx * 4.5}L${tx - hx * 8},${ty - hy * 8}L${bx + hy * 4.5},${by - hx * 4.5}z` }, g);
     el('circle', { cx: lx, cy: ly, r: 9, class: 'dj-wbg' }, g);
     const t = el('text', { x: lx, y: ly + 4, class: 'dj-w' }, g); t.textContent = fa(w);
     edges[a + b] = { g, p };
@@ -103,7 +101,7 @@
     const ring = el('circle', { cx: x, cy: y, r: R + 5, class: 'dj-ring' }, g);
     const c = el('circle', { cx: x, cy: y, r: R }, g);
     const t = el('text', { x, y: y + 6, class: 'dj-v' }, g); t.textContent = v;
-    const by = y < 145 ? y - R - 14 : y + R + 18;
+    const by = y <= 145 ? y - R - 14 : y + R + 18;
     const pill = el('rect', { x: x - 17, y: by - 12, width: 34, height: 19, rx: 9.5, class: 'dj-pill' }, g);
     const dt = el('text', { x, y: by + 2, class: 'dj-d' }, g);
     nodes[v] = { g, c, ring, dt, pill };
@@ -123,7 +121,6 @@
     for (const [a, b] of E) {
       const e = edges[a + b], tree = S.par[b] === a, hot = S.edge && S.edge[0] === a && S.edge[1] === b;
       e.g.setAttribute('class', 'dj-e' + (hot ? ' hot' : tree ? ' tree' : ''));
-      e.p.setAttribute('marker-end', `url(#${hot ? 'arh' : tree ? 'arb' : 'ar'})`);
     }
     root.querySelector('.dj-msg').innerHTML = S.msg;
     root.querySelector('.dj-queue').innerHTML = 'صف: ' + (S.Q.length ? S.Q.map(([dd, v]) => `<span>${pair(dd, v)}</span>`).join('') : '<span class="empty">خالی</span>');
