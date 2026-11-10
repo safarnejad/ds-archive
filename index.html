@@ -185,7 +185,7 @@
                   </ul>
                 </template>
                 <details class="tas" open>
-                  <summary class="mybold">دستیاران تدریس ({{ term.tasCount }} نفر)</summary>
+                  <summary class="mybold">دستیاران تدریس<template v-if="term.tas.length"> ({{ term.tasCount }} نفر)</template></summary>
                   <ul class="ta-list">
                     <li v-for="ta in term.tas">
                       {{ ta.name }}
