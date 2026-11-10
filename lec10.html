@@ -70,47 +70,7 @@ def btree_find(node, k):
 <li>۲. اگر عمو سیاه باشد نیاز به دوران داریم: اگر مسیر خود-پدر-پدربزرگ زیگزاگی باشد دو دوران و وگرنه یک دوران. این دوران‌ها کاملاً مشابه درخت اِی‌وی‌اِل است. علاوه بر دوران، رأسی که جای پدربزرگ آمده سیاه و پدربزرگ قرمز می‌شود و کار تمام است.</li>
 </ul></li>
 <li>در پایان ریشه را سیاه می‌کنیم. پس درج <span class="m"><i>O</i>(log <i>n</i>)</span> تغییر رنگ و حداکثر دو دوران دارد.</li>
-<li>در کد زیر <code>insert</code> درج درخت دودویی جست‌وجو (جلسۀ ۸) و <code>left_rotate</code> و <code>right_rotate</code> همان دوران‌های جلسۀ ۹ هستند (به‌روزرسانی ارتفاع در آن‌ها اینجا لازم نیست). <code>node.red</code> رنگ رأس است.</li>
-</ul>
-<pre>
-def is_red(node):
-  return node is not None and node.red
-
-def rb_insert(T, k):
-  if T.root is None:
-    T.root = new_node(key=k, parent=None, left=None, right=None)
-    node = T.root
-  else:
-    node = insert(T.root, k)
-  node.red = True
-  fix_up(T, node)
-
-def fix_up(T, node):
-  while is_red(node.parent):
-    p = node.parent
-    g = p.parent
-    uncle = g.right if p is g.left else g.left
-    if is_red(uncle):              # case 1: recolor
-      p.red = uncle.red = False
-      g.red = True
-      node = g
-    else:                          # case 2: rotate
-      if p is g.left:
-        if node is p.right:        # zigzag
-          left_rotate(T, p)
-          node, p = p, node
-        right_rotate(T, g)
-      else:
-        if node is p.left:
-          right_rotate(T, p)
-          node, p = p, node
-        left_rotate(T, g)
-      p.red = False
-      g.red = True
-  T.root.red = False
-</pre>
-<ul>
-<li>مثال: اجرای خط به خط درج کلید ۴ در درخت بالا. رأس‌های قرمز و سیاه به رنگ خودشان‌اند و نام متغیرهای کد بالای رأس‌ها آمده است. در این مثال هم حالت ۱ (تغییر رنگ) و هم حالت ۲ با زیگزاگ (دو دوران) پیش می‌آید.</li>
+<li>مثال: درج قدم به قدم کلید ۴ در درخت بالا. رأس‌های قرمز و سیاه به رنگ خودشان‌اند و نقش هر رأس (رأس فعلی، پدر، پدربزرگ و عمو) بالای آن آمده است. در این مثال هم حالت ۱ (تغییر رنگ) و هم حالت ۲ با زیگزاگ (دو دوران) پیش می‌آید.</li>
 </ul>
 <div class="dj" data-ex="rbInsert"></div>
 <ul>

@@ -226,18 +226,11 @@
       state: 'عدد بالای هر رأس ارتفاع سیاه آن است: تعداد رأس‌های سیاه روی مسیر از خود رأس تا یک برگ (بدون <code>None</code>). ارتفاع سیاه ریشه ۲ و ارتفاع درخت ۳ است.' }] };
   };
   EX.rbInsert = () => {
-    const code = ['def rb_insert(T, k):', '  if T.root is None:', '    T.root = new_node(key=k, parent=None, left=None, right=None)', '    node = T.root',
-      '  else:', '    node = insert(T.root, k)', '  node.red = True', '  fix_up(T, node)', '', 'def fix_up(T, node):', '  while is_red(node.parent):',
-      '    p = node.parent', '    g = p.parent', '    uncle = g.right if p is g.left else g.left', '    if is_red(uncle):              # case 1: recolor',
-      '      p.red = uncle.red = False', '      g.red = True', '      node = g', '    else:                          # case 2: rotate', '      if p is g.left:',
-      '        if node is p.right:        # zigzag', '          left_rotate(T, p)', '          node, p = p, node', '        right_rotate(T, g)', '      else:',
-      '        if node is p.left:', '          right_rotate(T, p)', '          node, p = p, node', '        left_rotate(T, g)', '      p.red = False', '      g.red = True',
-      '  T.root.red = False'];
     const T = { root: clrs() }, steps = [];
     let cur = null, p = null, g = null, uncle = null;
     const snap = (line, msg) => {
       const badge = {}, cls = {};
-      for (const [n, name] of [[g, 'g'], [uncle, 'uncle'], [p, 'p'], [cur, 'node']]) if (n) badge[n.k] = name;
+      for (const [n, name] of [[g, 'پدربزرگ'], [uncle, 'عمو'], [p, 'پدر'], [cur, 'رأس فعلی']]) if (n) badge[n.k] = name;
       if (cur) cls[cur.k] = 'cur';
       steps.push({ line, msg, ...treeNodes(T.root, { badge, cls }) });
     };
@@ -255,13 +248,13 @@
     cur = node(4, false); cur.p = n; n.l = cur;
     snap(5, 'درج معمولی درخت دودویی جست‌وجو: ۴ فرزند چپ ۵ می‌شود.');
     cur.red = true; snap(6, 'رأس تازه قرمز است. حالا ۴ و پدرش ۵ هر دو قرمزند و خاصیت ۳ خراب شده.');
-    snap(7, 'fix_up را صدا می‌زنیم.');
+    snap(7, 'حالا از رأس تازه به بالا درخت را درست می‌کنیم.');
     for (;;) {
       if (!(cur.p && cur.p.red)) { snap(10, `پدر ${fa(cur.k)} سیاه است؛ حلقه تمام می‌شود.`); break; }
       snap(10, `پدر ${fa(cur.k)} قرمز است؛ وارد حلقه می‌شویم.`);
-      p = cur.p; snap(11, `p = ${fa(p.k)}`);
-      g = p.p; snap(12, `g = ${fa(g.k)}`);
-      uncle = p === g.l ? g.r : g.l; snap(13, `عمو (uncle) = ${fa(uncle.k)}`);
+      p = cur.p; snap(11, `پدر: ${fa(p.k)}`);
+      g = p.p; snap(12, `پدربزرگ: ${fa(g.k)}`);
+      uncle = p === g.l ? g.r : g.l; snap(13, `عمو (برادر پدر): ${fa(uncle.k)}`);
       if (uncle.red) {
         snap(14, 'عمو قرمز است: حالت ۱.');
         p.red = uncle.red = false; snap(15, `${fa(p.k)} و ${fa(uncle.k)} سیاه می‌شوند.`);
@@ -274,7 +267,7 @@
       if (cur === p.r) {
         snap(20, `${fa(cur.k)} فرزند راست ${fa(p.k)} است (زیگزاگ).`);
         rotate(p, 'l'); snap(21, `دوران چپ روی ${fa(p.k)}: زیگزاگ صاف شد.`);
-        [cur, p] = [p, cur]; snap(22, `جای node و p عوض می‌شود: node = ${fa(cur.k)} و p = ${fa(p.k)}.`);
+        [cur, p] = [p, cur]; snap(22, `حالا ${fa(cur.k)} رأس فعلی است و ${fa(p.k)} پدر آن؛ مسیر صاف شده است.`);
       }
       uncle = null;
       rotate(g, 'r'); snap(23, `دوران راست روی ${fa(g.k)}: ${fa(p.k)} بالا آمد.`);
@@ -283,7 +276,7 @@
     }
     p = g = uncle = null; cur = null;
     T.root.red = false; snap(31, 'ریشه سیاه می‌ماند. همۀ خواص درخت قرمز-سیاه برقرار است.');
-    return { view: [440, 300], code, steps };
+    return { view: [440, 300], code: null, steps };
   };
 
   document.querySelectorAll('[data-ex]').forEach(e => AlgoRun(e, EX[e.dataset.ex]()));
