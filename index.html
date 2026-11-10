@@ -106,8 +106,9 @@
           <hr>
 
           <div class="row-fluid">
-            <div class="span7">
+            <div class="span7 sticky-col">
               <h4 class="mycenter mypadbot">تقویم درس</h4>
+              <div class="scroll-x">
               <table class="table table-bordered mytable myfullwidth">
                 <thead>
                   <tr class="aval">
@@ -157,12 +158,20 @@
                   </tr>
                 </tbody>
               </table>
+              </div>
 
             </div>
             <div class="span5">
-              <template v-for="term in terms">
-                <h4 :id="term.id">{{ term.name }}</h4>
-                <p v-if="term.summary">{{ term.summary }}</p>
+              <h4 class="mycenter mypadbot">ترم‌ها</h4>
+              <div class="term-chips">
+                <a v-for="term in termsNewest" :href="'#' + term.id" @click="open = term.id">{{ term.name }}</a>
+              </div>
+              <details v-for="term in termsNewest" :id="term.id" class="term" :open="open === term.id"
+                @toggle="$event.target.open && (open = term.id)">
+                <summary>
+                  <span class="mybold">{{ term.name }}</span>
+                  <small v-if="term.summary">{{ term.summary }}</small>
+                </summary>
                 <template v-for="group in term.groups">
                   <div class="mybold">{{ group.title }}:</div>
                   <div v-if="group.intro" v-html="group.intro"></div>
@@ -175,26 +184,17 @@
                     </li>
                   </ul>
                 </template>
-                <table class="table table-condensed">
-                  <tr>
-                    <td>
-                      <h5>دستیاران تدریس</h5>
-                    </td>
-                  </tr>
-                  <tr v-for="ta in term.tas">
-                    <td>
+                <details class="tas">
+                  <summary class="mybold">دستیاران تدریس ({{ term.tasCount }} نفر)</summary>
+                  <ul class="ta-list">
+                    <li v-for="ta in term.tas">
                       {{ ta.name }}
-                      <template v-if="ta.role">
-                        ({{ ta.role }})
-                      </template>
-                    </td>
-                  </tr>
-                  <tr v-if="term.tasNote">
-                    <td><small>{{ term.tasNote }}</small></td>
-                  </tr>
-                </table>
-                <hr>
-              </template>
+                      <small v-if="ta.role">({{ ta.role }})</small>
+                    </li>
+                  </ul>
+                  <p v-if="term.tasNote"><small>{{ term.tasNote }}</small></p>
+                </details>
+              </details>
             </div>
           </div>
         </div>
@@ -231,7 +231,9 @@
           info,
           sessions,
           marks,
-          terms
+          terms,
+          termsNewest: [...terms].reverse(),
+          open: location.hash.slice(1) || terms[terms.length - 1].id
         };
       },
       created() {

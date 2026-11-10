@@ -9,8 +9,10 @@
 </head>
 <body>
   <div id="page" class="container mynarrow">
+    <p class="lec-nav"><a href="lec16.html">جلسۀ قبل</a> - <a href="index.html">صفحۀ اصلی درس</a> - <a href="lec18.html">جلسۀ بعد</a></p>
     <h3 class="nomargintop">جلسۀ هفدهم: اعداد بزرگ: ضرب کاراتسوبا، تقسیم و جذر با روش نیوتون</h3>
     <p><small>مطالعۀ بیشتر: خارج از مراجع</small></p>
+    <div class="toc"><small>فهرست این جلسه</small><ul><li><a href="#s1">الگوریتم‌های ضرب دو عدد <span class="m"><i>d</i></span> رقمی</a></li><li><a href="#s2">الگوریتم کاراتسوبا</a></li><li><a href="#s3">تقسیم اعداد بزرگ</a></li><li><a href="#s4">روش نیوتون</a></li><li><a href="#s5">تقسیم با روش نیوتون</a></li><li><a href="#s6">جذر با روش نیوتون</a></li></ul></div>
 <ul>
 <li>اعداد بزرگ (مثلاً با یک میلیون رقم) داده‌ساختار خاص خود را لازم دارند. در پایتون <code>int</code> (در پایتون ۲ <code>long</code>) و در جاوا <code>BigInteger</code> داده‌ساختارهای خاصی برای اعداد بزرگ‌اند.</li>
 <li>در عمل اگر اعداد را در مبنای <span class="m">2<sup>15</sup></span> یا <span class="m">10<sup>4</sup></span> ذخیره کنیم، الگوریتم‌ها سریع‌تر از حالتی اجرا می‌شوند که اعداد در مبنای ۲ یا ۱۰ ذخیره شده باشند، چون از توان CPU بیشتر استفاده می‌کنیم.
@@ -20,7 +22,7 @@
 </ul></li>
 </ul>
 
-<h4>الگوریتم‌های ضرب دو عدد <span class="m"><i>d</i></span> رقمی</h4>
+<h4 id="s1">الگوریتم‌های ضرب دو عدد <span class="m"><i>d</i></span> رقمی</h4>
 <ul>
 <li>۱. الگوریتم مدرسه: <span class="m">Θ(<i>d</i><sup>2</sup>)</span>.</li>
 <li>۲. الگوریتم کاراتسوبا: <span class="m">Θ(<i>d</i><sup>log<sub>2</sub> 3</sup>) = Θ(<i>d</i><sup>1.585</sup>)</span>. پایتون از این روش استفاده می‌کند.</li>
@@ -30,7 +32,7 @@
 <li>در سال ۲۰۱۹ هاروی و فان در هوفن (Harvey, van der Hoeven) الگوریتمی با زمان <span class="m"><i>O</i>(<i>d</i> log <i>d</i>)</span> ارائه کردند.</li>
 </ul>
 
-<h4>الگوریتم کاراتسوبا</h4>
+<h4 id="s2">الگوریتم کاراتسوبا</h4>
 <ul>
 <li>ورودی: دو عدد <span class="m"><i>a</i></span> و <span class="m"><i>b</i></span> در مبنای <span class="m"><i>r</i></span> که حداکثر <span class="m"><i>d</i></span> رقم دارند.</li>
 <li>فرض می‌کنیم <span class="m"><i>a</i> = <i>a</i><sub>1</sub><i>r</i><sup><i>d</i>/2</sup> + <i>a</i><sub>0</sub></span> و <span class="m"><i>b</i> = <i>b</i><sub>1</sub><i>r</i><sup><i>d</i>/2</sup> + <i>b</i><sub>0</sub></span>. داریم
@@ -53,14 +55,14 @@ def karatsuba(a, b):
   return (c2 &lt;&lt; (2 * h)) + (c1 &lt;&lt; h) + c0
 </pre>
 
-<h4>تقسیم اعداد بزرگ</h4>
+<h4 id="s3">تقسیم اعداد بزرگ</h4>
 <ul>
 <li>۱. روش مدرسه: <span class="m">Θ(<i>d</i><sup>2</sup>)</span>.</li>
 <li>۲. جست‌وجوی دودویی روی خارج‌قسمت و ضرب: <span class="m">log<sub>2</sub>(<i>r</i><sup><i>d</i></sup>) · <i>T</i>(<i>d</i>) = Θ(<i>d</i>) · <i>T</i>(<i>d</i>)</span> که <span class="m"><i>T</i>(<i>d</i>)</span> زمان ضرب است.</li>
 <li>۳. روش نیوتون: <span class="m">Θ(<i>T</i>(<i>d</i>))</span>. نیاز به طراحی و تحلیل دقیق دارد، زیرا (۱) خود روش نیوتون به تقسیم نیاز دارد و (۲) با این که در هر مرحله ضرب انجام می‌دهیم، باید کاری کنیم که مرتبۀ زمان کل مراحل از یک ضرب بیشتر نشود.</li>
 </ul>
 
-<h4>روش نیوتون</h4>
+<h4 id="s4">روش نیوتون</h4>
 <ul>
 <li>به دنبال ریشۀ معادلۀ <span class="m"><i>f</i>(<i>x</i>) = 0</span> هستیم. در هر مرحله یک نقطۀ <span class="m"><i>x</i><sub><i>i</i></sub></span> داریم و می‌خواهیم نقطۀ بهتری به دست آوریم.</li>
 <li>روش نیوتون با استفاده از شیب نمودار (خط مماس) نقطۀ بعدی را این‌طور پیشنهاد می‌کند:
@@ -68,7 +70,7 @@ def karatsuba(a, b):
 <li>وقتی <span class="m"><i>f</i></span> تابع خوبی باشد، این روش از جست‌وجوی دودویی بسیار هوشمندانه‌تر است.</li>
 </ul>
 
-<h4>تقسیم با روش نیوتون</h4>
+<h4 id="s5">تقسیم با روش نیوتون</h4>
 <ul>
 <li>برای محاسبۀ <span class="m"><i>a</i>/<i>b</i></span> کافی است <span class="m">1/<i>b</i></span> را حساب کنیم و آن را در <span class="m"><i>a</i></span> ضرب کنیم.</li>
 <li>به جای عدد اعشاری <span class="m">1/<i>b</i></span> می‌توانیم عدد صحیح <span class="m">⌊<i>R</i>/<i>b</i>⌋</span> را حساب کنیم که <span class="m"><i>R</i> = <i>r</i><sup><i>k</i></sup></span> است.</li>
@@ -103,7 +105,7 @@ def divide(a, b):
   return q
 </pre>
 
-<h4>جذر با روش نیوتون</h4>
+<h4 id="s6">جذر با روش نیوتون</h4>
 <ul>
 <li>هدف: محاسبۀ <span class="m">√<i>a</i></span>. تابع مورد استفاده <span class="m"><i>f</i>(<i>x</i>) = <i>x</i><sup>2</sup> − <i>a</i></span> و مشتق آن <span class="m"><i>f</i> ′(<i>x</i>) = 2<i>x</i></span> است. هر مرحله:
 <div class="formula"><i>x</i><sub><i>i</i>+1</sub> = <i>x</i><sub><i>i</i></sub> − (<i>x</i><sub><i>i</i></sub><sup>2</sup> − <i>a</i>) / 2<i>x</i><sub><i>i</i></sub> = (<i>x</i><sub><i>i</i></sub> + <i>a</i>/<i>x</i><sub><i>i</i></sub>) / 2</div></li>

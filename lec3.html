@@ -9,8 +9,10 @@
 </head>
 <body>
   <div id="page" class="container mynarrow">
+    <p class="lec-nav"><a href="lec2.html">جلسۀ قبل</a> - <a href="index.html">صفحۀ اصلی درس</a> - <a href="lec4.html">جلسۀ بعد</a></p>
     <h3 class="nomargintop">جلسۀ سوم: حل روابط بازگشتی</h3>
     <p><small>مطالعۀ بیشتر: ۳-۴ تا ۳-۶ از قدسی و ۴.۳ تا ۴.۶ از CLRS</small></p>
+    <div class="toc"><small>فهرست این جلسه</small><ul><li><a href="#s1">حدس و استقرا</a></li><li><a href="#s2">تکرار با جای‌گذاری و درخت بازگشت</a></li><li><a href="#s3">قضیۀ اصلی</a></li><li><a href="#s4">روابط بازگشتی خطی همگن</a></li></ul></div>
 <ul>
 <li>زمان اجرای الگوریتم‌های بازگشتی (مثل تقسیم و حل در جلسۀ بعد) به صورت یک رابطۀ بازگشتی بیان می‌شود. مثلاً برای مرتب‌سازی ادغامی <span class="m"><i>T</i>(<i>n</i>) = 2<i>T</i>(<i>n</i>/2) + Θ(<i>n</i>)</span>.</li>
 <li>روش‌های حل رابطۀ بازگشتی:
@@ -23,7 +25,7 @@
 </ul></li>
 </ul>
 
-<h4>حدس و استقرا</h4>
+<h4 id="s1">حدس و استقرا</h4>
 <ul>
 <li>جواب را حدس می‌زنیم و با استقرا ثابت می‌کنیم. ثابت‌ها را در حدس نگه می‌داریم تا در استقرا مشخص شوند.</li>
 <li>مثال: برای <span class="m"><i>T</i>(<i>n</i>) = 2<i>T</i>(⌊<i>n</i>/2⌋) + <i>n</i></span> حدس می‌زنیم <span class="m"><i>T</i>(<i>n</i>) ≤ <i>c n</i> log <i>n</i></span>. داریم
@@ -31,7 +33,7 @@
 <li>دام رایج: اثبات <span class="m"><i>T</i>(<i>n</i>) ≤ <i>c n</i></span> برای همین رابطه با نوشتن <span class="m"><i>T</i>(<i>n</i>) ≤ <i>c n</i> + <i>n</i> = <i>O</i>(<i>n</i>)</span> غلط است، چون باید دقیقاً همان صورت حدس، یعنی <span class="m"><i>c n</i></span>، به دست بیاید.</li>
 </ul>
 
-<h4>تکرار با جای‌گذاری و درخت بازگشت</h4>
+<h4 id="s2">تکرار با جای‌گذاری و درخت بازگشت</h4>
 <ul>
 <li>رابطه را چند بار باز می‌کنیم تا الگو پیدا شود و سپس جمع را حساب می‌کنیم.</li>
 <li>مثال برج هانوی: <span class="m"><i>T</i>(<i>n</i>) = 2<i>T</i>(<i>n</i> − 1) + 1 = 4<i>T</i>(<i>n</i> − 2) + 2 + 1 = … = 2<sup><i>n</i></sup> − 1</span>.</li>
@@ -45,7 +47,7 @@ def hanoi(n, src, dst, tmp):
     hanoi(n - 1, tmp, dst, src)
 </pre>
 
-<h4>قضیۀ اصلی</h4>
+<h4 id="s3">قضیۀ اصلی</h4>
 <ul>
 <li>برای <span class="m"><i>T</i>(<i>n</i>) = <i>a T</i>(<i>n</i>/<i>b</i>) + <i>f</i>(<i>n</i>)</span>: تعداد زیرمسئله‌ها <span class="m"><i>a</i></span>، اندازۀ هر کدام <span class="m"><i>n</i>/<i>b</i></span> و مجموع زمان تقسیم و ادغام <span class="m"><i>f</i>(<i>n</i>)</span> است.</li>
 <li>تعداد برگ‌های درخت بازگشت <span class="m"><i>L</i> = <i>n</i><sup>log<sub><i>b</i></sub> <i>a</i></sup></span> و ارتفاع آن <span class="m">log<sub><i>b</i></sub> <i>n</i></span> است.</li>
@@ -55,7 +57,7 @@ def hanoi(n, src, dst, tmp):
 <li>مثال‌ها: جست‌وجوی دودویی <span class="m"><i>T</i>(<i>n</i>) = <i>T</i>(<i>n</i>/2) + 1 = Θ(log <i>n</i>)</span> (حالت ۲)، ضرب کاراتسوبا <span class="m"><i>T</i>(<i>n</i>) = 3<i>T</i>(<i>n</i>/2) + <i>n</i> = Θ(<i>n</i><sup>log<sub>2</sub> 3</sup>)</span> (حالت ۱) و <span class="m"><i>T</i>(<i>n</i>) = 2<i>T</i>(<i>n</i>/2) + <i>n</i><sup>2</sup> = Θ(<i>n</i><sup>2</sup>)</span> (حالت ۳).</li>
 </ul>
 
-<h4>روابط بازگشتی خطی همگن</h4>
+<h4 id="s4">روابط بازگشتی خطی همگن</h4>
 <ul>
 <li>اگر <span class="m"><i>c</i><sub><i>i</i></sub></span>ها اعداد حقیقی باشند، <span class="m"><i>a</i><sub><i>n</i></sub> = <i>c</i><sub>1</sub><i>a</i><sub><i>n</i>−1</sub> + <i>c</i><sub>2</sub><i>a</i><sub><i>n</i>−2</sub> + … + <i>c</i><sub><i>k</i></sub><i>a</i><sub><i>n</i>−<i>k</i></sub></span> یک رابطۀ بازگشتی خطی همگن از درجۀ <span class="m"><i>k</i></span> است.</li>
 <li>معادلۀ مشخصه: <span class="m"><i>r</i><sup><i>k</i></sup> = <i>c</i><sub>1</sub><i>r</i><sup><i>k</i>−1</sup> + … + <i>c</i><sub><i>k</i></sub></span>. اگر ریشه‌های <span class="m"><i>r</i><sub>1</sub>, …, <i>r</i><sub><i>k</i></sub></span> متمایز باشند، <span class="m"><i>a</i><sub><i>n</i></sub> = α<sub>1</sub><i>r</i><sub>1</sub><sup><i>n</i></sup> + … + α<sub><i>k</i></sub><i>r</i><sub><i>k</i></sub><sup><i>n</i></sup></span> و ضریب‌ها از شرایط اولیه به دست می‌آیند. برای ریشۀ تکراری <span class="m"><i>r</i></span> با تکرار <span class="m"><i>m</i></span>، جمله‌های <span class="m"><i>r</i><sup><i>n</i></sup>, <i>n r</i><sup><i>n</i></sup>, …, <i>n</i><sup><i>m</i>−1</sup><i>r</i><sup><i>n</i></sup></span> را داریم.</li>
