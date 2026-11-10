@@ -1,0 +1,206 @@
+% !TEX encoding = UTF-8 Unicode
+% !TeX program = xelatex
+% !TEX TS-program = XeLaTeX
+
+\documentclass[12pt, a4paper]{article}
+%\documentclass[12pt, a5paper]{article}
+\usepackage{mathtools}
+\usepackage{unicode-math}
+\usepackage{comment}
+\usepackage{wrapfig}
+\usepackage{xfrac}
+\usepackage{tikz}
+\usetikzlibrary{arrows, decorations.markings}
+
+\usepackage[pass]{geometry}
+%\geometry{legalpaper, landscape, margin=1in}
+\usepackage{fullpage}
+\usepackage{setspace}
+\usepackage[localise]{xepersian}
+\setstretch{1.195}
+\settextfont[Scale=1]{XB Niloofar}
+\setlatintextfont[Scale=1]{XB Niloofar}%{Junicode} %Junicode
+\setdigitfont{XB Niloofar}%{XB Zar}
+
+\setlength{\parindent}{0ex}
+
+\definecolor{answercolor}{HTML}{0080ff}
+\newcommand{\vsp}{\vspace{34pt}}
+\newcommand{\پاسخ}[2]{#1}
+%\thispagestyle{empty}
+%\newcommand{\پاسخ}[2]{\color{answercolor}\textbf{پاسخ: }#2\color{black}\vspace{-0.3cm}}
+
+\begin{document}
+		\tikzset{
+		treenode/.style = {align=center, inner sep=0pt, text centered,
+			font=\sffamily},
+		arn_n/.style = {treenode, circle, white, font=\sffamily\bfseries, draw=black,
+			fill=black, text width=1.5em},% arbre rouge noir, noeud noir
+		arn_r/.style = {treenode, circle, red, draw=red, 
+			text width=1.5em, very thick},% arbre rouge noir, noeud rouge
+		arn_s/.style = {treenode, circle, black, draw=black, 
+			text width=1.5em, very thick},% arbre rouge noir, noeud rouge
+		arn_x/.style = {treenode, rectangle, draw=black,
+			minimum width=0.5em, minimum height=0.5em, very thick}% arbre rouge noir, nil
+	}
+	\begin{tikzpicture}[remember picture,overlay]	\node[anchor=north,yshift=-1.5cm] at (current page.north) {\rl{به نام خدا}};
+	\end{tikzpicture}%
+
+\vspace{-1cm}
+{\centering
+	\textbf{کوئیز پنجم درس ساختمان داده‌ها و الگوریتم‌ها}\\
+مدرس: مهدی صفرنژاد       - ۳۰ اردیبهشت ۹۸\\
+\raggedleft\small
+نام و نام خانوادگی: \\
+}
+\vspace{-0.5cm}
+\پرش‌متوسط\پرخط‌ا\\
+در سؤالاتی که توضیح خواسته شده، یک پاسخ کوتاه (حدوداً بین یک تا دو خط) مدنظر است. در سؤالاتی که خواستۀ مسئله توضیحی نیست، جواب نهایی کفایت می‌کند و نوشتن مراحل رسیدن به جواب نیاز نیست.
+\پاراگراف{سؤال ۱.}\sloppy
+در الگوریتم تقسیم با روش نیوتون از 
+$\Theta(d)$
+ضرب استفاده می‌شود، ولی اگر زمان اجرای الگوریتم اجرا شده برای ضرب 
+$T(d)$
+باشد، زمان اجرای تقسیم به جای 
+$\Theta(d.T(d))$
+برابر با
+$\Theta(T(d))$
+هست. به اختصار بگویید چطور چنین چیزی ممکن است؟ $d$ تعداد ارقام دو عدد است.
+
+\پاسخ{\vsp\vsp}{
+با توجه به خطای هر مرحله از روش نیوتون می‌توان ضربِ هر مرحله را فقط تا دقت لازم انجام داد. در این صورت ضرب‌های اول هزینۀ کمتری دارند که به تدریج و به صورت یک سری هندسی افزایش پیدا می‌کند. در این صورت مجموع هزینه‌ها، ضریب ثابتی از هزینۀ آخرین ضرب خواهد شد.
+
+}
+
+\پاراگراف{سؤال ۲.}
+درخت پسوندی \متن‌تایپ{adad\$} را رسم کنید.
+
+\پاسخ{\vsp\vsp}{
+	\begin{center}
+	\begin{tikzpicture}[-,>=stealth',level/.style={sibling distance = 3cm/#1,
+		level distance = 1.5cm}] 
+	\node [arn_s] { } 
+	child{ node [arn_s] {} 
+	edge from parent node[above left] {\texttt{\$}} }
+	child { node [arn_s] {}
+		child{ node [arn_s] {} edge from parent node[left] {\texttt{\$}} 
+}
+child{ node [arn_s] {} edge from parent node[right] {\texttt{ad\$}} 
+}
+	edge from parent node[left] {\texttt{ad}} }
+	child { node [arn_s] {}
+		child{ node [arn_s] {} edge from parent node[left] {\texttt{\$}} 
+		}
+		child{ node [arn_s] {} edge from parent node[right] {\texttt{ad\$}} 
+		}
+	edge from parent node[above right] {\texttt{d}} }
+
+	; 
+	\end{tikzpicture}
+\end{center}
+	
+}
+
+\پاراگراف{سؤال ۳.}
+آرایه پسوندی و آرایۀ کمکی طولانی‌ترین پیشوند مشترک (LCP) رشتۀ \متن‌تایپ{adad\$} را بنویسید.
+
+\پاسخ{\vsp\vsp}{
+پاسخ در جدول زیر آمده است. نوشتن ستون پسوندها برای کسب نمره نیاز نیست.
+	\begin{center}
+		\begin{tabular}{|l|c|c|}
+			\hline
+			پسوندها & آرایه پسوندی & LCP \\
+						\hline
+									\hline
+			\texttt{\$}      & 4            & 0   \\
+						\hline
+			\texttt{ad\$}    & 2            & 2   \\
+						\hline
+			\texttt{adad\$}  & 0            & 0   \\
+						\hline
+			\texttt{d\$}     & 3            & 1   \\
+						\hline
+			\texttt{dad\$}   & 1            & 0  \\
+						\hline
+		\end{tabular}
+	\end{center}
+
+}
+	
+\پاراگراف{سؤال ۴.}
+تبدیل باروز ویلر \متن‌تایپ{adad\$} چیست؟
+
+\پاسخ{\vsp\vsp}{
+	 \متن‌تایپ{dd\$aa}
+	
+}
+
+\پاراگراف{سؤال ۵.}
+عبارت
+$a^{b+c}\cdot c^{(b-a)\cdot(d^e)}$
+را به صورت پسوندی بنویسید.
+
+\پاسخ{\vsp\vsp}{
+\lr{\texttt{a b c + \^{} c b a - d e \^{} * \^{} *}}
+	
+}
+
+\پاراگراف{سؤال ۶.}
+درخت دکارتی لیست
+$[10, 3, 5, 7, 4]$
+را رسم کنید.
+
+\پاسخ{\vsp\vsp}{
+	\begin{center}
+	\begin{tikzpicture}[-,>=stealth',level/.style={sibling distance = 2cm/#1,
+		level distance = 1cm}] 
+	\node [arn_s] at (0, 0) {3}
+	child{ node [arn_s] at (0, 0) {10} }
+	child { node [arn_s] at (4, 0) {4}
+		child{ node [arn_s] at (-4, 0) {5} 
+			child{ node [arn_s] at (2, 0) {7} 
+			}
+		}
+	 }	
+	; 
+	\end{tikzpicture}
+\end{center}
+}
+
+\پاراگراف{سؤال ۷.}
+برای حل مسئلۀ پرسش کمینۀ یک محدوده ایدۀ توان‌های ۲ و درخت پاره‌خطی وجود دارد. با توجه به هر کدام از معیارهای حافظه، زمان پاسخ به پرسش (query) و قابلیت تغییر یکی از اعضای آرایه کدام از این دو راه‌حل بهتر هستند؟
+
+\پاسخ{\vsp\vsp}{
+	از لحاظ حافظه، درخت پاره‌خطی بهتر است زیرا حافظه آن $O(n)$ و حافظۀ ایدۀ توان‌های ۲ $O(n\log n)$ است. از لحاظ زمانِ پاسخ به پرسش، ایدۀ توان‌های ۲ بهتر است زیرا به هر پرسش در $O(1)$ پاسخ می‌دهد و درخت پاره‌خطی در $O(\log n)$. از لحاظ قابلیت تغییر یکی از اعضای آرایه، درخت پاره‌خطی این امکان را دارد ولی ایده توان‌های ۲ این قابلیت را ندارد. برای نمره‌دهی، نوشتن دلایل نیاز نیست و ذکر داده‌ساختار مناسب‌تر از هر دید کفایت می‌کند.
+	
+}
+
+\پاراگراف{سؤال ۸.}
+آیا تابع $f$ یک داده‌ساختار افزوده (مثل درخت AVL افزوده یا درخت پاره‌خطی) می‌تواند «میانه عناصر» باشد؟ چرا؟
+
+\پاسخ{\vsp\vsp}{
+	خیر. زیرا مقدار $f$ یک رأس را نمی‌توان از مقادیر $f$ دو فرزند آن به دست آورد.
+	
+}
+
+\پاراگراف{سؤال ۹.}
+در داده‌ساختار مجموعه‌های مجزا، rank چه چیزی را نشان می‌دهد؟
+
+\پاسخ{\vsp\vsp}{
+	rank
+	همان ارتفاع است در حالتی که فشرده‌سازی مسیر نداشته باشیم. به عبارت دیگر rank حداکثر ارتفاع ممکن زیردرخت است.
+	
+}
+
+\پاراگراف{سؤال ۱۰.}
+یک داده‌ساختار پشته داریم که علاوه بر \متن‌لاتین{pop()} (با هزینه $c$) و \متن‌لاتین{push(x)} (با هزینه $c$) دارای عمل \متن‌لاتین{multipop(k)} (با هزینه $kc$) باشد که معادل $k$ بار اجرای \متن‌لاتین{pop()} است. می‌خواهیم با تحلیل تابع پتانسیل ثابت کنیم هزینه سرشکن هر عمل $O(1)$ است. یک تابع پتانسیل مناسب برای این کار پیشنهاد دهید.
+
+\پاسخ{\vsp\vsp}{
+تعداد اعضای پشته ضرب در $c$. در صورتی که ضرب در $c$ لحاظ نشود، نیمی از نمره داده می‌شود.
+	
+}
+\vspace{1pt}
+\begin{flushleft}
+موفق باشید
+\end{flushleft}
+\end{document}

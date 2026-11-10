@@ -1,0 +1,39 @@
+\شروع‌مسئله[19]
+\متن‌سیاه{رأس‌های برشی}. یک رأس در گراف بدون جهت $G$ برشی است اگر و تنها اگر حذف آن از گراف، تعداد مؤلفه‌های همبندی گراف را بیشتر کند. ما در این مسئله می‌خواهیم رئوس برشی گراف همبند و بدون جهت $G$ را پیدا کنیم.
+
+در این قسمت باید اثبات دقیقی برای درستی الگوریتم و زمان اجرای آن بیان کنید.
+
+\شروع{زیرمسائل}
+\زیرمسئله[10]
+فرض کنید جست‌وجوی عمق اول (DFS) را از یک رأس دلخواه اجرا می‌کنیم. ثابت کنید رأس غیربرگ و غیرریشه $v$ از درخت DFS برشی است اگر و تنها اگر زیردرخت یکی از فرزندان $v$ یال برگشتی به اجداد $v$ نداشته باشد.
+
+\زیرمسئله[9]
+از این ایده استفاده کنید و الگوریتمی با زمان اجرای $O(n+e)$ برای پیدا کردن همۀ رأس‌های برشی یک گراف ارائه داده و اثبات کنید.
+
+\پاسخ{
+	The first thing to note is that the claim is an if and only if statement so we need to prove it in both directions.
+	Claim 1: If u is an articulation point, then there exist a subtree rooted at a child of u that has no back edges to a proper ancestor of u.
+	We can prove this by contradiction. Assume all the subtrees have back edges to a proper ancestor of u. If we remove u, every subtree of u can still reach a proper ancestor of u through the back edge. Since the graph is still connected, u cannot be an articulation point, so our initial assumption is violated. Therefore, there must be a subtree with no back edge to a proper ancestor of u.
+	Claim 2: If there exist a subtree rooted at a child of u that has no back edges to a proper ancestor of u, then u is an articulation point.
+	The important fact to realize is that a DFS on an undirected graph only produces tree edges and back edges. Because there are no cross edges, then there is no path from one subtree rooted at a child of u to another subtree rooted at a child of u, nor a path to a vertex that is neither an ancestor or descendent of u. Since the assumption says there are no back edges either, then there must only be tree edges. If we remove u, then the subtree that has no back edges will be disconnected since we are effectively removing the connecting tree edge. Hence, u is an articulation point.
+	Since Claim 1 and Claim 2 are true, then the original claim is true.
+	
+
+}
+
+%\زیرمسئله[7]
+%یک گراف همبند بدون جهت $G$ داریم که یال‌ها فقط وزن مثبت دارند. همچنین این گراف دقیقاً یک دور دارد. الگوریتمی با زمان $O(n)$ طراحی کنید که کوتاه‌ترین مسیر از $s$ به $t$ را پیدا کند.
+%
+%\پاسخ{
+%	Given two vertices in a weighted tree containing only positive weight edges, there is a unique simple path between them which is also the minimum weight path. A depth-first search from a source vertex s in the tree results in a directed DFS tree in O(|V |) time (since |E| = |V |−1). Then relaxing edges in topological sort order of the directed DFS tree computes minimum weight paths from s in O(|V |) time. Since G has one cycle, our strategy will be to break the cycle by removing an edge, and then compute the minimum weight path from s to t in the resultant tree.
+%	First, we find the vertex v on the cycle closest to s by running depth-first search from s in O(|V |) time (since |E| = |V |). To find v, one edge of the cycle will be the only DFS back edge e1, and will terminate at vertex v, with the other edge of the cycle incident to v being a single outgoing DFS tree edge e2. If s is on the cycle, v = s; otherwise the unique path from s to v does not contain e1 or e2. A shortest path from s to t cannot traverse both edges e1 and e2, or else the path would visit v at least twice, traversing a cycle of positive weight. Removing either e1 or e2 results in a tree, at least one of which contains the minimum weight path from s to t. Thus, find the minimum weight path from s to t in each tree using the algorithm described above, returning the minimum of the two in O(|V |) time.
+%	Rubric:
+%	• 12 points for a correct O(|V |) time algorithm • 3 points for running time analysis
+%	• Partial credit may be awarded
+%	
+%	
+%}
+
+\پایان{زیرمسائل}
+
+

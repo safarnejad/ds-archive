@@ -1,0 +1,116 @@
+% !TEX encoding = UTF-8 Unicode
+% !TeX program = xelatex
+% !TEX TS-program = XeLaTeX
+
+\documentclass[12pt, a4paper]{article}
+%\documentclass[12pt, a5paper]{article}
+\usepackage{mathtools}
+\usepackage{unicode-math}
+\usepackage{comment}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usetikzlibrary{arrows, decorations.markings}
+
+\usepackage[pass]{geometry}
+%\geometry{legalpaper, landscape, margin=1in}
+\usepackage{fullpage}
+\usepackage{setspace}
+\usepackage[localise]{xepersian}
+\setstretch{1.195}
+\settextfont[Scale=1]{XB Niloofar}
+\setlatintextfont[Scale=1]{XB Niloofar}%{Junicode} %Junicode
+\setdigitfont{XB Niloofar}%{XB Zar}
+
+\setlength{\parindent}{0ex}
+
+\definecolor{answercolor}{HTML}{0080ff}
+\newcommand{\vsp}{\vspace{25pt}}
+%\newcommand{\پاسخ}[2]{#1}
+\thispagestyle{empty}
+\newcommand{\پاسخ}[2]{\color{answercolor}\textbf{پاسخ: }#2\color{black}\vspace{-0.3cm}}
+
+\begin{document}
+	\tikzset{
+		treenode/.style = {align=center, inner sep=0pt, text centered,
+			font=\sffamily},
+		arn_n/.style = {treenode, circle, white, font=\sffamily\bfseries, draw=black,
+			fill=black, text width=1.5em},% arbre rouge noir, noeud noir
+		arn_r/.style = {treenode, circle, red, draw=red, 
+			text width=1.5em, very thick},% arbre rouge noir, noeud rouge
+		arn_s/.style = {treenode, circle, black, draw=black, 
+			text width=1.5em, very thick},% arbre rouge noir, noeud rouge
+		arn_x/.style = {treenode, rectangle, draw=black,
+			minimum width=0.5em, minimum height=0.5em, very thick}% arbre rouge noir, nil
+	}
+	\begin{tikzpicture}[remember picture,overlay]	\node[anchor=north,yshift=-1.5cm] at (current page.north) {\rl{به نام خدا}};
+	\end{tikzpicture}%
+
+\vspace{-1cm}
+{\centering
+	\textbf{کوئیز سوم درس ساختمان داده‌ها و الگوریتم‌ها}\\
+مدرس: مهدی صفرنژاد       - ۲۴ فروردین ۹۸\\
+\raggedleft\small
+%نام و نام خانوادگی: \\
+}
+\vspace{-0.5cm}
+\پرش‌متوسط\پرخط‌ا\\
+در تمام سؤالات پاسخ کوتاه (حدوداً بین یک تا دو خط) مدنظر است، مگر این که در سؤال به صراحت ذکر شده باشد.
+\پاراگراف{سؤال ۱. }
+این جمله درست است یا غلط؟
+یک الگوریتم لاس‌وگاس همیشه جواب درست را برمی‌گرداند.
+
+\پاسخ{\vsp}{
+درست است. الگوریتم‌های لاس‌وگاس همان الگوریتم‌های احتمالاً سریع هستند که همیشه جواب درست را برمی‌گردانند ولی زمان اجرای آن‌ها به صورت میانگین سنجیده می‌شود.
+
+}
+
+\پاراگراف{سؤال ۲.}
+در مدل RAM  فرض کنید آرایه‌ای از اعداد داریم که هر درایۀ آن در یک کلمه جا می‌شود. زمان بهترین الگوریتم برای مرتب کردن این آرایه که تاکنون ارائه شده است (بدون داشتن کران بالا بر روی مقدار هر درایه) چقدر است؟ (فقط مرتبۀ زمانی را بنویسید)
+
+\پاسخ{\vsp}{
+	$O(n\sqrt{\log\log n})$ به احتمال بالا
+	
+}
+
+\پاراگراف{سؤال ۳.}
+این جمله درست است یا غلط؟
+زمان اجرای میانگین الگوریتم مرتب‌سازی سریع تصادفی وسواسی (که در کلاس گفته شد) تنها در صورتی $\Theta(n\log n)$ است که در مرحلۀ تقسیم آن (که آرایه را به دو قسمت افزار می‌کند)، اندازۀ هر قسمت حداقل $\frac 1 4$ برابر اندازۀ آرایۀ اصلی باشد.
+
+\پاسخ{\vsp}{
+غلط است. کافی است طول هر قسمت یک ضریب ثابت از طول آرایۀ اصلی باشد.
+
+}
+	
+\پاراگراف{سؤال ۴.}
+آرایه‌ای به طول $n=4k+1$ داریم. می‌خواهیم آرایۀ کوچکتری به طول $2k+1$ پیدا کنیم که میانۀ آن برابر با میانۀ آرایه اصلی باشد. این جمله درست است یا غلط که برای حل این مسئله در مدل مقایسه به حداقل زمان $\Omega(n\log n)$ نیاز داریم؟
+
+\پاسخ{\vsp\vsp}{
+	غلط است. می‌توان این کار را در زمان خطی انجام داد. ابتدا در $O(n)$ میانه را پیدا می‌کنیم. سپس آرایه را در $O(n)$ به سه زیرآرایۀ تشکیل شده از درایه‌های کوچکتر، بزرگتر و مساوی با میانه افراز می‌کنیم. در نهایت $k$ درایه کوچکتر از میانه، $k$ درایه بزرگتر از میانه و میانه را انتخاب می‌کنیم. (اگر برای برداشتن هر کدام درایه به تعداد مناسب وجود نداشت، از درایه‌های مساوی با میانه استفاده می‌کنیم)
+	
+}
+
+\پاراگراف{سؤال ۵.}
+با روش درخت تصمیم و در مدل مقایسه‌ای، حداقل مرتبۀ زمان مورد نیاز و کافی برای ادغام دو آرایه که طول هر کدام $n$ است چقدر است؟ فرض کنید درایه‌ها متمایز هستند.
+
+\پاسخ{\vsp\vsp}{
+	تعداد برگ‌های درخت تصمیم این مسئله برابر است با $\binom{2n}{n}$. بنابراین به حداقل زمان $\Omega(\log\binom{2n}{n})$ نیاز داریم. در جلسۀ دوم کلاس نشان دادیم این مقدار برابر است با $\Omega(n)$. همچنین می‌دانیم ادغام در $O(n)$ امکان‌پذیر است. پس جواب $\Theta(n)$ است.
+	
+}
+
+\پاراگراف{سؤال ۶.}
+آرایۀ زیر را با مرتب‌سازی مبنایی (از چپ به راست و از کوچک به بزرگ) مرتب کنید. آرایۀ مرتب‌شده پس از مرتب‌سازی بر اساس هر رقم را بنویسید.
+\begin{flushleft}
+	$\langle 245, 163, 207, 109, 243\rangle$
+\end{flushleft}
+
+\پاسخ{\vsp\vsp}{مرتب‌سازی از رقم کم ارزش به سمت رقم پرارزش می‌رود:
+\begin{flushleft}
+	$\langle 163, 243, 245, 207, 109\rangle$\\
+	$\langle 207, 109, 243, 245, 163\rangle$\\
+	$\langle 109, 163, 207, 243, 245\rangle$
+\end{flushleft}
+}
+\begin{flushleft}
+موفق باشید
+\end{flushleft}
+\end{document}

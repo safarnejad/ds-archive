@@ -1,0 +1,151 @@
+<ul>
+<li>ایده: یک داده‌ساختار آماده را تغییر می‌دهیم و اطلاعات اضافه‌ای در آن نگه می‌داریم (داده‌ساختار افزوده یا augmented).</li>
+</ul>
+
+<h3>داده‌ساختارهای افزودۀ معمول</h3>
+<ul>
+<li>هدف: در هر رأس <span class="m"><i>v</i></span> یک درخت، مقدار تابع <span class="m"><i>f</i>(<i>v</i>)</span> را روی زیردرخت <span class="m"><i>v</i></span> نگه داریم.</li>
+<li>شرط: مقدار تابع برای <span class="m"><i>v</i></span> باید از روی مقدار تابع فرزندان <span class="m"><i>v</i></span> (و خود <span class="m"><i>v</i></span>) در <span class="m"><i>O</i>(1)</span> محاسبه شود.</li>
+<li>با این خاصیت، هر تغییر در داده‌ساختار (درج، حذف یا تغییر مقدار یک عنصر) فقط روی مقدار تابع رأس‌های مسیر آن رأس تا ریشه اثر می‌گذارد و به‌روزرسانی این مقادیر <span class="m">Θ(<i>h</i>)</span> طول می‌کشد که <span class="m"><i>h</i></span> ارتفاع درخت است. در دوران‌ها هم فقط مقدار چند رأس عوض می‌شود.</li>
+<li>درخت‌های اِی‌وی‌اِل (جلسۀ ۹) برای این کار مناسب‌اند، چون ارتفاعشان <span class="m"><i>O</i>(log <i>n</i>)</span> است.</li>
+<li>توابع معمول: جمع، ضرب، کمینه، بیشینه، xor و …</li>
+</ul>
+
+<h3>درخت مرتبه آماری</h3>
+<ul>
+<li>واسط درخت مرتبه آماری (order-statistic tree): درج، حذف، عنصر بعدی، مرتبۀ یک عنصر داده شده (<code>rank</code>) و انتخاب عنصر با مرتبۀ داده شده (<code>select</code>).</li>
+<li>ایده: در هر رأس درخت اِی‌وی‌اِل تعداد عناصر زیردرخت آن (<code>node.size</code>) را نگه می‌داریم. داریم <code>node.size = size(node.left) + size(node.right) + 1</code>.</li>
+<li>به‌روزرسانی و جست‌وجو در زمان <span class="m">Θ(log <i>n</i>)</span> انجام می‌شوند.</li>
+<li><code>select(node, k)</code>: اگر <span class="m"><i>k</i></span> برابر اندازۀ زیردرخت چپ به علاوۀ یک باشد، جواب خود رأس است؛ اگر کمتر باشد در زیردرخت چپ و اگر بیشتر باشد در زیردرخت راست به دنبال عنصر <span class="m">(<i>k</i> − size(left) − 1)</span>اُم می‌گردیم. مرتبه‌ها از ۱ شروع می‌شوند.</li>
+<li><code>rank(node)</code>: از رأس تا ریشه بالا می‌رویم و هر بار که از فرزند راست به پدر می‌رسیم، اندازۀ زیردرخت چپ پدر و خود پدر را اضافه می‌کنیم.</li>
+</ul>
+<pre>
+def size(node):
+  return node.size if node else 0
+
+def update_size(node):
+  node.size = size(node.left) + size(node.right) + 1
+
+def select(node, k):
+  r = size(node.left) + 1
+  if k == r:
+    return node
+  if k &lt; r:
+    return select(node.left, k)
+  return select(node.right, k - r)
+
+def rank(node):
+  r = size(node.left) + 1
+  while node.parent:
+    if node == node.parent.right:
+      r += size(node.parent.left) + 1
+    node = node.parent
+  return r
+</pre>
+<ul>
+<li><code>update_size</code> باید بعد از هر تغییر، برای رأس‌های مسیر تا ریشه و رأس‌های درگیر در دوران‌ها (از پایین به بالا) صدا زده شود، همان جایی که ارتفاع رأس‌ها در درخت اِی‌وی‌اِل به‌روز می‌شود.</li>
+<li>مثال: در درختی با کلیدهای ۱ تا ۷ که ریشۀ آن ۴ است، <code>select(root, 6)</code> به زیردرخت راست (ریشۀ ۶) با <span class="m"><i>k</i> = 2</span> می‌رود و ۶ را برمی‌گرداند.</li>
+</ul>
+
+<h3>درخت پاره‌خطی</h3>
+<ul>
+<li>با فرض این که کلیدها اعداد صحیح ۱ تا <span class="m"><i>m</i></span> (یا اندیس‌های یک آرایه) باشند، یک درخت دودویی تقریباً کامل روی آن‌ها می‌سازیم که هر رأس آن متناظر یک بازه است و مثل قبل تابع <span class="m"><i>f</i></span> را برای هر رأس و زیردرخت آن نگه می‌داریم (درخت پاره‌خطی یا segment tree).</li>
+<li>در مقایسه با درخت اِی‌وی‌اِل افزوده، ساختار درخت پاره‌خطی تغییر نمی‌کند (دوران ندارد) و پیاده‌سازی آن آسان‌تر است.</li>
+<li>حافظۀ آن <span class="m">Θ(<i>m</i>)</span> و زمان هر عمل <span class="m">Θ(log <i>m</i>)</span> است (و نه <span class="m">Θ(log <i>n</i>)</span> که <span class="m"><i>n</i></span> تعداد عناصر موجود است).</li>
+<li>در کد زیر درخت در آرایۀ <code>T</code> ذخیره شده، رأس <code>v</code> متناظر بازۀ <code>[lo, hi]</code> است و فرزندانش <code>2v</code> و <code>2v + 1</code>‌اند (مثل هرم). تابع، جمع است. برای کمینه (جلسۀ ۲۰) کافی است <code>+</code> را با <code>min</code> عوض کنیم.</li>
+</ul>
+<pre>
+def build(T, A, v, lo, hi):
+  if lo == hi:
+    T[v] = A[lo]
+    return
+  mid = (lo + hi) // 2
+  build(T, A, 2 * v, lo, mid)
+  build(T, A, 2 * v + 1, mid + 1, hi)
+  T[v] = T[2 * v] + T[2 * v + 1]
+
+def query(T, v, lo, hi, i, j):  # sum of A[i..j]
+  if j &lt; lo or hi &lt; i:
+    return 0
+  if i &lt;= lo and hi &lt;= j:
+    return T[v]
+  mid = (lo + hi) // 2
+  return query(T, 2 * v, lo, mid, i, j) + query(T, 2 * v + 1, mid + 1, hi, i, j)
+
+def update(T, v, lo, hi, i, x):  # A[i] = x
+  if lo == hi:
+    T[v] = x
+    return
+  mid = (lo + hi) // 2
+  if i &lt;= mid:
+    update(T, 2 * v, lo, mid, i, x)
+  else:
+    update(T, 2 * v + 1, mid + 1, hi, i, x)
+  T[v] = T[2 * v] + T[2 * v + 1]
+
+# T = [0] * (4 * len(A)); build(T, A, 1, 0, len(A) - 1)
+</pre>
+
+<h3>انتشار با تأخیر</h3>
+<ul>
+<li>وقتی به جای یک عنصر بخواهیم همۀ عناصر یک بازه را تغییر دهیم، مثلاً همه را برابر یک مقدار کنیم یا به همه یک مقدار اضافه کنیم، برای این که زمان زیاد نشود از انتشار با تأخیر (lazy propagation) استفاده می‌کنیم. این روش هم در درخت اِی‌وی‌اِل افزوده و هم در درخت پاره‌خطی قابل استفاده است.</li>
+<li>ایده: تا وقتی به یک رأس نرفته‌ایم، به مقدار تابع آن نیاز نداریم. روی رأس یک علامت (flag) می‌گذاریم که یعنی عناصر این زیردرخت به‌روز نیستند و چه تغییری باید رویشان اعمال شود.</li>
+<li>در زمان جست‌وجو یا به‌روزرسانی، اگر از چنین رأسی پایین رفتیم، فرزندانش را به‌روز می‌کنیم و علامت را به آن‌ها منتقل می‌کنیم.</li>
+<li>هر به‌روزرسانی یا پرسش در هر سطح حداکثر به ۴ رأس و در کل به حداکثر <span class="m">4 log<sub>2</sub> <i>n</i></span> رأس دسترسی دارد. پس زمان به‌روزرسانی یک بازه و پرسش هر دو (از نظر مجانبی) مثل قبل است.</li>
+<li>در کد زیر به همۀ عناصر یک بازه عددی اضافه می‌شود و <code>add[v]</code> مقداری است که هنوز به فرزندان <code>v</code> منتقل نشده است.</li>
+</ul>
+<pre>
+def push(T, add, v, lo, mid, hi):
+  if add[v]:
+    for c, length in ((2 * v, mid - lo + 1), (2 * v + 1, hi - mid)):
+      T[c] += add[v] * length
+      add[c] += add[v]
+    add[v] = 0
+
+def range_add(T, add, v, lo, hi, i, j, x):
+  if j &lt; lo or hi &lt; i:
+    return
+  if i &lt;= lo and hi &lt;= j:
+    T[v] += x * (hi - lo + 1)
+    add[v] += x
+    return
+  mid = (lo + hi) // 2
+  push(T, add, v, lo, mid, hi)
+  range_add(T, add, 2 * v, lo, mid, i, j, x)
+  range_add(T, add, 2 * v + 1, mid + 1, hi, i, j, x)
+  T[v] = T[2 * v] + T[2 * v + 1]
+
+def range_sum(T, add, v, lo, hi, i, j):
+  if j &lt; lo or hi &lt; i:
+    return 0
+  if i &lt;= lo and hi &lt;= j:
+    return T[v]
+  mid = (lo + hi) // 2
+  push(T, add, v, lo, mid, hi)
+  return range_sum(T, add, 2 * v, lo, mid, i, j) + range_sum(T, add, 2 * v + 1, mid + 1, hi, i, j)
+</pre>
+
+<h3>درخت فنویک</h3>
+<ul>
+<li>اگر در درخت پاره‌خطی جمع را نگه داریم، کافی است مقدار تابع را فقط برای نصف رأس‌ها ذخیره کنیم (مثلاً فقط فرزندان چپ، چون مقدار فرزند راست از تفاضل پدر و فرزند چپ به دست می‌آید) و به جای <span class="m">2<i>n</i> − 1</span> رأس، اطلاعات را در <span class="m"><i>n</i></span> خانه نگه داریم.</li>
+<li>درخت فنویک (Fenwick tree یا binary indexed tree) این کار را هوشمندانه انجام می‌دهد و جمع‌ها را در آرایه‌ای هم‌اندازۀ خود داده‌ها، بدون هیچ حافظۀ اضافه‌ای، نگه می‌دارد.</li>
+<li>خانۀ <span class="m"><i>i</i></span> جمع <span class="m"><i>A</i>[<i>i</i> − lowbit(<i>i</i>) + 1 … <i>i</i>]</span> را دارد که <span class="m">lowbit(<i>i</i>)</span> = <code>i &amp; -i</code> کم‌ارزش‌ترین بیت یک عدد <span class="m"><i>i</i></span> است. هر دو عمل <span class="m"><i>O</i>(log <i>n</i>)</span> طول می‌کشند.</li>
+<li>عملیاتی مثل جمع و xor (و ضرب اعداد ناصفر) پشتیبانی می‌شوند، چون جواب یک بازه از تفاضل دو پیشوند به دست می‌آید. کمینه و بیشینه پشتیبانی نمی‌شوند، چون وارون ندارند.</li>
+<li>تصویر ساختار درختی آن پیچیده است ولی کد بسیار کوتاهی دارد. اندیس‌گذاری آرایه از ۱ است (<code>F[0]</code> استفاده نمی‌شود و <code>F</code> در ابتدا <code>[0] * (n + 1)</code> است).</li>
+</ul>
+<pre>
+def prefix_sum(F, i):  # A[1] + ... + A[i]
+  result = 0
+  while i &gt; 0:
+    result += F[i]
+    i -= i &amp; -i
+  return result
+
+def add(F, i, x):  # A[i] += x
+  while i &lt; len(F):
+    F[i] += x
+    i += i &amp; -i
+</pre>
+<ul>
+<li>مثال روی درخت فنویک ۱۴ خانه‌ای: <code>prefix_sum(F, 13)</code> خانه‌های ۱۳، ۱۲ و ۸ را جمع می‌کند (<span class="m">13 = 1101<sub>2</sub></span>) و <code>add(F, 5, 2)</code> خانه‌های ۵، ۶ و ۸ را تغییر می‌دهد (خانۀ ۱۶ وجود ندارد).</li>
+</ul>

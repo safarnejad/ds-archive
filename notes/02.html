@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>جلسۀ ۲: مدل محاسبات، رشد توابع</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+<nav class="top">
+  <a class="home" href="../index.html">ساختمان داده‌ها و الگوریتم‌ها</a>
+  <a href="../index.html#notes">درس‌نامه</a>
+  <a href="../index.html#terms">ترم‌ها</a>
+  <a href="../tas.html">دستیاران آموزشی</a>
+</nav>
+<h1>جلسۀ ۲: مدل محاسبات، رشد توابع</h1>
+<p class="sub">مطالعۀ بیشتر: ۳-۱ و ۳-۳ از قدسی و ۳ از CLRS</p>
+<h3>تاریخچه و تعریف الگوریتم</h3>
+<ul>
+<li>تاریخچۀ الگوریتم‌ها: اولین الگوریتم‌ها دستورالعمل‌های تاریخی برای آشپزی، مراسم مذهبی و کشاورزی بودند. سپس ضرب اعداد توسط مصریان، جذر و تجزیۀ اعداد توسط بابلیان، الگوریتم اقلیدس و غربال اراتستن پیش از میلاد. حذف گاوسی و روشی برای حل برخی معادلات در چین، و سپس کتاب جبر و مقابلۀ خوارزمی که نام الگوریتم از نام او گرفته شده است. عصر جدید الگوریتم‌ها از حدود ۱۹۷۰ به بعد است.</li>
+<li>تعریف الگوریتم، شبه‌کد و مدل محاسبات و رابطۀ آن‌ها با برنامه، زبان برنامه‌نویسی و کامپیوتر: برنامه با زبان برنامه‌نویسی نوشته می‌شود و کامپیوتر آن را اجرا می‌کند. به همین ترتیب الگوریتم (معادل برنامه) با شبه‌کد نوشته می‌شود و روی مدل محاسبات (معادل کامپیوتر) اجرا می‌شود.</li>
+</ul>
+
+<h3>مدل‌های محاسبات</h3>
+<ul>
+<li>مدل صفر: ماشین تورینگ.</li>
+<li>مدل یک: ماشین دسترسی تصادفی (RAM) و ارتباط آن با حافظۀ RAM. در هر قدم:
+<ul>
+<li>تعداد ثابتی خانه از حافظه بارگذاری می‌کند،</li>
+<li>تعداد ثابتی عملیات روی آن‌ها انجام می‌دهد،</li>
+<li>و تعداد ثابتی خانه را در حافظه ذخیره می‌کند.</li>
+<li>هر قدم یک واحد زمان می‌گیرد، بنابراین زمان الگوریتم برابر تعداد قدم‌های آن است.</li>
+<li>تعریف کلمه (<span class="m"><i>w</i></span>) با حداقل اندازۀ <span class="m">log<sub>2</sub> <i>n</i></span> بیت، تا بتوان با یک کلمه به هر خانۀ ورودی اشاره کرد، و ارتباط آن با محاسبۀ زمان الگوریتم‌ها.</li>
+</ul></li>
+<li>مدل دو: ماشین اشاره‌گر. هر شیء تعداد ثابتی فیلد دارد که هر فیلد یا یک کلمه است یا یک اشاره‌گر به یک شیء دیگر.
+<ul>
+<li>با مدل RAM قابل پیاده‌سازی است و به زبان‌های شیءگرا نزدیک است.</li>
+<li>اشاره‌گر در زبان‌های برنامه‌نویسی گاهی با نام reference وجود دارد.</li>
+</ul></li>
+<li>مدل سه: ماشین پایتون. هر قدم یکی از دستورهای پایتون است، ولی دستورهای مختلف لزوماً زمان ثابتی نمی‌گیرند و در تحلیل الگوریتم باید به این نکته توجه کرد.
+<ul>
+<li><code>list</code> در پایتون آرایه است و نه لیست پیوندی. <code>L.append(x)</code> زمان ثابت می‌گیرد (چگونگی آن در جلسۀ ۵ و جلسۀ ۲۲ توضیح داده می‌شود).</li>
+<li><code>L1 + L2</code> و <code>L1.extend(L2)</code> در زمان <span class="m"><i>O</i>(<i>n</i><sub>1</sub> + <i>n</i><sub>2</sub> + 1)</span> انجام می‌شوند. عدد ۱ برای حالتی است که هر دو لیست خالی باشند، چون زمان هیچ دستوری صفر نیست.</li>
+<li>جست‌وجوی یک مقدار در لیست (<code>x in L</code>) زمان خطی دارد و <code>len(L)</code> زمان ثابت.</li>
+<li><code>L.sort()</code> زمان <span class="m">Θ(|<i>L</i>| log |<i>L</i>|)</span> دارد که موضوع جلسات ۴ تا ۱۳ است.</li>
+<li><code>str</code> و <code>tuple</code> مشابه لیست هستند.</li>
+<li><code>dict</code> کلیدها را به مقادیر نگاشت می‌کند. زمان هر مقداردهی یا پرسیدن مقدار یک کلید با احتمال زیاد ثابت است که موضوع جلسات ۱۴ تا ۱۶ است. <code>set</code> هم مشابه <code>dict</code> است.</li>
+<li><code>heapq</code> صف اولویت را پیاده‌سازی می‌کند (جلسۀ ۷).</li>
+<li><code>int</code> اعداد بزرگ را ذخیره می‌کند و عملیات معمول را روی آن می‌توان انجام داد (کاربرد در رمزنگاری). جمع اعداد خطی است و مشابه روش مدرسه است، ولی ضرب از روش مدرسه سریع‌تر است (جلسۀ ۱۷).</li>
+</ul></li>
+</ul>
+
+<h3>تحلیل مجانبی</h3>
+<ul>
+<li>هدف از تحلیل الگوریتم: بررسی الگوریتم پیش از پیاده‌سازی از نظر زمان اجرا و حافظۀ مصرفی، و مقایسۀ الگوریتم‌ها با هم.</li>
+<li>تحلیل در بدترین حالت، بهترین حالت و حالت میانگین (ورودی تصادفی است و میانگین زمان اجرا حساب می‌شود).</li>
+<li>تعریف نمادها:
+<div class="formula">Θ(<i>g</i>) = { <i>f</i> : ∃ <i>c</i><sub>1</sub>, <i>c</i><sub>2</sub>, <i>n</i><sub>0</sub> &gt; 0, ∀<i>n</i> ≥ <i>n</i><sub>0</sub> : 0 ≤ <i>c</i><sub>1</sub><i>g</i>(<i>n</i>) ≤ <i>f</i>(<i>n</i>) ≤ <i>c</i><sub>2</sub><i>g</i>(<i>n</i>) }</div>
+<div class="formula"><i>O</i>(<i>g</i>) = { <i>f</i> : ∃ <i>c</i>, <i>n</i><sub>0</sub> &gt; 0, ∀<i>n</i> ≥ <i>n</i><sub>0</sub> : 0 ≤ <i>f</i>(<i>n</i>) ≤ <i>c g</i>(<i>n</i>) }</div>
+<div class="formula">Ω(<i>g</i>) = { <i>f</i> : ∃ <i>c</i>, <i>n</i><sub>0</sub> &gt; 0, ∀<i>n</i> ≥ <i>n</i><sub>0</sub> : 0 ≤ <i>c g</i>(<i>n</i>) ≤ <i>f</i>(<i>n</i>) }</div>
+<div class="formula"><i>o</i>(<i>g</i>) = { <i>f</i> : ∀<i>c</i> &gt; 0, ∃<i>n</i><sub>0</sub>, ∀<i>n</i> ≥ <i>n</i><sub>0</sub> : 0 ≤ <i>f</i>(<i>n</i>) &lt; <i>c g</i>(<i>n</i>) }</div>
+<div class="formula">ω(<i>g</i>) = { <i>f</i> : ∀<i>c</i> &gt; 0, ∃<i>n</i><sub>0</sub>, ∀<i>n</i> ≥ <i>n</i><sub>0</sub> : 0 ≤ <i>c g</i>(<i>n</i>) &lt; <i>f</i>(<i>n</i>) }</div>
+</li>
+<li>اگر <span class="m"><i>f</i> = Θ(<i>g</i>)</span>، تابع <span class="m"><i>g</i></span> کران بسته مجانبی برای <span class="m"><i>f</i></span> است، و به همین ترتیب <span class="m"><i>O</i></span> کران بالا و <span class="m">Ω</span> کران پایین مجانبی است.</li>
+<li>تشبیه به مقایسۀ اعداد: <span class="m"><i>O</i> ≈ ≤</span>، <span class="m">Ω ≈ ≥</span>، <span class="m">Θ ≈ =</span>، <span class="m"><i>o</i> ≈ &lt;</span> و <span class="m">ω ≈ &gt;</span>.</li>
+<li>خواص:
+<ul>
+<li>تراگذری: اگر <span class="m"><i>f</i> = <i>O</i>(<i>g</i>)</span> و <span class="m"><i>g</i> = <i>O</i>(<i>h</i>)</span> آنگاه <span class="m"><i>f</i> = <i>O</i>(<i>h</i>)</span> (برای همۀ نمادها).</li>
+<li>بازتابی: <span class="m"><i>f</i> = Θ(<i>f</i>)</span> (برای <span class="m"><i>O</i></span>، <span class="m">Ω</span> و <span class="m">Θ</span>).</li>
+<li>تقارن: فقط <span class="m">Θ</span> متقارن است.</li>
+<li>تقارن ترانهاده: <span class="m"><i>f</i> = <i>O</i>(<i>g</i>) ⇔ <i>g</i> = Ω(<i>f</i>)</span> و <span class="m"><i>f</i> = <i>o</i>(<i>g</i>) ⇔ <i>g</i> = ω(<i>f</i>)</span>.</li>
+</ul></li>
+<li>مثال: <span class="m">log <span style="font-size:1.5em;vertical-align:-.12em">(</span><span style="display:inline-block;vertical-align:middle;text-align:center;line-height:1.05"><i>n</i><br><i>n</i>/2</span><span style="font-size:1.5em;vertical-align:-.12em">)</span> = Θ(<i>n</i>)</span>.
+از تقریب استرلینگ <span class="m"><i>n</i>! ≈ √(2π<i>n</i>) (<i>n</i>/<i>e</i>)<sup><i>n</i></sup></span> نتیجه می‌شود که این ضریب دوجمله‌ای تقریباً <span class="m">2<sup><i>n</i></sup>/√<i>n</i></span> است.</li>
+</ul>
+
+<div class="pager"><a href="01.html">→ جلسۀ ۱</a><a href="03.html">جلسۀ ۳ ←</a></div>
+<footer>مهدی صفرنژاد، دانشکدۀ مهندسی کامپیوتر دانشگاه صنعتی شریف، ۱۳۹۷ تا ۱۴۰۱.
+محتوای این سایت تحت مجوز <a href="https://creativecommons.org/licenses/by/4.0/deed.fa">CC BY 4.0</a> منتشر شده است.</footer>
+</div>
+</body>
+</html>

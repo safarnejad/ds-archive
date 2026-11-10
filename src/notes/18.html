@@ -1,0 +1,169 @@
+<h3>مسئلۀ تطابق رشته‌ها</h3>
+<ul>
+<li>نسخه‌ای از مسئله که در جلسۀ ۱۵ بررسی شد: یک رشتۀ (بزرگ) <span class="m"><i>t</i></span> و یک رشتۀ (کوچک) <span class="m"><i>s</i></span> داریم و می‌خواهیم <span class="m"><i>s</i></span> را به عنوان زیررشته‌ای از <span class="m"><i>t</i></span> پیدا کنیم.</li>
+<li>الگوریتم‌های مختلفی مثل KMP، بویر-مور و رابین-کارپ برای این مسئله پیشنهاد شده‌اند. الگوریتم رابین-کارپ در جلسۀ ۱۵ توضیح داده شد.</li>
+<li>در این جلسه به نسخه‌ای از همین سؤال می‌پردازیم که رشتۀ <span class="m"><i>t</i></span> از ابتدا داده شده است (و می‌توانیم آن را پیش‌پردازش کنیم) و باید به تعدادی پرسش (query) پاسخ دهیم که هر کدام <span class="m"><i>s</i></span> خود را دارد.</li>
+</ul>
+
+<h3>مسئلۀ رشتۀ قبلی</h3>
+<ul>
+<li>رشته‌های <span class="m"><i>T</i><sub>1</sub>, <i>T</i><sub>2</sub>, …, <i>T</i><sub><i>k</i></sub></span> داده شده‌اند. پس از پیش‌پردازش، در هر پرسش یک رشتۀ <span class="m"><i>s</i></span> داده می‌شود و می‌خواهیم جای <span class="m"><i>s</i></span> را در لغت‌نامۀ مرتب این رشته‌ها پیدا کنیم. در واقع خروجی، رشتۀ قبل از <span class="m"><i>s</i></span> در میان <span class="m"><i>T</i><sub>1</sub>, …, <i>T</i><sub><i>k</i></sub></span> است.</li>
+<li>به ترتیب رشته‌ها در لغت‌نامه ترتیب لغت‌نامه‌ای (lexicographic) می‌گوییم.</li>
+<li>این مسئله با جست‌وجوی دودویی حل می‌شود، اما هر مقایسه ممکن است به اندازۀ طول <span class="m"><i>s</i></span> طول بکشد و اگر <span class="m"><i>s</i></span> طولانی باشد زمان‌بر است.</li>
+<li>یک راه، استفاده از درهم‌سازی مشابه درهم‌سازی غلتان جلسۀ ۱۵ است: درهم‌سازی همۀ پیشوندهای <span class="m"><i>T</i><sub>1</sub>, …, <i>T</i><sub><i>k</i></sub></span> را در پیش‌پردازش و درهم‌سازی همۀ پیشوندهای <span class="m"><i>s</i></span> را در هر پرسش حساب می‌کنیم. با جست‌وجوی دودویی روی طول طولانی‌ترین پیشوند مشترک، هر مقایسه در <span class="m"><i>O</i>(log |<i>s</i>|)</span> انجام می‌شود و زمان هر پرسش <span class="m"><i>O</i>(log |<i>s</i>| · log <i>k</i>)</span> است (به علاوۀ <span class="m"><i>O</i>(|<i>s</i>|)</span> برای درهم‌سازی پیشوندهای <span class="m"><i>s</i></span>).</li>
+</ul>
+
+<h3>ترای و ترای فشرده</h3>
+<ul>
+<li>یک داده‌ساختار درختی جدید که برای مسائل بالا مفید است. نام ترای (trie) از واژۀ re<b>trie</b>val به معنی بازیابی (اطلاعات) آمده است.</li>
+<li>ترای درختی است که هر یال آن به یک حرف از الفبا (<span class="m">Σ</span>) مربوط است. به جای این که کلیدها در رأس‌ها ذخیره شوند، کلید هر رأس همان حروف روی مسیر ریشه تا آن رأس است.</li>
+<li>مثال: ترای رشته‌های <code>ana$</code>، <code>ann$</code>، <code>anna$</code> و <code>anne$</code>. حرف <code>$</code> که عضو <span class="m">Σ</span> نیست پایان رشته را نشان می‌دهد تا هیچ رشته‌ای پیشوند رشتۀ دیگر نباشد و هر رشته به یک برگ برسد.</li>
+<li>عملیات ترای: درج یک رشته، حذف یک رشته، جست‌وجوی یک رشته و نوشتن همۀ رشته‌ها (به ترتیب لغت‌نامه‌ای). سه عمل اول <span class="m"><i>O</i>(|<i>s</i>|)</span> طول می‌کشند (با فرض این‌که پیدا کردن فرزند هر رأس <span class="m"><i>O</i>(1)</span> باشد).</li>
+<li>در کد زیر به جای <code>$</code> در هر رأس <code>node.end</code> را نگه می‌داریم و <code>node.count</code> تعداد رشته‌های زیردرخت است که با آن تعداد رشته‌های دارای یک پیشوند داده شده را هم جواب می‌دهیم. فرزندان در دیکشنری (جدول درهم‌سازی) ذخیره می‌شوند.</li>
+</ul>
+<pre>
+class TrieNode:
+  def __init__(self):
+    self.children = {}
+    self.end = False
+    self.count = 0
+
+def insert(root, s):
+  if search(root, s):
+    return
+  node = root
+  node.count += 1
+  for c in s:
+    if c not in node.children:
+      node.children[c] = TrieNode()
+    node = node.children[c]
+    node.count += 1
+  node.end = True
+
+def find(root, s):
+  node = root
+  for c in s:
+    if c not in node.children:
+      return None
+    node = node.children[c]
+  return node
+
+def search(root, s):
+  node = find(root, s)
+  return node is not None and node.end
+
+def count_prefix(root, p):
+  node = find(root, p)
+  return node.count if node else 0
+
+def delete(root, s):
+  if not search(root, s):
+    return
+  node = root
+  node.count -= 1
+  for c in s:
+    child = node.children[c]
+    child.count -= 1
+    if child.count == 0:
+      del node.children[c]
+      return
+    node = child
+  node.end = False
+
+def words(node, prefix=''):
+  if node.end:
+    yield prefix
+  for c in sorted(node.children):
+    yield from words(node.children[c], prefix + c)
+</pre>
+<ul>
+<li>در ترای فشرده (compressed یا compact) رأس‌هایی که فقط یک فرزند دارند حذف می‌شوند و روی هر یال یک رشته (به جای یک حرف) قرار می‌گیرد. تعداد رأس‌های ترای فشردۀ <span class="m"><i>k</i></span> رشته <span class="m"><i>O</i>(<i>k</i>)</span> است.</li>
+</ul>
+
+<h3>حل مسئلۀ رشتۀ قبلی با ترای</h3>
+<ul>
+<li>ابتدا از رشته‌های <span class="m"><i>T</i><sub>1</sub>, …, <i>T</i><sub><i>k</i></sub></span> یک ترای می‌سازیم. برای پاسخ به هر پرسش، <span class="m"><i>s</i></span> را می‌خوانیم و هم‌زمان از ریشۀ ترای مطابق حرفی که می‌خوانیم پایین می‌رویم.</li>
+<li>اگر در رأس <span class="m"><i>v</i></span> باشیم و <span class="m"><i>v</i></span> فرزندی برای حرف خواندۀ <span class="m"><i>c</i></span> نداشته باشد، جواب بزرگ‌ترین رشته در زیردرخت فرزندانی از <span class="m"><i>v</i></span> است که حرفشان قبل از <span class="m"><i>c</i></span> است (و اگر چنین فرزندی نبود، جواب در بالاتر از <span class="m"><i>v</i></span> است).</li>
+<li>در کد زیر برای هر رأس که از آن رد می‌شویم، بزرگ‌ترین رشتۀ کوچک‌تر از مسیر فعلی را به‌روز می‌کنیم. خروجی بزرگ‌ترین رشتۀ ذخیره‌شده‌ای است که از <span class="m"><i>s</i></span> بزرگ‌تر نیست (یا <code>None</code>).</li>
+</ul>
+<pre>
+def largest(node, prefix):
+  while node.children:
+    c = max(node.children)
+    node, prefix = node.children[c], prefix + c
+  return prefix
+
+def predecessor(root, s):
+  best, node, prefix = None, root, ''
+  for c in s:
+    if node.end:
+      best = prefix
+    smaller = [d for d in node.children if d &lt; c]
+    if smaller:
+      d = max(smaller)
+      best = largest(node.children[d], prefix + d)
+    if c not in node.children:
+      return best
+    node, prefix = node.children[c], prefix + c
+  if node.end:
+    return prefix
+  return best
+</pre>
+<ul>
+<li>زمان و حافظۀ این الگوریتم به داده‌ساختار هر رأس ترای بستگی دارد. <span class="m">|<i>T</i>|</span> را تعداد رأس‌های ترای می‌گیریم:
+<ul>
+<li>۱. آرایه: برای هر رأس آرایه‌ای به طول <span class="m">|Σ|</span> که هر خانۀ آن به فرزند مربوط اشاره می‌کند یا <code>None</code> است. پیدا کردن یک رشته <span class="m"><i>O</i>(|<i>s</i>|)</span> و پرسش رشتۀ قبلی <span class="m"><i>O</i>(|<i>s</i>| + |Σ|)</span> طول می‌کشد. جملۀ <span class="m"><i>O</i>(|Σ|)</span> مربوط به وقتی است که فرزند حرف خوانده‌شده وجود ندارد و باید آخرین حرف قبل از آن را پیدا کنیم. حافظه <span class="m"><i>O</i>(|<i>T</i>| · |Σ|)</span> است که زیاد است.</li>
+<li>۲. لیست مرتب (یا درخت دودویی جست‌وجو): به جای آرایه‌ای که احتمالاً خانه‌های خالی زیادی دارد. حافظه به <span class="m"><i>O</i>(|<i>T</i>|)</span> کم می‌شود (تمرین: چرا؟) ولی زمان هر پرسش به <span class="m"><i>O</i>(|<i>s</i>| log |Σ|)</span> می‌رسد.</li>
+<li>۳. جدول درهم‌سازی: حافظه <span class="m"><i>O</i>(|<i>T</i>|)</span>، پیدا کردن یک رشته <span class="m"><i>O</i>(|<i>s</i>|)</span> و پرسش رشتۀ قبلی <span class="m"><i>O</i>(|<i>s</i>| + |Σ|)</span> (مثل کد بالا). اگر <span class="m">Σ</span> بزرگ باشد این زمان زیاد است.</li>
+<li>۴. درخت فان امده بوآس (van Emde Boas) که در این درس پوشش داده نمی‌شود: حافظه <span class="m"><i>O</i>(|<i>T</i>|)</span> و زمان پرسش <span class="m"><i>O</i>(|<i>s</i>| log log |Σ|)</span>.</li>
+<li>۵. درخت دودویی جست‌وجوی وزن‌دار متوازن: حافظه <span class="m"><i>O</i>(|<i>T</i>|)</span> و زمان پرسش <span class="m"><i>O</i>(|<i>s</i>| + log <i>k</i>)</span>. با کمی تلاش می‌توان آن را به <span class="m"><i>O</i>(|<i>s</i>| + log |Σ|)</span> رساند.
+<ul>
+<li>فرزندان هر رأس را در یک درخت دودویی وزن‌دار نگه می‌داریم که وزن هر فرزند تعداد برگ‌های زیردرخت آن است. این درخت دودویی بر حسب این وزن‌ها تا حد امکان متوازن است.</li>
+<li>لم: زمان پاسخ به پرسش در این ساختار <span class="m"><i>O</i>(|<i>s</i>| + log <i>k</i>)</span> است. ایدۀ اثبات: در هر قدم یا یک حرف روی <span class="m"><i>s</i></span> جلو می‌رویم یا دست کم یک‌سوم برگ‌ها را کنار می‌گذاریم.</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<h3>درخت پسوندی</h3>
+<ul>
+<li>درخت پسوندی (suffix tree) ترای فشرده‌ای است که شامل همۀ پسوندهای یک رشته است.</li>
+<li>حرف <code>$</code> را که عضو <span class="m">Σ</span> نیست به انتهای رشته اضافه می‌کنیم و فرض می‌کنیم <code>$</code> از همۀ حروف دیگر کوچک‌تر است. مثال: درخت پسوندی <code>banana$</code>.</li>
+<li>برای جلوگیری از زیاد شدن حافظه، به جای ذخیرۀ رشته روی یال‌های ترای فشرده، اندیس شروع و پایان آن را در رشتۀ اصلی نگه می‌داریم (اگر این اندیس‌ها یکتا نباشند از هر کدام می‌توان استفاده کرد). در این صورت حافظه <span class="m"><i>O</i>(|<i>t</i>|)</span> است.</li>
+<li>درخت پسوندی را می‌توان در زمان خطی ساخت. کد زیر نسخۀ ساده و غیرفشرده (ترای پسوندی) است که همۀ پسوندها را یکی‌یکی در ترای درج می‌کند و زمان و حافظۀ آن <span class="m"><i>O</i>(|<i>t</i>|<sup>2</sup>)</span> است. هر برگ اندیس شروع پسوند خود را دارد.</li>
+</ul>
+<pre>
+def suffix_trie(t):
+  t += '$'
+  root = {}
+  for i in range(len(t)):
+    node = root
+    for c in t[i:]:
+      node = node.setdefault(c, {})
+    node['start'] = i
+  return root
+
+def leaves(node):
+  for c in node:
+    if c == 'start':
+      yield node[c]
+    else:
+      yield from leaves(node[c])
+
+def occurrences(root, s):
+  node = root
+  for c in s:
+    if c not in node:
+      return []
+    node = node[c]
+  return sorted(leaves(node))
+</pre>
+
+<h3>کاربردهای درخت پسوندی</h3>
+<ul>
+<li>۱. تطابق رشته‌ها (مسئلۀ ابتدای جلسه) در زمان <span class="m"><i>O</i>(|<i>s</i>|)</span> برای هر پرسش.</li>
+<li>۲. تطابق رشته‌ها با شمردن تعداد تکرارها یا خروجی دادن همۀ مکان‌های وقوع: برگ‌های زیردرختی که به آن می‌رسیم (تابع <code>occurrences</code> بالا).</li>
+<li>۳. پیدا کردن طولانی‌ترین زیررشتۀ تکراری یک رشته: عمیق‌ترین (از نظر تعداد حروف) رأس داخلی.</li>
+<li>۴. طولانی‌ترین زیررشتۀ مشترک <span class="m"><i>k</i></span> رشته در زمان خطی: رشته‌ها را به صورت <span class="m"><i>T</i><sub>1</sub>$<sub>1</sub><i>T</i><sub>2</sub>$<sub>2</sub>…<i>T</i><sub><i>k</i></sub>$<sub><i>k</i></sub></span> به هم می‌چسبانیم و درخت پسوندی آن را می‌سازیم. سپس با پیمایش درخت طولانی‌ترین رشته‌ای را پیدا می‌کنیم که در زیردرخت آن همۀ <span class="m">$</span>ها ظاهر شوند.</li>
+<li>جالب است که مسئلۀ مشابه، یعنی طولانی‌ترین زیردنبالۀ مشترک (که لازم نیست پیوسته باشد) برای <span class="m"><i>k</i></span> رشته، الگوریتم کارایی ندارد (برای <span class="m"><i>k</i></span> دلخواه NP-سخت است).</li>
+<li>آرایۀ پسوندی که معادل درخت پسوندی و ساده‌تر از آن است، موضوع جلسۀ ۱۹ است.</li>
+</ul>

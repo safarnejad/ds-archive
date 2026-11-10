@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>جلسۀ ۷: هرم و مرتب‌سازی هرمی</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+<nav class="top">
+  <a class="home" href="../index.html">ساختمان داده‌ها و الگوریتم‌ها</a>
+  <a href="../index.html#notes">درس‌نامه</a>
+  <a href="../index.html#terms">ترم‌ها</a>
+  <a href="../tas.html">دستیاران آموزشی</a>
+</nav>
+<h1>جلسۀ ۷: هرم و مرتب‌سازی هرمی</h1>
+<p class="sub">مطالعۀ بیشتر: ۶-۴ و ۶-۳-۳ از قدسی و ۶ از CLRS</p>
+<h3>واسط صف اولویت</h3>
+<ul>
+<li>صف اولویت یک واسط مجموعه‌ای است که در آن کلید همان اولویت است. (واسط دنباله‌ای اندیس دارد و واسط مجموعه‌ای کلید.)</li>
+<li>عملیات:
+<ul>
+<li><code>len()</code></li>
+<li><code>insert(v)</code></li>
+<li><code>find_max()</code> و <code>delete_max()</code>، یا در صف اولویت کمینه <code>find_min()</code> و <code>delete_min()</code></li>
+</ul></li>
+<li>برخی کاربردهای صف اولویت: مرتب‌سازی و الگوریتم دایسترا (جلسۀ ۲۸).</li>
+<li>مرتب‌سازی با صف اولویت: همۀ اعضا را درج می‌کنیم و سپس <span class="m"><i>n</i></span> بار بیشینه را حذف می‌کنیم و از آخر آرایه می‌چینیم (یا با صف کمینه از اول آرایه).</li>
+</ul>
+<pre>
+def max_pq_sort(A):
+  Q = []
+  for v in A:
+    insert(Q, v)
+  for i in range(len(A)):
+    A[len(A) - 1 - i] = delete_max(Q)
+</pre>
+<ul>
+<li>داده‌ساختارهایی که تا الان گفته شدند برای صف اولویت خوب نیستند:
+<ul>
+<li>آرایۀ نامرتب: <code>insert</code> در <span class="m"><i>O</i>(1)</span> (سرشکن) ولی <code>find_max</code> و <code>delete_max</code> در <span class="m"><i>O</i>(<i>n</i>)</span>.</li>
+<li>آرایۀ مرتب: <code>find_max</code> و <code>delete_max</code> در <span class="m"><i>O</i>(1)</span> ولی <code>insert</code> در <span class="m"><i>O</i>(<i>n</i>)</span>.</li>
+</ul></li>
+<li>هرم دودویی: <code>len</code> در <span class="m"><i>O</i>(1)</span>، <code>insert</code> در <span class="m"><i>O</i>(log <i>n</i>)</span>، <code>find_max</code> در <span class="m"><i>O</i>(1)</span> و <code>delete_max</code> در <span class="m"><i>O</i>(log <i>n</i>)</span>.</li>
+<li>داده‌ساختارهای دیگری مثل هرم فیبوناچی هم برای صف اولویت وجود دارند: <code>insert</code> و <code>find_max</code> در <span class="m"><i>O</i>(1)</span> و <code>delete_max</code> به صورت سرشکن در <span class="m"><i>O</i>(log <i>n</i>)</span>. افزایش کلید هم در آن سرشکن <span class="m"><i>O</i>(1)</span> است و به همین دلیل دایسترا را سریع‌تر می‌کند.</li>
+</ul>
+
+<h3>هرم دودویی</h3>
+<ul>
+<li>هرم بیشینه (max-heap) یک درخت دودویی تقریباً کامل (جلسۀ ۶) است که به صورت آرایه ذخیره می‌شود و با همان <code>parent(i)</code>، <code>left(i)</code> و <code>right(i)</code> پیمایش می‌شود. به آن درخت نیمه‌مرتب (partially ordered tree) هم می‌گویند.</li>
+<li>خاصیت هرم بیشینۀ درختی: کلید هر رأس از کلید همۀ رئوس زیردرختش کوچک‌تر نیست.</li>
+<li>خاصیت هرم بیشینۀ رأسی: کلید هر رأس از کلید فرزندانش کوچک‌تر نیست. این دو خاصیت معادل‌اند (با استقرا روی ارتفاع). پس بیشینه در ریشه است.</li>
+<li>ارتفاع هرم با <span class="m"><i>n</i></span> عضو <span class="m">⌊log<sub>2</sub> <i>n</i>⌋</span> است، پس درج و حذف در <span class="m"><i>O</i>(log <i>n</i>)</span> انجام می‌شوند.</li>
+<li>در همۀ کدهای پایین <code>Q</code> یک هرم بیشینه است که به صورت آرایه (لیست پایتون) ذخیره شده است.</li>
+</ul>
+<pre>
+def parent(i):
+  return (i - 1) // 2
+
+def left(i):
+  return 2 * i + 1
+
+def right(i):
+  return 2 * i + 2
+
+def find_max(Q):
+  return Q[0]
+</pre>
+<ul>
+<li>درج با <code>max_heapify_up</code>: عضو جدید را به عنوان برگ در آخر آرایه اضافه می‌کنیم و تا وقتی از پدرش بزرگ‌تر است با پدرش جابه‌جا می‌کنیم (به سمت ریشه حرکت می‌کنیم).</li>
+</ul>
+<pre>
+def insert(Q, v):
+  Q.append(v)
+  max_heapify_up(Q, len(Q) - 1)
+
+def max_heapify_up(Q, i):
+  if i &gt; 0 and Q[i] &gt; Q[parent(i)]:
+    Q[i], Q[parent(i)] = Q[parent(i)], Q[i]
+    max_heapify_up(Q, parent(i))
+</pre>
+<ul>
+<li>افزایش کلید یک عضو هم به همین شکل است: کلید را افزایش می‌دهیم و <code>max_heapify_up</code> را صدا می‌زنیم.</li>
+</ul>
+<pre>
+def increase_key(Q, i, v):
+  if v &lt; Q[i]:
+    raise ValueError("new key is smaller than the current key")
+  Q[i] = v
+  max_heapify_up(Q, i)
+</pre>
+<ul>
+<li>حذف بیشینه با <code>max_heapify_down</code>: ریشه را با آخرین برگ جابه‌جا و آن برگ را حذف می‌کنیم. سپس ریشه را تا وقتی از یکی از فرزندانش کوچک‌تر است با بزرگ‌ترین فرزندش جابه‌جا می‌کنیم. پارامتر <code>n</code> اندازۀ هرم است (برای مرتب‌سازی هرمی لازم می‌شود).</li>
+</ul>
+<pre>
+def max_heapify_down(Q, i, n):
+  j = i
+  if left(i) &lt; n and Q[left(i)] &gt; Q[j]:
+    j = left(i)
+  if right(i) &lt; n and Q[right(i)] &gt; Q[j]:
+    j = right(i)
+  if j != i:
+    Q[i], Q[j] = Q[j], Q[i]
+    max_heapify_down(Q, j, n)
+
+def delete_max(Q):
+  Q[0], Q[-1] = Q[-1], Q[0]
+  v = Q.pop()
+  max_heapify_down(Q, 0, len(Q))
+  return v
+</pre>
+
+<h3>ساخت هرم</h3>
+<ul>
+<li>ساخت هرم با <span class="m"><i>n</i></span> درج متوالی <span class="m"><i>O</i>(<i>n</i> log <i>n</i>)</span> طول می‌کشد.</li>
+<li>راه بهتر: برگ‌ها خودشان هرم‌اند. از آخرین رأس داخلی تا ریشه روی هر رأس <code>max_heapify_down</code> را اجرا می‌کنیم. وقتی به رأس <span class="m"><i>i</i></span> می‌رسیم هر دو زیردرختش هرم‌اند، پس بعد از آن زیردرخت <span class="m"><i>i</i></span> هم هرم است.</li>
+</ul>
+<pre>
+def build_heap(A):
+  for i in range(len(A) // 2 - 1, -1, -1):
+    max_heapify_down(A, i, len(A))
+</pre>
+<ul>
+<li>تحلیل زمانی ساخت هرم در <span class="m"><i>O</i>(<i>n</i>)</span>: <code>max_heapify_down</code> روی رأسی به ارتفاع <span class="m"><i>h</i></span> زمان <span class="m"><i>O</i>(<i>h</i>)</span> می‌برد و حداکثر <span class="m">⌈<i>n</i>/2<sup><i>h</i>+1</sup>⌉</span> رأس با ارتفاع <span class="m"><i>h</i></span> داریم، پس
+<div class="formula"><span class="m">∑<sub><i>h</i>=0</sub><sup>⌊log <i>n</i>⌋</sup> ⌈<i>n</i>/2<sup><i>h</i>+1</sup>⌉ · <i>O</i>(<i>h</i>) = <i>O</i>(<i>n</i> ∑<sub><i>h</i>≥0</sub> <i>h</i>/2<sup><i>h</i></sup>) = <i>O</i>(<i>n</i>)</span></div>
+چون <span class="m">∑<sub><i>h</i>≥0</sub> <i>h</i>/2<sup><i>h</i></sup> = 2</span>. شهود: بیشتر رئوس نزدیک برگ‌ها هستند و کار کمی دارند.</li>
+</ul>
+
+<h3>مرتب‌سازی هرمی</h3>
+<ul>
+<li>آرایه را در جای خودش به هرم بیشینه تبدیل می‌کنیم. سپس هر بار بیشینه (ریشه) را با آخرین عضو هرم جابه‌جا می‌کنیم، اندازۀ هرم را یکی کم می‌کنیم و <code>max_heapify_down</code> را روی ریشه اجرا می‌کنیم.</li>
+<li>زمان <span class="m"><i>O</i>(<i>n</i> log <i>n</i>)</span> و حافظۀ اضافۀ <span class="m"><i>O</i>(1)</span> (درجا). (با هرم کمینه هم می‌توان مرتب کرد: کمینه‌ها را به ترتیب حذف می‌کنیم.)</li>
+</ul>
+<pre>
+def heap_sort(A):
+  build_heap(A)
+  for n in range(len(A) - 1, 0, -1):
+    A[0], A[n] = A[n], A[0]
+    max_heapify_down(A, 0, n)
+</pre>
+
+<div class="pager"><a href="06.html">→ جلسۀ ۶</a><a href="08.html">جلسۀ ۸ ←</a></div>
+<footer>مهدی صفرنژاد، دانشکدۀ مهندسی کامپیوتر دانشگاه صنعتی شریف، ۱۳۹۷ تا ۱۴۰۱.
+محتوای این سایت تحت مجوز <a href="https://creativecommons.org/licenses/by/4.0/deed.fa">CC BY 4.0</a> منتشر شده است.</footer>
+</div>
+</body>
+</html>

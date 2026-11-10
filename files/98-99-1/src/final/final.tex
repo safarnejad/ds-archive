@@ -1,0 +1,66 @@
+% !TEX encoding = UTF-8 Unicode
+% !TeX program = xelatex
+% !TEX TS-program = XeLaTeX
+%
+% CE254 Problem Set Template
+%
+\documentclass[12pt,twoside,a4paper]{article}
+\newif\ifHideSolutions
+
+%برای پنهان کردن جواب به جای false نوشته شود true.
+\HideSolutionstrue
+\input{macros-ce254}
+\فرمان‌نو{\theproblemsetnum}{پایان‌ترم}
+\فرمان‌نو{\releasedate}{۲۵ دی ۹۸}
+
+
+%\title{تفکر الگوریتمی}
+\usetikzlibrary{arrows, decorations.markings}
+\شروع{نوشتار}
+
+	\tikzset{
+	treenode/.style = {align=center, inner sep=0pt, text centered,
+		font=\sffamily},
+	arn_n/.style = {treenode, circle, white, font=\sffamily\bfseries, draw=black,
+		fill=black, text width=1.5em},% arbre rouge noir, noeud noir
+	arn_r/.style = {treenode, circle, red, draw=red, 
+		text width=1.5em, very thick},% arbre rouge noir, noeud rouge
+	arn_s/.style = {treenode, circle, black, draw=black, 
+		text width=1.5em, very thick},% arbre rouge noir, noeud rouge
+	arn_x/.style = {treenode, rectangle, draw=black,
+		minimum width=0.5em, minimum height=0.5em, very thick}% arbre rouge noir, nil
+}
+
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=north,yshift=-2.5cm] at (current page.north) {\rl{به نام خدا}};
+\end{tikzpicture}%
+
+\handout{\theproblemsetnum}{آزمون پایان‌ترم}{\releasedate}
+
+زمان این امتحان 150 دقیقه و مجموع نمرات آن 100 است.
+سؤالات در دو صفحه (یک برگۀ پشت و رو) قرار دارند.
+توضیحات ابتدای سؤالات را به دقت بخوانید و  پاسخ هر سؤال را در برگه‌های جداگانه بنویسید. پاسخ بخش‌های مختلف هر سؤال را نیز  به ترتیب در برگۀ پاسخ‌نامه بنویسید.
+\مقداربعد{\تورفتگی‌سربند}{0pt}
+
+% این دستورات برای نوشتن جواب تمرین توسط دانشجویان است.
+%\پرش‌متوسط\پرخط‌ا\پرش‌متوسط
+%{\سیاه نام و نام‌خانوادگی:} نام شما
+%\پرش‌متوسط
+%{\سیاه نام افرادی که با هم تمرین‌ها را حل کردید:} نام اول, نام دوم 
+
+\پرش‌متوسط\پرخط‌ا
+
+\شروع{مسائل}
+\input{src/short}
+\صفحه‌جدید
+\input{src/design}
+%\صفحه‌جدید
+\input{src/others}
+
+
+\begin{flushleft}
+موفق باشید	
+\end{flushleft}
+\پایان{مسائل}
+\پایان{نوشتار}
+

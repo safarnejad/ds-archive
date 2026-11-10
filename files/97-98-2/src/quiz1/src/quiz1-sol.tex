@@ -1,0 +1,150 @@
+% !TEX encoding = UTF-8 Unicode
+% !TeX program = xelatex
+% !TEX TS-program = XeLaTeX
+
+\documentclass[12pt, a4paper]{article}
+%\documentclass[12pt, a5paper]{article}
+\usepackage{mathtools}
+\usepackage{unicode-math}
+\usepackage{comment}
+\usepackage{tikz}
+\usepackage[pass]{geometry}
+%\geometry{legalpaper, landscape, margin=1in}
+\usepackage[empty]{fullpage}
+\usepackage{setspace}
+\usepackage[localise]{xepersian}
+\setstretch{1.255}
+\settextfont[Scale=1]{XB Niloofar}
+\setlatintextfont[Scale=1]{XB Niloofar}%{Junicode} %Junicode
+\setdigitfont{XB Niloofar}%{XB Zar}
+
+\setlength{\parindent}{0ex}
+
+\definecolor{answercolor}{HTML}{0080ff}
+%\newcommand{\پاسخ}[2]{#1}
+\newcommand{\پاسخ}[2]{\color{answercolor}\textbf{پاسخ: }#2\color{black}\vspace{-0.3cm}}
+
+\begin{document}
+	
+	\begin{tikzpicture}[remember picture,overlay]
+	\node[anchor=north,yshift=-1.5cm] at (current page.north) {\rl{به نام خدا}};
+	\end{tikzpicture}%
+
+\vspace{-1cm}
+{\centering
+	\textbf{پاسخ کوئیز اول درس ساختمان داده‌ها و الگوریتم‌ها}\\
+مدرس: مهدی صفرنژاد       - ۱۳ اسفند ۹۷\\
+\raggedleft\small
+%نام و نام خانوادگی: \\
+}
+\vspace{-0.5cm}
+\پرش‌متوسط\پرخط‌ا\\
+%تمام سؤال‌ها جواب کوتاه هستند و توضیح یک‌خطی می‌خواهند.
+\vspace{-1cm}
+\پاراگراف{سؤال ۱. }
+مقیاس‌پذیری یک الگوریتم به چه معنی است؟
+
+\پاسخ{\vspace{0.5cm}}{
+یعنی با بزرگ شدن اندازۀ ورودی، الگوریتم همچنان قابل استفاده باشد.
+
+}
+
+\پاراگراف{سؤال ۲.}
+تست زمان را به صورت کوتاه تعریف کنید و ارتباط آن را با مطالب درس بیان کنید.
+
+\پاسخ{\vspace{0.5cm}}{
+یعنی مفید ماندن یک موضوع در طی زمان. مطالب این درس در چند دهۀ اخیر تست زمان را با موفقیت گذرانده‌اند.
+	
+}
+
+\پاراگراف{سؤال ۳.}
+این جمله صحیح است یا غلط؟ زمان اجرای یک الگوریتم برابر است با تعداد مراحل آن الگوریتم در مدل محاسباتی‌اش.
+
+\پاسخ{\vspace{0.7cm}}{
+غلط است. در برخی مدل‌های محاسبات مثل مدل پایتون یک مرحله ممکن است زمان زیادی صرف کند.
+	
+}
+
+\پاراگراف{سؤال ۴.}
+نام دو مدل محاسبات که در کلاس توضیح داده شدند را بنویسید.
+
+\پاسخ{\vspace{0.5cm}}{
+دو مورد از (۱) ماشین دسترسی تصادفی، (۲) ماشین اشاره‌گر و (۳) ماشین پایتون.
+	
+}
+
+\پاراگراف{سؤال ۵.}
+اگر $f(n) = O(g(n))$ باشد، آیا می‌توان استدلال کرد که
+$2^{f(n)} = O(2^{g(n)})$؟
+
+\پاسخ{\vspace{0.5cm}}{
+خیر. اگر
+$g(n)=\log n$
+ و
+$f(n)=2\log n=O(g(n))$
+  باشد، داریم
+$2^{f(n)}=n^2$ 
+   و
+$2^{g(n)}=n$.
+     پس
+$f(n)\neq O(2^{g(n)})$.
+	
+}
+
+\پاراگراف{سؤال ۶.}
+کدام‌یک از توابع زیر (به صورت مجانبی) بزرگ‌تر است؟
+\vspace{-0.3cm}
+$$f_1(n) = 2^{\log^4 n}, f_2(n) = n^{5\log^2 n}$$
+
+\پاسخ{\vspace{0.5cm}}{
+\vspace{-0.5cm}
+	مبنای $\log$ها همان‌طور که سر کلاس گفته شد ۲ است.
+$$f_1(n) = (2^{\log n})^{\log^3 n} = n^{\log^3 n} > n^{5\log^2 n} = f_2(n)$$
+	\vspace{-1cm}
+}
+
+\پاراگراف{سؤال ۷.}
+پیچیدگی زمانی تابع $T(n)$ با رابطۀ بازگشتی زیر چیست؟
+\vspace{-0.3cm}
+$$T(n)=T(\sqrt{n})+\log_2 n$$
+
+\پاسخ{\vspace{0.5cm}}{
+	\vspace{-1cm}
+\begin{align*}
+\begin{split}
+T(n)&=\log_2 n + \log_2 (n^{1/2}) + \log_2 {n^{1/4}} + \dots \\
+&= \log_2 n + (1/2)\log_2 n + (1/4)\log_2 n + \dots \leq 2\log_2 n = O(\log n)
+\end{split}
+\end{align*}
+
+}
+
+\پاراگراف{سؤال ۸.}
+در مقایسۀ مرتب‌سازی درجی و ادغامی، یک مورد از برتری هر کدام را نام ببرید.
+
+\پاسخ{\vspace{1cm}}{
+مرتب‌سازی ادغامی زمان اجرای کمتری در بدترین حالت دارد. مرتب‌سازی درجی آرایه‌های تقریباً مرتب را سریع‌تر مرتب می‌کند. یا مرتب‌سازی درجی از حافظه اضافه استفاده نمی‌کند.
+	
+}
+
+\پاراگراف{سؤال ۹.}
+نام مرتب‌سازی مورد استفاده در زبان پایتون (الگوریتم تابع sort پایتون) چیست؟
+
+\پاسخ{\vspace{0.5cm}}{
+مرتب‌سازی تیم یا \متن‌لاتین{TimSort}.
+
+}
+
+\پاراگراف{سؤال ۱۰.}
+آيا داده ساختار آرایۀ پویا برای واسط دنبالۀ پویا مناسب است؟
+
+\پاسخ{\vspace{1.2cm}}{
+خیر، زیرا درج در وسط دنباله به خاطر shift دادن زمان‌بر است.
+	
+}
+
+\begin{flushleft}
+موفق باشید
+\end{flushleft}
+
+\end{document}

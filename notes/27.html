@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>جلسۀ ۲۷: الگوریتم بلمن-فورد</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+<nav class="top">
+  <a class="home" href="../index.html">ساختمان داده‌ها و الگوریتم‌ها</a>
+  <a href="../index.html#notes">درس‌نامه</a>
+  <a href="../index.html#terms">ترم‌ها</a>
+  <a href="../tas.html">دستیاران آموزشی</a>
+</nav>
+<h1>جلسۀ ۲۷: الگوریتم بلمن-فورد</h1>
+<p class="sub">مطالعۀ بیشتر: ۲۴.۱ و ۲۴.۴ از CLRS</p>
+<ul>
+<li>یادآوری تعریف کوتاه‌ترین مسیر بین دو رأس و مسئلۀ کوتاه‌ترین مسیر از مبدأ مشخص به بقیۀ رأس‌ها (SSSP).</li>
+<li>یادآوری چارچوب الگوریتم مبتنی بر relax کردن و الگوریتم کوتاه‌ترین مسیر در DAG (جلسۀ ۲۶).</li>
+<li>وقتی گراف دور منفی داشته باشد، مسئلۀ کوتاه‌ترین مسیر عملاً قابل حل نیست. در این صورت می‌توانیم:
+<ul>
+<li>راه اول: فقط وجود دور منفی را گزارش کنیم.</li>
+<li>راه دوم: همۀ رأس‌هایی را که به خاطر دور منفی طول کوتاه‌ترین مسیر از <span class="m"><i>s</i></span> به آن‌ها <span class="m">−∞</span> است گزارش کنیم و برای بقیه کوتاه‌ترین مسیر را پیدا کنیم.</li>
+<li>راه سوم: یک دور منفی پیدا کنیم.</li>
+</ul></li>
+</ul>
+
+<h3>الگوریتم بلمن-فورد</h3>
+<ul>
+<li>همان چارچوب مبتنی بر relax کردن است که در <span class="m"><i>n</i> − 1</span> دور (round)، همۀ یال‌ها به ترتیب دلخواه relax می‌شوند.</li>
+<li>اگر دور منفی نباشد، کوتاه‌ترین مسیر از <span class="m"><i>s</i></span> به بقیه را پیدا می‌کند و در صورت وجود دور منفی، با اندکی تغییر هر کدام از راه‌های بالا را انجام می‌دهد.</li>
+<li>در کد زیر <code>E</code> فهرست یال‌ها و <code>relax</code> همان تابع جلسۀ ۲۶ است. این نسخه راه اول را پیاده می‌کند:</li>
+</ul>
+<pre>
+def bellman_ford(V, E, w, s):
+  d = {v: math.inf for v in V}
+  parent = {v: None for v in V}
+  d[s] = 0
+  for round in range(len(V) - 1):
+    for u, v in E:
+      relax(u, v, w, d, parent)
+  # 1st approach: check for negative weight cycles
+  for u, v in E:
+    if d[v] &gt; d[u] + w(u, v):  # This edge can still be relaxed
+      raise ValueError("There's a negative cycle reachable from s!")
+  return d, parent
+</pre>
+<ul>
+<li>مثال اجرای الگوریتم بلمن-فورد روی یک گراف ۶ رأسی.</li>
+<li>اثبات درستی: با استقرا روی <span class="m"><i>i</i></span>، پس از دور <span class="m"><i>i</i></span>اُم <code>d[v]</code> کمتر یا مساوی وزن کوتاه‌ترین مسیر از <span class="m"><i>s</i></span> به <span class="m"><i>v</i></span> با حداکثر <span class="m"><i>i</i></span> یال است. اگر دور منفی نباشد، کوتاه‌ترین مسیرها ساده‌اند و حداکثر <span class="m"><i>n</i> − 1</span> یال دارند، پس پس از <span class="m"><i>n</i> − 1</span> دور (با ناوردای <span class="m"><i>d</i>[<i>v</i>] ≥ δ(<i>s</i>, <i>v</i>)</span>) داریم <span class="m"><i>d</i>[<i>v</i>] = δ(<i>s</i>, <i>v</i>)</span>.</li>
+<li>زمان اجرا: <span class="m"><i>O</i>(<i>n e</i>)</span>.</li>
+</ul>
+
+<h3>برخورد با دور منفی</h3>
+<ul>
+<li>۱. گزارش وجود دور منفی: کافی است relax کردن‌ها را یک دور دیگر انجام دهیم. اگر <code>d</code> رأسی به‌روز شود، دور منفی وجود دارد (کد بالا). اگر دور منفی نباشد، طبق اثبات درستی هیچ یالی قابل relax نیست؛ و اگر دور منفی <span class="m">(<i>v</i><sub>0</sub>, …, <i>v</i><sub><i>k</i></sub> = <i>v</i><sub>0</sub>)</span> از <span class="m"><i>s</i></span> قابل دسترسی باشد و هیچ یالی قابل relax نباشد، با جمع زدن <span class="m"><i>d</i>[<i>v</i><sub><i>i</i></sub>] ≤ <i>d</i>[<i>v</i><sub><i>i</i>−1</sub>] + <i>w</i>(<i>v</i><sub><i>i</i>−1</sub>, <i>v</i><sub><i>i</i></sub>)</span> روی دور به این می‌رسیم که وزن دور نامنفی است که تناقض است.
+<ul>
+<li>در این روش، دور منفی فقط اگر از <span class="m"><i>s</i></span> قابل دسترسی باشد گزارش می‌شود. برای پیدا کردن دور منفی در کل گراف (وقتی به کوتاه‌ترین مسیرها نیازی نداریم) می‌توان در ابتدای الگوریتم <code>d</code> همۀ رأس‌ها را صفر گذاشت.</li>
+</ul></li>
+<li>۲. گزارش رأس‌هایی که کوتاه‌ترین مسیر از <span class="m"><i>s</i></span> به آن‌ها <span class="m">−∞</span> است: یک دور دیگر relax می‌کنیم. هر رأسی که <code>d</code> آن در این دور به‌روز شود، و هر رأسی که از چنین رأسی قابل دسترسی باشد، <span class="m">δ = −∞</span> دارد. <code>d</code> بقیۀ رأس‌ها درست است.
+<ul>
+<li>دلیل: روی هر دور منفیِ قابل دسترس از <span class="m"><i>s</i></span> همیشه یالی قابل relax هست (استدلال راه اول)، پس سر آن یال در این دور به‌روز می‌شود. برعکس، اگر <code>d[v]</code> پس از <span class="m"><i>n</i> − 1</span> دور هنوز کم شود، گشتی با <span class="m"><i>n</i></span> یال کوتاه‌تر از همۀ مسیرهای ساده هست که یک دور منفی دارد.</li>
+<li>اگر به جای این کار فقط <span class="m"><i>n</i></span> دور دیگر relax کنیم، کافی نیست: وقتی وزن دور منفی کم و یال خروجی از آن سنگین است، <code>d</code> رأس‌های دورتر ممکن است در این دورها اصلاً عوض نشود. برای همین دسترسی را جداگانه پخش می‌کنیم.</li>
+</ul></li>
+</ul>
+<pre>
+def bellman_ford_minus_inf(V, E, w, s):
+  d = {v: math.inf for v in V}
+  parent = {v: None for v in V}
+  d[s] = 0
+  for round in range(len(V) - 1):
+    for u, v in E:
+      relax(u, v, w, d, parent)
+  minus_inf = set()
+  for u, v in E:
+    if d[v] &gt; d[u] + w(u, v):
+      minus_inf.add(v)
+  for round in range(len(V)):  # spread to everything reachable
+    for u, v in E:
+      if u in minus_inf:
+        minus_inf.add(v)
+  for v in minus_inf:
+    d[v] = -math.inf
+  return d, parent
+</pre>
+<ul>
+<li>۳. پیدا کردن یک دور منفی: به‌روزرسانی‌ها را یک دور بیشتر انجام می‌دهیم. سپس با دنبال کردن <code>parent</code> از یکی از رأس‌هایی که در دور آخر <code>d</code> آن به‌روز شده، یک دور منفی پیدا می‌کنیم. توجه کنید رأسی که <code>d</code> آن به‌روز شده ممکن است خودش روی دور نباشد؛ ولی پس از <span class="m"><i>n</i></span> قدم دنبال کردن <code>parent</code> حتماً روی دور هستیم.</li>
+</ul>
+<pre>
+def negative_cycle(V, E, w, s):
+  d = {v: math.inf for v in V}
+  parent = {v: None for v in V}
+  d[s] = 0
+  for round in range(len(V) - 1):
+    for u, v in E:
+      relax(u, v, w, d, parent)
+  for u, v in E:
+    if d[v] &gt; d[u] + w(u, v):
+      relax(u, v, w, d, parent)
+      x = v
+      for i in range(len(V)):  # walk back into the cycle
+        x = parent[x]
+      cycle = [x]
+      y = parent[x]
+      while y != x:
+        cycle.append(y)
+        y = parent[y]
+      return cycle[::-1]
+  return None
+</pre>
+
+<h3>کاربردها</h3>
+<ul>
+<li>یال و دور منفی در بسیاری از گراف‌ها، مثل گراف نقشه، وجود ندارد؛ برای همین کاربرد الگوریتم بلمن-فورد ممکن است به ذهن نرسد.</li>
+<li>تبدیل ارزها و آربیتراژ: اگر نرخ تبدیل ارز <span class="m"><i>i</i></span> به <span class="m"><i>j</i></span> برابر <span class="m"><i>r</i><sub><i>ij</i></sub></span> باشد، وزن یال را <span class="m">−log <i>r</i><sub><i>ij</i></sub></span> می‌گذاریم. دوری از تبدیل‌ها که سرمایه را زیاد کند (حاصل‌ضرب نرخ‌ها بیشتر از ۱) همان دور منفی است.</li>
+<li>دستگاه نامعادلات تفاضلی: اگر <span class="m"><i>m</i></span> نامعادله به صورت <span class="m"><i>x</i><sub><i>j</i></sub> − <i>x</i><sub><i>i</i></sub> ≤ <i>b</i><sub><i>k</i></sub></span> داشته باشیم، آن را با بلمن-فورد حل می‌کنیم:
+<ul>
+<li>برای هر <span class="m"><i>x</i><sub><i>i</i></sub></span> یک رأس و برای هر نامعادله یک یال جهت‌دار از <span class="m"><i>x</i><sub><i>i</i></sub></span> به <span class="m"><i>x</i><sub><i>j</i></sub></span> با وزن <span class="m"><i>b</i><sub><i>k</i></sub></span> می‌گذاریم.</li>
+<li>در ابتدای الگوریتم <code>d</code> همه را صفر می‌گذاریم و بلمن-فورد را اجرا می‌کنیم.</li>
+<li>اگر دور منفی نباشد، <span class="m"><i>x</i><sub><i>i</i></sub> = <i>d</i>[<i>x</i><sub><i>i</i></sub>]</span> یک جواب معتبر است (نامساوی مثلث). اگر دور منفی باشد، با جمع نامعادله‌های روی دور به این می‌رسیم که صفر از یک عدد منفی کوچک‌تر یا مساوی است، پس دستگاه جواب ندارد.</li>
+</ul></li>
+</ul>
+
+<div class="pager"><a href="26.html">→ جلسۀ ۲۶</a><a href="28.html">جلسۀ ۲۸ ←</a></div>
+<footer>مهدی صفرنژاد، دانشکدۀ مهندسی کامپیوتر دانشگاه صنعتی شریف، ۱۳۹۷ تا ۱۴۰۱.
+محتوای این سایت تحت مجوز <a href="https://creativecommons.org/licenses/by/4.0/deed.fa">CC BY 4.0</a> منتشر شده است.</footer>
+</div>
+</body>
+</html>

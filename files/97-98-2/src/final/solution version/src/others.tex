@@ -1,0 +1,48 @@
+\شروع‌مسئله[19]
+\متن‌سیاه{رأس‌های برشی}. یک رأس در گراف بدون جهت $G$ برشی است اگر و تنها اگر حذف آن از گراف، تعداد مؤلفه‌های همبندی گراف را بیشتر کند. ما در این مسئله می‌خواهیم رئوس برشی گراف همبند و بدون جهت $G$ را پیدا کنیم.
+
+در این قسمت باید اثبات دقیقی برای درستی الگوریتم و زمان اجرای آن بیان کنید.
+
+\شروع{زیرمسائل}
+\زیرمسئله[10]
+فرض کنید جست‌وجوی عمق اول (DFS) را از یک رأس دلخواه اجرا می‌کنیم. ثابت کنید رأس غیربرگ و غیرریشه $v$ از درخت DFS برشی است اگر و تنها اگر زیردرخت یکی از فرزندان $v$ یال برگشتی به اجداد $v$ نداشته باشد.
+
+\پاسخ{
+با توجه به این که ادعا از نوع «اگر و تنها اگر» است، آن را باید از دو جهت اثبات کنیم.
+
+جهت اول: اگر $u$ یک رأس برشی باشد، زیردرخت یکی از فرزندان آن هیچ یال برگشتی به اجداد $u$ ندارد. این ادعا را می‌توان با برهان خلف اثبات کرد. فرض کنید تمام زیردرخت فرزندان یک یال بازگشتی به اجداد $u$ داشته باشند. اگر رأس $u$ از گراف حذف شود، تمام زیردرخت‌های $u$ با یال بازگشتی مذکور به جدی از $u$ متصل هستند و بنابراین گراف همبند می‌ماند که نتیجه می‌دهد $u$ برشی نیست. این تناقض با فرض برشی بودن $u$ نتیجه می‌دهد فرض خلف غلط است و حداقل یکی از زیردرخت‌های $u$ یال بازگشتی به اجداد $u$ ندارد.
+
+جهت دوم: اگر زیردرخت یکی از فرزندان $u$ هیچ یال برگشتی به اجداد $u$ نداشته باشد، $u$ یک رأس برشی است. برای نشان‌دادن درستی این ادعا نیز کافی است توجه کنیم در DFS روی یک گراف بدون‌جهت، تنها یال‌های درخت DFS وجود دارند و یال‌های بازگشتی (و یال‌های متقاطع و رو به جلو وجود ندارند). بنابراین هیچ مسیری از زیردرخت فرزندان $u$ به یکدیگر و به رأس‌هایی که اجداد و نوادگان $u$ نیستند وجود ندارد. با توجه به این فرض که یال‌های بازگشتی نیز در این مسئله وجود ندارند، تنها یال‌های درخت بین زیردرخت موردنظر و خارج از آن وجود دارد. بنابراین اگر $u$ از گراف حذف شود، زیردرخت موردنظر از بقیۀ رئوس جدا شده و گراف غیرهمبند می‌شود. در نتیجه $u$ برشی است.
+
+با اثبات جهت اول و دوم، ادعای خواسته شده ثابت می‌شود.
+
+در صورتی که با یال‌های متقاطع اشاره نشود، حداقل ۲ نمره کم می‌شود.
+	
+}
+
+\زیرمسئله[9]
+از این ایده استفاده کنید و الگوریتمی با زمان اجرای $O(n+e)$ برای پیدا کردن همۀ رأس‌های برشی یک گراف ارائه داده و اثبات کنید.
+
+\پاسخ{
+	شرط لازم و کافی برای برشی بودن رأس‌های میانی (غیر از برگ‌ها و ریشه) در قسمت آ گفته شده است. برگ‌ها برشی نیستند زیرا با حذف آن‌ها درخت DFS بقیه رئوس را به هم متصل می‌کند. ریشه نیز برشی اگر و تنها اگر بیش از یک فرزند در درخت DFS داشته باشد. برای اثبات این ادعا توجه کنید اگر ریشه تنها یک فرزند داشته باشد مشابه برگ‌ها با استفاده از درخت DFS برشی نمی‌تواند باشد و اگر بیش از یک فرزند داشته باشد، چون یال متقاطع وجود ندارد، ریشه حتماً برشی است.
+	
+برای بررسی این شروط کافی است از یک رأس دلخواه جست‌وجوی عمق اول را اجرا کنیم و برای هر رأس، عمق خود رأس (یا به جای آن زمان شروع) را نگه داریم. با استفاده از این عمق، برای هر رأس، کم‌عمق‌ترین همسایۀ آن را نگه داشته و با استفاده از این، برای هر رأس کم‌عمق‌ترین همسایۀ زیردرخت رأس را می‌توانیم محاسبه کنیم. با داشتن این اطلاعات می‌توان شرط قسمت آ را به راحتی در حین اجرای DFS بررسی کرد. شرط رأس‌های برگ و ریشه نیز در حین اجرای DFS قابل انجام است. زمان محاسبه اطلاعات اضافه و چک کردن شرط‌ها برای رأس $v$ حداکثر به اندازه $O(\mathsf{deg}_G(v))$ (متناسب با درجۀ $v$) است و از لحاظ مجانبی، زمان بیشتری را به DFS اضافه نمی‌کند. بنابراین زمان اجرای الگوریتم $O(n+e)$ خواهد بود.
+
+}
+
+%\زیرمسئله[7]
+%یک گراف همبند بدون جهت $G$ داریم که یال‌ها فقط وزن مثبت دارند. همچنین این گراف دقیقاً یک دور دارد. الگوریتمی با زمان $O(n)$ طراحی کنید که کوتاه‌ترین مسیر از $s$ به $t$ را پیدا کند.
+%
+%\پاسخ{
+%	Given two vertices in a weighted tree containing only positive weight edges, there is a unique simple path between them which is also the minimum weight path. A depth-first search from a source vertex s in the tree results in a directed DFS tree in O(|V |) time (since |E| = |V |−1). Then relaxing edges in topological sort order of the directed DFS tree computes minimum weight paths from s in O(|V |) time. Since G has one cycle, our strategy will be to break the cycle by removing an edge, and then compute the minimum weight path from s to t in the resultant tree.
+%	First, we find the vertex v on the cycle closest to s by running depth-first search from s in O(|V |) time (since |E| = |V |). To find v, one edge of the cycle will be the only DFS back edge e1, and will terminate at vertex v, with the other edge of the cycle incident to v being a single outgoing DFS tree edge e2. If s is on the cycle, v = s; otherwise the unique path from s to v does not contain e1 or e2. A shortest path from s to t cannot traverse both edges e1 and e2, or else the path would visit v at least twice, traversing a cycle of positive weight. Removing either e1 or e2 results in a tree, at least one of which contains the minimum weight path from s to t. Thus, find the minimum weight path from s to t in each tree using the algorithm described above, returning the minimum of the two in O(|V |) time.
+%	Rubric:
+%	• 12 points for a correct O(|V |) time algorithm • 3 points for running time analysis
+%	• Partial credit may be awarded
+%	
+%	
+%}
+
+\پایان{زیرمسائل}
+
+

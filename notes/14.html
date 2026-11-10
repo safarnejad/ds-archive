@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>جلسۀ ۱۴: درهم‌سازی: مقدمات، زنجیره، درهم‌سازی سراسری و پویا</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+<nav class="top">
+  <a class="home" href="../index.html">ساختمان داده‌ها و الگوریتم‌ها</a>
+  <a href="../index.html#notes">درس‌نامه</a>
+  <a href="../index.html#terms">ترم‌ها</a>
+  <a href="../tas.html">دستیاران آموزشی</a>
+</nav>
+<h1>جلسۀ ۱۴: درهم‌سازی: مقدمات، زنجیره، درهم‌سازی سراسری و پویا</h1>
+<p class="sub">مطالعۀ بیشتر: ۱-۵ تا ۵-۵ و ۵-۸ از قدسی و ۱۱.۱ تا ۱۱.۳ از CLRS</p>
+<ul>
+<li>اولین جلسه با موضوع درهم‌سازی (hashing): پرکاربردترین داده‌ساختار در علوم و مهندسی کامپیوتر.</li>
+</ul>
+
+<h3>مسئلۀ لغت‌نامه</h3>
+<ul>
+<li>واسط لغت‌نامه (dictionary): به دنبال داده‌ساختاری هستیم که روی تعدادی شیء، که هر کدام یک کلید دارند، این عملیات را انجام دهد:
+<ul>
+<li>درج: یک شیء و کلید آن را بگیرد و ذخیره کند.</li>
+<li>حذف: یک کلید را بگیرد و شیء آن را حذف کند.</li>
+<li>جست‌وجو: یک کلید را بگیرد و اگر شیئی با این کلید هست، آن را برگرداند.</li>
+</ul></li>
+<li>فرض می‌کنیم کلیدها متمایزند (اگر دو شیء با کلید یکسان درج کنیم، شیء جدید جایگزین قبلی می‌شود).</li>
+<li>درخت دودویی جست‌وجوی متوازن این مسئله را با زمان <span class="m"><i>O</i>(log <i>n</i>)</span> برای هر عمل حل می‌کند و علاوه بر این می‌تواند عناصر با کلید نزدیک (کمترین کلید بزرگ‌تر و بیشترین کلید کوچک‌تر) را هم پیدا کند.</li>
+<li>هدف این است که این سه عمل در <span class="m"><i>O</i>(1)</span> انجام شوند.</li>
+<li>در پایتون <code>dict</code> این مسئله را حل می‌کند. <code>set</code> هم مثل <code>dict</code> است با این تفاوت که شیءها همان کلیدها هستند.</li>
+</ul>
+
+<h3>برخی کاربردهای درهم‌سازی</h3>
+<ul>
+<li>زبان‌های برنامه‌نویسی، پایگاه‌های داده، کامپایلرها و مفسرها</li>
+<li>مسیریاب‌های شبکه (اختصاص خروجی به هر آدرس IP) و سرورهای شبکه (نگاشت درگاه به سوکت یا برنامه)</li>
+<li>حافظۀ مجازی در سیستم‌عامل‌ها</li>
+<li>جست‌وجوی زیررشته (دستور <code>grep</code> و جست‌وجوی گوگل) و تشابه رشته‌ها (DNA)</li>
+<li>همگام‌سازی فایل‌ها و پوشه‌ها (دراپ‌باکس)</li>
+<li>رمزنگاری</li>
+</ul>
+
+<h3>جدول دسترسی مستقیم</h3>
+<ul>
+<li>یک راه (غیرعملی) این است که کلیدها را اندیس آرایه بگیریم. در این صورت درج، حذف و جست‌وجو در <span class="m"><i>O</i>(1)</span> انجام می‌شوند. به این روش جدول دسترسی مستقیم (direct access table) می‌گویند.</li>
+<li>دو مشکل عمده دارد: ۱. کلیدها باید عدد صحیح نامنفی باشند. ۲. کلیدهای بزرگ (مثلاً <span class="m">2<sup>256</sup></span>) جدول را بیش از اندازه بزرگ می‌کنند.</li>
+</ul>
+
+<h3>راه‌حل مشکل اول: پیش‌درهم‌سازی</h3>
+<ul>
+<li>در کامپیوتر همه‌چیز به صورت صفر و یک ذخیره می‌شود، پس هر کلیدی را می‌توان به عدد تبدیل کرد. از لحاظ ریاضی هم مجموعۀ کلیدها شماراست.</li>
+<li>در پایتون این کار را تابع <code>hash</code> انجام می‌دهد (اسم آن گمراه‌کننده است و بهتر بود <code>prehash</code> باشد).</li>
+<li>در تئوری پیش‌درهم‌سازی دو کلید متفاوت باید متفاوت باشد، اما در پایتون این خاصیت برقرار نیست؛ مثلاً <code>hash(-1) == hash(-2) == -2</code>.</li>
+<li>کلیدها نباید در طول اجرای برنامه تغییر کنند. مثلاً لیست نمی‌تواند کلید باشد، چون درج در آن لیست را تغییر می‌دهد.</li>
+</ul>
+
+<h3>راه‌حل مشکل دوم: درهم‌سازی</h3>
+<ul>
+<li>مجموعۀ کلیدها <span class="m">𝒰</span> را با یک تابع درهم‌سازی به مجموعۀ کوچک‌تری به اندازۀ <span class="m"><i>m</i></span> می‌نگاریم: <span class="m"><i>h</i>: 𝒰 → {0, 1, …, <i>m</i> − 1}</span> که <span class="m"><i>m</i> ≈ <i>n</i></span> (تعداد اشیا) است.</li>
+<li>مشکل برخورد (collision): اگر <span class="m"><i>x</i></span> را در خانۀ <span class="m"><i>h</i>(<i>x</i>)</span> درج کنیم، ممکن است دو شیء با کلیدهای متفاوت بخواهند در یک خانه درج شوند.</li>
+<li>در این جلسه و دو جلسۀ بعد روش‌های مختلف رفع برخورد را بررسی می‌کنیم.</li>
+</ul>
+
+<h3>زنجیره</h3>
+<ul>
+<li>ساده‌ترین راه رفع برخورد زنجیره (chaining) است: اشیائی که برخورد دارند در یک لیست پیوندی ذخیره می‌شوند.</li>
+<li>درج ساده است: <span class="m"><i>x</i></span> را به لیست خانۀ <span class="m"><i>h</i>(<i>x</i>)</span> اضافه می‌کنیم. برای جست‌وجو و حذف باید کل لیست خانۀ <span class="m"><i>h</i>(<i>x</i>)</span> را بگردیم.</li>
+<li>جست‌وجو در بدترین حالت <span class="m">Θ(<i>n</i>)</span> است (همه در یک خانه). به دنبال تحلیل حالت میانگین هستیم.</li>
+</ul>
+
+<h3>فرض درهم‌سازی یکنواخت ساده</h3>
+<ul>
+<li>فرض درهم‌سازی یکنواخت ساده (simple uniform hashing): هر کلید با احتمال مساوی و مستقل از بقیۀ کلیدها به هر کدام از خانه‌های جدول نگاشته می‌شود.</li>
+<li>ضریب بارگذاری (load factor) را <span class="m">α = <i>n</i>/<i>m</i></span> تعریف می‌کنیم که <span class="m"><i>n</i></span> تعداد کلیدهای ذخیره‌شده و <span class="m"><i>m</i></span> اندازۀ جدول است.</li>
+<li>توجه کنید این فرض لزوماً درست نیست.</li>
+<li>با این فرض طول میانگین هر زنجیره <span class="m">α</span> و میانگین زمان جست‌وجو <span class="m"><i>O</i>(1 + α)</span> است. بنابراین اگر <span class="m"><i>m</i> = Ω(<i>n</i>)</span> باشد، زمان جست‌وجو <span class="m"><i>O</i>(1)</span> است.</li>
+</ul>
+
+<h3>توابع درهم‌سازی</h3>
+<ul>
+<li>روش تقسیم: <span class="m"><i>h</i>(<i>k</i>) = <i>k</i> mod <i>m</i></span>.
+<ul>
+<li>در عمل وقتی خوب است که <span class="m"><i>m</i></span> عدد اول و دور از توان‌های ۲ و ۱۰ باشد.</li>
+<li>پیدا کردن عدد اول در هر بار تغییر اندازۀ جدول و محاسبۀ باقی‌مانده زمان‌بر است.</li>
+</ul></li>
+<li>روش ضرب: <span class="m"><i>h</i>(<i>k</i>) = [(<i>a</i> · <i>k</i>) mod 2<sup><i>w</i></sup>] ≫ (<i>w</i> − <i>r</i>)</span>.
+<ul>
+<li>این تعریف با روش ضرب کتاب CLRS کمی متفاوت است.</li>
+<li><span class="m"><i>w</i></span> تعداد بیت‌های کلمه (و کلید <span class="m"><i>k</i></span>)، <span class="m"><i>a</i></span> یک عدد تصادفی و <span class="m"><i>m</i> = 2<sup><i>r</i></sup></span> است؛ یعنی <span class="m"><i>r</i></span> بیت پرارزش از <span class="m"><i>w</i></span> بیت کم‌ارزش حاصل‌ضرب را برمی‌داریم.</li>
+<li>در عمل خوب است اگر <span class="m"><i>a</i></span> فرد باشد، <span class="m">2<sup><i>w</i>−1</sup> &lt; <i>a</i> &lt; 2<sup><i>w</i></sup></span> و <span class="m"><i>a</i></span> خیلی نزدیک به <span class="m">2<sup><i>w</i>−1</sup></span> و <span class="m">2<sup><i>w</i></sup></span> نباشد.</li>
+<li>ضرب و استخراج بیت‌ها سریع‌تر از تقسیم است.</li>
+</ul></li>
+</ul>
+
+<h3>درهم‌سازی سراسری</h3>
+<ul>
+<li>در درهم‌سازی سراسری (universal hashing) یک خانواده از توابع درهم‌سازی داریم که در ابتدای الگوریتم یکی از آن‌ها را تصادفی انتخاب می‌کنیم و در ادامه از همان استفاده می‌کنیم. به این ترتیب هیچ ورودی ثابتی همیشه بد نیست.</li>
+<li>مثال: <span class="m"><i>h</i>(<i>k</i>) = [(<i>a k</i> + <i>b</i>) mod <i>p</i>] mod <i>m</i></span> که <span class="m"><i>p</i></span> یک عدد اول بزرگ (بزرگ‌تر از اندازۀ <span class="m">𝒰</span>)، <span class="m"><i>a</i> ∈ {1, …, <i>p</i> − 1}</span> و <span class="m"><i>b</i> ∈ {0, …, <i>p</i> − 1}</span> تصادفی است.</li>
+<li>برای هر دو کلید <span class="m"><i>k</i><sub>1</sub> ≠ <i>k</i><sub>2</sub></span> ثابت می‌شود <span class="m">Pr<sub><i>a</i>,<i>b</i></sub>{<i>h</i>(<i>k</i><sub>1</sub>) = <i>h</i>(<i>k</i><sub>2</sub>)} ≤ 1/<i>m</i></span>. توجه کنید احتمال روی انتخاب تصادفی <span class="m"><i>a</i></span> و <span class="m"><i>b</i></span> است، نه روی ورودی.</li>
+<li>با استفاده از این خاصیت ثابت می‌شود امید ریاضی طول زنجیرۀ هر کلید حداکثر <span class="m">1 + α</span> است، بدون فرض درهم‌سازی یکنواخت ساده.</li>
+</ul>
+<pre>
+import random
+from types import SimpleNamespace
+
+p = 2 ** 61 - 1   # a large prime
+
+def universal_hash(m):
+  a = random.randint(1, p - 1)
+  b = random.randint(0, p - 1)
+  return lambda k: ((a * hash(k) + b) % p) % m
+</pre>
+
+<h3>درهم‌سازی پویا</h3>
+<ul>
+<li>چون <span class="m"><i>n</i></span> از ابتدا ممکن است معلوم نباشد، انتخاب <span class="m"><i>m</i></span> مناسب به طوری که <span class="m"><i>m</i> = Ω(<i>n</i>)</span> باشد مسئلۀ مهمی است.</li>
+<li>مشابه آرایۀ پویا (جلسۀ ۵) عمل می‌کنیم: هر گاه <span class="m"><i>m</i> = <i>n</i></span> شد، <span class="m"><i>m</i></span> را دو برابر و هر گاه <span class="m"><i>m</i> = 4<i>n</i></span> شد، <span class="m"><i>m</i></span> را نصف می‌کنیم. در تغییر اندازه یک تابع درهم‌سازی جدید انتخاب می‌کنیم و همۀ اشیا را دوباره درج می‌کنیم.</li>
+<li>در این صورت همیشه <span class="m"><i>n</i> ≤ <i>m</i> ≤ 4<i>n</i></span> است و زمان سرشکن درج و حذف <span class="m"><i>O</i>(1)</span> است؛ تحلیل مشابه آرایۀ پویاست.</li>
+<li>در کد زیر زنجیره‌ها با <code>list</code> پایتون پیاده شده‌اند و هر عضو زنجیره یک جفت (کلید، شیء) است.</li>
+</ul>
+<pre>
+def new_table():
+  return SimpleNamespace(m=1, n=0, h=universal_hash(1), slots=[[]])
+
+def resize(T, m):
+  items = [kv for chain in T.slots for kv in chain]
+  T.m, T.h = m, universal_hash(m)
+  T.slots = [[] for _ in range(m)]
+  for k, v in items:
+    T.slots[T.h(k)].append((k, v))
+
+def find(T, k):
+  for key, v in T.slots[T.h(k)]:
+    if key == k:
+      return v
+  return None
+
+def insert(T, k, v):
+  chain = T.slots[T.h(k)]
+  for i in range(len(chain)):
+    if chain[i][0] == k:
+      chain[i] = (k, v)
+      return
+  chain.append((k, v))
+  T.n += 1
+  if T.n == T.m:
+    resize(T, 2 * T.m)
+
+def delete(T, k):
+  chain = T.slots[T.h(k)]
+  for i in range(len(chain)):
+    if chain[i][0] == k:
+      chain.pop(i)
+      T.n -= 1
+      if T.m &gt; 1 and 4 * T.n == T.m:
+        resize(T, T.m // 2)
+      return
+</pre>
+
+<div class="pager"><a href="13.html">→ جلسۀ ۱۳</a><a href="15.html">جلسۀ ۱۵ ←</a></div>
+<footer>مهدی صفرنژاد، دانشکدۀ مهندسی کامپیوتر دانشگاه صنعتی شریف، ۱۳۹۷ تا ۱۴۰۱.
+محتوای این سایت تحت مجوز <a href="https://creativecommons.org/licenses/by/4.0/deed.fa">CC BY 4.0</a> منتشر شده است.</footer>
+</div>
+</body>
+</html>

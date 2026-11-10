@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>جلسۀ ۱۹: آرایۀ پسوندی و تبدیل باروز-ویلر</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+<nav class="top">
+  <a class="home" href="../index.html">ساختمان داده‌ها و الگوریتم‌ها</a>
+  <a href="../index.html#notes">درس‌نامه</a>
+  <a href="../index.html#terms">ترم‌ها</a>
+  <a href="../tas.html">دستیاران آموزشی</a>
+</nav>
+<h1>جلسۀ ۱۹: آرایۀ پسوندی و تبدیل باروز-ویلر</h1>
+<p class="sub">مطالعۀ بیشتر: خارج از مراجع</p>
+<ul>
+<li>یادآوری ترای و درخت پسوندی از جلسۀ ۱۸.</li>
+</ul>
+
+<h3>آرایۀ پسوندی</h3>
+<ul>
+<li>اگر پسوندهای یک رشته را به ترتیب لغت‌نامه‌ای مرتب کنیم، دنبالۀ اندیس‌های شروع پسوندهای مرتب‌شده آرایۀ پسوندی (suffix array) را تشکیل می‌دهد.</li>
+<li>مثال: آرایۀ پسوندی <code>banana$</code> برابر <code>[6, 5, 3, 1, 0, 4, 2]</code> است (<code>$</code> از همۀ حروف کوچک‌تر است).</li>
+<li>می‌توان نشان داد آرایۀ پسوندی معادل درخت پسوندی است و با این حال ساده‌تر و فشرده‌تر از آن است. ساختار درخت پسوندی با نگاه به آن مشخص است ولی برای آرایۀ پسوندی این‌طور نیست.</li>
+<li>ساده‌ترین روش ساخت: پسوندها را مستقیم مرتب کنیم. هر مقایسه <span class="m"><i>O</i>(<i>n</i>)</span> طول می‌کشد و کل زمان <span class="m"><i>O</i>(<i>n</i><sup>2</sup> log <i>n</i>)</span> است.</li>
+</ul>
+<pre>
+def suffix_array_naive(t):
+  return sorted(range(len(t)), key=lambda i: t[i:])
+</pre>
+
+<h3>آرایۀ طولانی‌ترین پیشوند مشترک</h3>
+<ul>
+<li>در آرایۀ کمکی طولانی‌ترین پیشوند مشترک (LCP) برای هر دو پسوند متوالی در آرایۀ پسوندی، طول طولانی‌ترین پیشوند مشترک آن‌ها را ذخیره می‌کنیم.</li>
+<li>این آرایه در زمان <span class="m"><i>O</i>(|<i>t</i>|)</span> ساخته می‌شود (الگوریتم کاسای). نکتۀ اصلی: اگر پسوند <span class="m"><i>i</i></span> با پسوند قبلی خود در آرایۀ پسوندی <span class="m"><i>h</i></span> حرف مشترک داشته باشد، پسوند <span class="m"><i>i</i> + 1</span> با پسوند قبلی خود دست کم <span class="m"><i>h</i> − 1</span> حرف مشترک دارد. پس <span class="m"><i>h</i></span> در کل حداکثر <span class="m">2<i>n</i></span> بار تغییر می‌کند.</li>
+<li>در کد زیر <code>lcp[r]</code> طول پیشوند مشترک پسوندهای <code>sa[r - 1]</code> و <code>sa[r]</code> است و <code>lcp[0] = 0</code>.</li>
+</ul>
+<pre>
+def lcp_array(t, sa):
+  n = len(t)
+  rank = [0] * n
+  for r in range(n):
+    rank[sa[r]] = r
+  lcp = [0] * n
+  h = 0
+  for i in range(n):
+    if rank[i] &gt; 0:
+      j = sa[rank[i] - 1]
+      while i + h &lt; n and j + h &lt; n and t[i + h] == t[j + h]:
+        h += 1
+      lcp[rank[i]] = h
+      if h &gt; 0:
+        h -= 1
+    else:
+      h = 0
+  return lcp
+</pre>
+
+<h3>تطابق رشته‌ها با آرایۀ پسوندی</h3>
+<ul>
+<li>همۀ وقوع‌های <span class="m"><i>s</i></span> در <span class="m"><i>t</i></span> پسوندهایی‌اند که با <span class="m"><i>s</i></span> شروع می‌شوند و در آرایۀ پسوندی کنار هم قرار دارند. این بازه را با دو جست‌وجوی دودویی پیدا می‌کنیم.</li>
+<li>بدون استفاده از LCP زمان هر جست‌وجو <span class="m"><i>O</i>(|<i>s</i>| log |<i>t</i>|)</span> است.</li>
+<li>با استفاده از LCP و داشتن کمینۀ هر زیربازه از آن (جلسۀ ۲۰) می‌توان این زمان را به <span class="m"><i>O</i>(|<i>s</i>| + log |<i>t</i>|)</span> کاهش داد.</li>
+</ul>
+<pre>
+def search(t, sa, s):
+  lo, hi = 0, len(sa)
+  while lo &lt; hi:
+    mid = (lo + hi) // 2
+    if t[sa[mid]:sa[mid] + len(s)] &lt; s:
+      lo = mid + 1
+    else:
+      hi = mid
+  first, hi = lo, len(sa)
+  while lo &lt; hi:
+    mid = (lo + hi) // 2
+    if t[sa[mid]:sa[mid] + len(s)] == s:
+      lo = mid + 1
+    else:
+      hi = mid
+  return sorted(sa[first:lo])
+</pre>
+
+<h3>تبدیل درخت و آرایۀ پسوندی به همدیگر</h3>
+<ul>
+<li>الف. درخت پسوندی به آرایۀ پسوندی: با پیمایش درخت (مشابه پیمایش میان‌ترتیب، با بررسی فرزندان به ترتیب حروف) پسوندها را به ترتیب در برگ‌ها می‌بینیم و آرایۀ پسوندی را می‌سازیم.</li>
+<li>ب. آرایۀ پسوندی به درخت پسوندی: از درخت دکارتی آرایۀ LCP استفاده می‌کنیم.
+<ul>
+<li>درخت دکارتی یک آرایه: عنصر کمینه در ریشه قرار می‌گیرد، زیردرخت چپ به صورت بازگشتی از عناصر سمت چپ آن و زیردرخت راست به صورت بازگشتی از عناصر سمت راست آن ساخته می‌شود. ساخت آن در زمان خطی در جلسۀ ۲۰ می‌آید.</li>
+<li>این‌جا اگر چند عنصر کمینه داشته باشیم، همه را در ریشه می‌گذاریم و آرایه به چند قسمت تقسیم می‌شود. در این صورت درخت دیگر دودویی نیست.</li>
+<li>با این شرط، عدد هر رأس درخت دکارتی LCP برابر عمق حرفی (تعداد حروف مسیر از ریشه) یک رأس داخلی درخت پسوندی است و ساختار دو درخت یکی است. بنابراین می‌توان پسوندها را به ترتیب آرایۀ پسوندی در این درخت درج کرد و درخت پسوندی را ساخت.</li>
+</ul></li>
+</ul>
+
+<h3>ساخت آرایۀ پسوندی</h3>
+<ul>
+<li>روش‌های خطی متعددی وجود دارد. این‌جا دو روش با زمان <span class="m"><i>O</i>(|<i>t</i>| log<sup>2</sup> |<i>t</i>|)</span> و <span class="m"><i>O</i>(|<i>t</i>| log |<i>t</i>|)</span> را می‌گوییم.</li>
+<li>روش اول، مرتب کردن پسوندها و مقایسه با درهم‌سازی غلتان (جلسۀ ۱۵):
+<ul>
+<li>با محاسبۀ درهم‌سازی همۀ پیشوندهای رشته در پیش‌پردازش، درهم‌سازی هر زیررشته (با تفاضل درهم‌سازی دو پیشوند با ضریب مناسب) در <span class="m"><i>O</i>(1)</span> به دست می‌آید.</li>
+<li>با جست‌وجوی دودویی روی طول پیشوند مشترک، هر دو زیررشته در <span class="m"><i>O</i>(log |<i>t</i>|)</span> مقایسه می‌شوند.</li>
+<li>با یک مرتب‌سازی مقایسه‌ای با <span class="m"><i>O</i>(|<i>t</i>| log |<i>t</i>|)</span> مقایسه، کل زمان <span class="m"><i>O</i>(|<i>t</i>| log<sup>2</sup> |<i>t</i>|)</span> است.</li>
+</ul></li>
+<li>روش دوم، تکنیک دو برابر کردن (توان‌های ۲):
+<ul>
+<li>همان‌طور که در تبدیل باروز-ویلر (پایین‌تر) می‌بینیم، وقتی رشته به <code>$</code> ختم شود ترتیب پسوندها همان ترتیب چرخش‌های رشته است.</li>
+<li>در مرحلۀ <span class="m"><i>i</i></span>اُم چرخش‌ها را بر اساس <span class="m">2<sup><i>i</i></sup></span> حرف اولشان مرتب می‌کنیم. هر چرخش با طول <span class="m">2<sup><i>i</i>+1</sup></span> از دو نیمۀ به طول <span class="m">2<sup><i>i</i></sup></span> تشکیل شده که رتبۀ هر دو از مرحلۀ قبل معلوم است، پس هر مقایسه در <span class="m"><i>O</i>(1)</span> انجام می‌شود.</li>
+<li>بعد از <span class="m">⌈log<sub>2</sub> <i>n</i>⌉</span> مرحله کار تمام است. با مرتب‌سازی مقایسه‌ای زمان کل <span class="m"><i>O</i>(|<i>t</i>| log<sup>2</sup> |<i>t</i>|)</span> و با مرتب‌سازی مبنایی (جلسۀ ۱۳) <span class="m"><i>O</i>(|<i>t</i>| log |<i>t</i>|)</span> است.</li>
+</ul></li>
+</ul>
+<pre>
+def suffix_array(t):  # t ends with '$'
+  n = len(t)
+  rank = [ord(c) for c in t]
+  sa = list(range(n))
+  k = 1
+  while True:
+    key = lambda i: (rank[i], rank[(i + k) % n])
+    sa.sort(key=key)
+    new = [0] * n
+    for r in range(1, n):
+      new[sa[r]] = new[sa[r - 1]] + (key(sa[r]) != key(sa[r - 1]))
+    rank = new
+    if rank[sa[-1]] == n - 1:
+      return sa
+    k *= 2
+</pre>
+
+<h3>کاربردهای آرایۀ پسوندی</h3>
+<ul>
+<li>چون آرایۀ پسوندی با درخت پسوندی معادل است، همۀ کاربردهای درخت پسوندی این‌جا هم وجود دارد و بسیاری از آن‌ها مستقیماً پیاده‌سازی می‌شوند.</li>
+<li>مثلاً تعداد زیررشته‌های ناتهی متفاوت یک رشته به طول <span class="m"><i>n</i></span> (بدون <code>$</code>) برابر است با
+<div class="formula"><i>n</i>(<i>n</i> + 1)/2 − Σ<sub><i>i</i></sub> LCP[<i>i</i>]</div>
+چون هر پسوند به اندازۀ طولش پیشوند دارد و <span class="m">LCP[<i>i</i>]</span> تا از آن‌ها قبلاً شمرده شده‌اند.</li>
+<li>طولانی‌ترین زیررشتۀ تکراری: بیشینۀ آرایۀ LCP.</li>
+</ul>
+<pre>
+def distinct_substrings(t):
+  sa = suffix_array_naive(t)
+  n = len(t)
+  return n * (n + 1) // 2 - sum(lcp_array(t, sa))
+</pre>
+
+<h3>تبدیل باروز-ویلر</h3>
+<ul>
+<li>اگر جلوی هر خانۀ آرایۀ پسوندی، رشتۀ چرخش‌یافته‌ای را بنویسیم که از همان مکان شروع می‌شود، حروف آخر این سطرها تبدیل باروز-ویلر (Burrows-Wheeler transform) رشته را تشکیل می‌دهند. یعنی حرف آخر هر سطر <code>t[sa[r] - 1]</code> است.</li>
+<li>مثال: تبدیل <code>banana$</code> برابر <code>annb$aa</code> است.</li>
+<li>نکتۀ جالب این است که این تبدیل وارون‌پذیر است و از روی آن خود رشته (و در نتیجه آرایۀ پسوندی) بازسازی می‌شود.</li>
+<li>روش وارون کردن: اگر <span class="m"><i>i</i></span> ستون اول جدول چرخش‌های مرتب را داشته باشیم، تبدیل را به عنوان ستون قبل از آن‌ها می‌گذاریم (چرخش هر سطر) و سطرها را مرتب می‌کنیم. این‌طور <span class="m"><i>i</i> + 1</span> ستون اول به دست می‌آید. بعد از <span class="m"><i>n</i></span> مرحله کل جدول را داریم و رشته سطری است که به <code>$</code> ختم می‌شود.</li>
+<li>بسیاری از روش‌های فشرده‌سازی (مثل bzip2) از این تبدیل استفاده می‌کنند زیرا اغلب حروف مشابه را کنار هم قرار می‌دهد. ولی لزوماً این‌طور نیست، مثلاً <code>BWT(appelee$) = e$elpepa</code>.</li>
+</ul>
+<pre>
+def bwt(t):  # t ends with '$'
+  sa = suffix_array(t)
+  return ''.join(t[i - 1] for i in sa)
+
+def inverse_bwt(b):
+  table = [''] * len(b)
+  for _ in range(len(b)):
+    table = sorted(b[r] + table[r] for r in range(len(b)))
+  for row in table:
+    if row[-1] == '$':
+      return row
+</pre>
+
+<div class="pager"><a href="18.html">→ جلسۀ ۱۸</a><a href="20.html">جلسۀ ۲۰ ←</a></div>
+<footer>مهدی صفرنژاد، دانشکدۀ مهندسی کامپیوتر دانشگاه صنعتی شریف، ۱۳۹۷ تا ۱۴۰۱.
+محتوای این سایت تحت مجوز <a href="https://creativecommons.org/licenses/by/4.0/deed.fa">CC BY 4.0</a> منتشر شده است.</footer>
+</div>
+</body>
+</html>

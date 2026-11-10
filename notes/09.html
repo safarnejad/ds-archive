@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>جلسۀ ۹: درخت‌های دودویی متوازن: درخت اِی‌وی‌اِل</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+<nav class="top">
+  <a class="home" href="../index.html">ساختمان داده‌ها و الگوریتم‌ها</a>
+  <a href="../index.html#notes">درس‌نامه</a>
+  <a href="../index.html#terms">ترم‌ها</a>
+  <a href="../tas.html">دستیاران آموزشی</a>
+</nav>
+<h1>جلسۀ ۹: درخت‌های دودویی متوازن: درخت اِی‌وی‌اِل</h1>
+<p class="sub">مطالعۀ بیشتر: ۴-۳-۷ از قدسی و ۱۳.۲، ۱۴.۱ و ۱۴.۲ از CLRS</p>
+<ul>
+<li>مرور درخت دودویی جست‌وجو، خاصیت، عملیات و زمان آن‌ها (جلسۀ ۸): همه <span class="m"><i>O</i>(<i>h</i>)</span>.</li>
+<li>اهمیت متوازن بودن درخت دودویی جست‌وجو. تعریف متوازن بودن: ارتفاع لگاریتمی، یعنی <span class="m"><i>h</i> = <i>O</i>(log <i>n</i>)</span>.</li>
+<li>اولین و ساده‌ترین درخت دودویی جست‌وجوی متوازن: درخت اِی‌وی‌اِل (AVL)، توسط اَدِلسون-وِلسکی و لَندیس در سال ۱۹۶۲.</li>
+</ul>
+
+<h3>خاصیت اِی‌وی‌اِل و متوازن بودن</h3>
+<ul>
+<li>خاصیت اِی‌وی‌اِل: برای هر رأس، ارتفاع فرزند چپ و راست حداکثر یک واحد اختلاف دارد.</li>
+<li>در هر رأس ارتفاع آن را نگه می‌داریم: مثالی از داده‌ساختار افزوده. رأس <code>None</code> را رأسی با ارتفاع ۱− درنظر می‌گیریم.</li>
+<li>کجی (skew) هر رأس: ارتفاع فرزند راست منهای ارتفاع فرزند چپ. خاصیت اِی‌وی‌اِل یعنی کجی همۀ رئوس ۱−، ۰ یا ۱ است.</li>
+<li>اثبات متوازن بودن درخت اِی‌وی‌اِل: به جای کمترین ارتفاع درخت <span class="m"><i>n</i></span>رأسی، کمترین تعداد رأس درخت با ارتفاع <span class="m"><i>h</i></span> را حساب می‌کنیم:
+<div class="formula"><span class="m"><i>N</i><sub><i>h</i></sub> = <i>N</i><sub><i>h</i>−1</sub> + <i>N</i><sub><i>h</i>−2</sub> + 1</span></div>
+<ul>
+<li>راه ساده: <span class="m"><i>N</i><sub><i>h</i></sub> &gt; 2<i>N</i><sub><i>h</i>−2</sub></span>، پس <span class="m"><i>N</i><sub><i>h</i></sub> ≥ 2<sup><i>h</i>/2</sup></span> و <span class="m"><i>h</i> ≤ 2 log<sub>2</sub> <i>n</i></span>.</li>
+<li>راه سخت ولی دقیق: با اعداد فیبوناچی <span class="m"><i>N</i><sub><i>h</i></sub> = <i>F</i><sub><i>h</i>+3</sub> − 1</span> و در نتیجه <span class="m"><i>h</i> &lt; 1.4405 log<sub>2</sub>(<i>n</i> + 2)</span>.</li>
+</ul></li>
+</ul>
+
+<h3>دوران</h3>
+<ul>
+<li>دوران راست‌گرد و چپ‌گرد: ساختار درخت را عوض می‌کند ولی ترتیب میان‌ترتیب رئوس (و بنابراین خاصیت درخت دودویی جست‌وجو) را حفظ می‌کند و <span class="m"><i>O</i>(1)</span> است.</li>
+<li>در دوران چپ‌گرد روی <span class="m"><i>x</i></span>، فرزند راستش <span class="m"><i>y</i></span> جای آن را می‌گیرد، <span class="m"><i>x</i></span> فرزند چپ <span class="m"><i>y</i></span> می‌شود و زیردرخت چپ قبلی <span class="m"><i>y</i></span> فرزند راست <span class="m"><i>x</i></span> می‌شود. دوران راست‌گرد قرینۀ آن است.</li>
+<li>بعد از دوران، ارتفاع و کجی دو رأس جابه‌جاشده را از پایین به بالا به‌روز می‌کنیم.</li>
+</ul>
+<pre>
+def height(node):
+  return node.height if node else -1
+
+def update(node):
+  node.height = 1 + max(height(node.left), height(node.right))
+  node.skew = height(node.right) - height(node.left)
+
+def left_rotate(T, x):
+  y = x.right
+  x.right = y.left
+  if y.left:
+    y.left.parent = x
+  replace(T, x, y)
+  y.left = x
+  x.parent = y
+  update(x)
+  update(y)
+
+def right_rotate(T, x):
+  y = x.left
+  x.left = y.right
+  if y.right:
+    y.right.parent = x
+  replace(T, x, y)
+  y.right = x
+  x.parent = y
+  update(x)
+  update(y)
+
+def replace(T, x, y):
+  # y takes x's place under x's parent
+  y.parent = x.parent
+  if x.parent is None:
+    T.root = y
+  elif x is x.parent.left:
+    x.parent.left = y
+  else:
+    x.parent.right = y
+</pre>
+
+<h3>درج</h3>
+<ul>
+<li>استراتژی درج: ابتدا مثل درخت دودویی جست‌وجوی ساده درج می‌کنیم، سپس از رأس درج‌شده به سمت ریشه ارتفاع‌ها را به‌روز و درخت را تصحیح می‌کنیم.</li>
+<li>اگر کجی رأسی ۲ شد (ارتفاع زیردرخت راست دو واحد بیشتر است):
+<ul>
+<li>اگر کجی فرزند راست ۰ یا ۱ باشد، یک دوران چپ‌گرد روی رأس مشکل را حل می‌کند.</li>
+<li>اگر کجی فرزند راست ۱− باشد (حالت زیگزاگ)، اول دوران راست‌گرد روی فرزند راست و سپس دوران چپ‌گرد روی رأس (دوران ترکیبی).</li>
+<li>کجی ۲− قرینۀ همین است.</li>
+</ul></li>
+<li>درج در درخت اِی‌وی‌اِل به حداکثر یک تصحیح نیاز دارد (یک دوران یا یک دوران ترکیبی): از سه حالت بالا، در دو حالتی که بعد از درج پیش می‌آیند، پس از دوران ارتفاع زیردرخت به مقدار قبل از درج برمی‌گردد و در رئوس بالاتر دیگر مشکلی نیست. حالت سوم (کجی فرزند ۰) نمی‌تواند پس از درج ایجاد شود.</li>
+<li><code>maintain</code> روی رأس درج‌شده (یا والد رأس حذف‌شده) صدا زده می‌شود:</li>
+</ul>
+<pre>
+def maintain(T, node):
+  update(node)
+  balance(T, node)
+  if node.parent:
+    maintain(T, node.parent)
+
+def balance(T, node):
+  if node.skew == 2:
+    if node.right.skew == -1:
+      right_rotate(T, node.right)
+    left_rotate(T, node)
+  elif node.skew == -2:
+    if node.left.skew == 1:
+      left_rotate(T, node.left)
+    right_rotate(T, node)
+
+def avl_insert(T, k):
+  if T.root is None:
+    T.root = new_node(key=k, parent=None, left=None, right=None)
+    node = T.root
+  else:
+    node = insert(T.root, k)    # BST insert, session 8
+  maintain(T, node)
+</pre>
+<ul>
+<li>مثالی از درج در درخت اِی‌وی‌اِل: درج ۱، ۲، ۳ به ترتیب یک دوران چپ‌گرد روی ۱ و سپس درج ۵ و ۴ یک دوران ترکیبی روی ۳ ایجاد می‌کند.</li>
+</ul>
+
+<h3>حذف</h3>
+<ul>
+<li>حذف در درخت اِی‌وی‌اِل مشابه درج است: حذف مثل درخت دودویی جست‌وجو و سپس <code>maintain</code> از والد رأسی که واقعاً حذف شده است. تفاوت این است که ممکن است در چند سطح نیاز به دوران باشد: تا <span class="m">Θ(log <i>n</i>)</span> دوران.</li>
+</ul>
+<pre>
+def avl_delete(T, node):
+  if node.left and node.right:
+    succ = find_min(node.right)
+    node.key = succ.key
+    node = succ
+  parent = node.parent
+  delete(T, node)    # node has at most one child now
+  if parent:
+    maintain(T, parent)
+</pre>
+
+<h3>مرتب‌سازی اِی‌وی‌اِل</h3>
+<ul>
+<li><span class="m"><i>n</i></span> درج هر کدام در <span class="m"><i>O</i>(log <i>n</i>)</span> و یک پیمایش میان‌ترتیب در <span class="m"><i>O</i>(<i>n</i>)</span>: در مجموع <span class="m"><i>O</i>(<i>n</i> log <i>n</i>)</span>.</li>
+</ul>
+<pre>
+def avl_sort(A):
+  T = new_tree()
+  for a in A:
+    avl_insert(T, a)
+  out = []
+  in_order(T.root, out)
+  return out
+</pre>
+
+<div class="pager"><a href="08.html">→ جلسۀ ۸</a><a href="10.html">جلسۀ ۱۰ ←</a></div>
+<footer>مهدی صفرنژاد، دانشکدۀ مهندسی کامپیوتر دانشگاه صنعتی شریف، ۱۳۹۷ تا ۱۴۰۱.
+محتوای این سایت تحت مجوز <a href="https://creativecommons.org/licenses/by/4.0/deed.fa">CC BY 4.0</a> منتشر شده است.</footer>
+</div>
+</body>
+</html>

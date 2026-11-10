@@ -1,0 +1,72 @@
+% !TEX encoding = UTF-8 Unicode
+% !TeX program = xelatex
+% !TEX TS-program = XeLaTeX
+%
+% CE254 Problem Set Template
+%
+\documentclass[12pt,twoside,a4paper]{article}
+\newif\ifHideSolutions
+
+%برای پنهان کردن جواب به جای false نوشته شود true.
+\HideSolutionstrue
+\input{macros-ce254}
+\فرمان‌نو{\theproblemsetnum}{میان‌ترم}
+\فرمان‌نو{\releasedate}{۲۸ فروردین ۹۹}
+\فرمان‌نو{\partaduedate}{}
+
+%\title{تفکر الگوریتمی}
+\usetikzlibrary{arrows, decorations.markings}
+\شروع{نوشتار}
+
+	\tikzset{
+	treenode/.style = {align=center, inner sep=0pt, text centered,
+		font=\sffamily},
+	arn_n/.style = {treenode, circle, white, font=\sffamily\bfseries, draw=black,
+		fill=black, text width=1.5em},% arbre rouge noir, noeud noir
+	arn_r/.style = {treenode, circle, red, draw=red, 
+		text width=1.5em, very thick},% arbre rouge noir, noeud rouge
+	arn_s/.style = {treenode, circle, black, draw=black, 
+		text width=1.5em, very thick},% arbre rouge noir, noeud rouge
+	arn_x/.style = {treenode, rectangle, draw=black,
+		minimum width=0.5em, minimum height=0.5em, very thick}% arbre rouge noir, nil
+}
+
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=north,yshift=-2.5cm] at (current page.north) {\rl{به نام خدا}};
+\end{tikzpicture}%
+
+\handout{\theproblemsetnum}{آزمون میان‌ترم}{\releasedate}
+
+با توجه به شرایط خاص این ترم، امتحان میان‌ترم هم به صورت غیرحضوری برگزار خواهد شد. به این بخش از امتحان که از ساعت ۹ صبح روز پنج‌شنبه ۲۸ فروردین ۱۳۹۹ شروع می‌شود، ۲۴ ساعت وقت اختصاص داده شده است. این امتحان سه سؤال دارد که برای هر کدام از سؤال‌ها باید یک الگوریتم و/یا داده‌ساختار مناسب پیشنهاد دهید. این داده‌ساختار یا الگوریتم می‌تواند از مطالب گفته شده در درس، ترکیبی از آن‌ها و یا خلاقیتی باشد. از داده‌ساختارها و الگوریتم‌های کلاس تا آخر جلسه~۱۲ می‌توانید بدون اثبات استفاده کنید و کافی است الگوریتم را دقیق نام برده و زمان اجرای آن را نیز بیان کنید. ولی هر داده‌ساختار و الگوریتم دیگری را باید به طور دقیق اثبات کنید.
+
+علاوه بر \زیرخط{کلیت داده‌ساختار و الگوریتم}، \زیرخط{زمان اجرا} و \زیرخط{دلیل انتخاب خود} را نیز به طور کامل توضیح دهید. همچنین در صورتی که زمان اجرای الگوریتم شما \زیرخط{زمان سرشکن یا زمان تصادفی} است، آن را بیان کنید.
+نمره شما هم به بهینه‌بودن و درستی الگوریتم و داده‌ساختار پیشنهادی بستگی دارد و هم به دقت و درستی اثبات‌ها.
+توجه کنید در صورت مشاهده تشابه بیش از حد طبیعی در برگه‌های پاسخ‌نامه، به‌شدت با آن برخورد خواهد شد.
+\مقداربعد{\تورفتگی‌سربند}{0pt}
+
+% این دستورات برای نوشتن جواب تمرین توسط دانشجویان است.
+%\پرش‌متوسط\پرخط‌ا\پرش‌متوسط
+%{\سیاه نام و نام‌خانوادگی:} نام شما
+%\پرش‌متوسط
+%{\سیاه نام افرادی که با هم تمرین‌ها را حل کردید:} نام اول, نام دوم 
+
+\پرش‌متوسط\پرخط‌ا
+
+\شروع{مسائل}
+
+\ورودی{src/others}
+%%\صفحه‌جدید
+%\ورودی{src/peak-order}
+%%\صفحه‌جدید
+%\ورودی{src/peak-counterexample}
+%%\صفحه‌جدید
+%\ورودی{src/peak-proof}
+%%\صفحه‌جدید
+%\ورودی{src/droptest}
+
+\begin{flushleft}
+موفق باشید	
+\end{flushleft}
+\پایان{مسائل}
+\پایان{نوشتار}
+

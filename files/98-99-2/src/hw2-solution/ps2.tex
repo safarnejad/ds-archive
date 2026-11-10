@@ -1,0 +1,57 @@
+% !TEX encoding = UTF-8 Unicode
+% !TeX program = xelatex
+% !TEX TS-program = XeLaTeX
+%
+% CE254 Problem Set Template
+%
+\documentclass[11pt,twoside,a4paper]{article}
+\usepackage{hyperref}
+\newif\ifHideSolutions
+
+%برای پنهان کردن جواب به جای false نوشته شود true.
+\HideSolutionstrue
+\input{macros-ce254}
+\فرمان‌نو{\theproblemsetnum}{دوم}
+\فرمان‌نو{\releasedate}{۱۲ اسفند ۹۸}
+\فرمان‌نو{\partaduedate}{۲۸ اسفند ۹۸}
+%\title{تفکر الگوریتمی}
+
+\شروع{نوشتار}
+
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=north,yshift=-2.5cm] at (current page.north) {\rl{به نام خدا}};
+\end{tikzpicture}%
+
+\handout{\theproblemsetnum}{داده‌ساختار‌های پایه، درخت‌ها}{\releasedate}
+
+% این دستورات برای نوشتن جواب تمرین توسط دانشجویان است.
+%\پرش‌متوسط\پرخط‌ا\پرش‌متوسط
+%{\سیاه نام و نام‌خانوادگی:} نام شما
+%\پرش‌متوسط
+%{\سیاه نام افرادی که با هم تمرین‌ها را حل کردید:} نام اول, نام دوم 
+
+\پرش‌متوسط\پرخط‌ا
+
+\شروع{مسائل}
+
+\ورودی{src/Theorical/Duals}
+\ورودی{src/Theorical/LinkedListLoop}
+\ورودی{src/Theorical/Triangle}
+\ورودی{src/Theorical/Findmin}
+\ورودی{src/Theorical/Thousand}
+\ورودی{src/Theorical/Merge}
+\ورودی{src/Theorical/KMax}
+\ورودی{src/Theorical/MaxInPath}
+\ورودی{src/Theorical/NextK}
+\صفحه‌جدید
+\ورودی{src/Practical/AVL-stack}
+\صفحه‌جدید
+\ورودی{src/Practical/heap-grades}
+\صفحه‌جدید
+\ورودی{src/Practical/paranthese}
+
+\begin{flushleft}
+	موفق باشید	
+\end{flushleft}
+\پایان{مسائل}
+\پایان{نوشتار}

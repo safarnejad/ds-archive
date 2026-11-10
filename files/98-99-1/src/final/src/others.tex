@@ -1,0 +1,47 @@
+%\شروع‌مسئله[15]
+%گراف جهتدار و وزن‌دار
+%$G(V,E)$
+%داده شده است. وزن‌ها ممکن است منفی هم باشند. $s$ و $t$ دو راس گراف هستند و $k$ عددی طبیعی است.
+%
+%\شروع{زیرمسائل}
+%
+%\زیرمسئله[5] % مسئلۀ ۱آ
+%الگوریتمی از مرتبۀ زمانی 
+%$O(|V|\log |V| + |E|)$
+%ارائه دهید که مسیری از $s$ به $t$ که مینیمم یال‌هایش بیشینه است، را پیدا کند.
+%
+%\زیرمسئله[5] % مسئلۀ ۱آ
+%الگوریتمی از  مرتبۀ 
+%$O(k(|V| + |E|))$
+%ارائه دهید که میان تمام مسیرهای $s$ به $t$ که دقیقا $k$ یال دارند، طول کوتاه‌ترین را پیدا کند.
+%
+%\متن‌سیاه{راهنمایی:}
+%یک گراف جدید تشکیل دهید و به ازای هر راس $v$ در گراف اصلی، 
+%$k + 1$
+%راس $(v,i)$ در نظر بگیرید
+%$(0 \le i \le k)$
+%،
+%و یال‌ها را طوری قرار دهید که فاصلۀ راس
+%$(v,i)$
+%از $(s,0)$ برابر با $i$ باشد. سپس ثابت کنید این گراف یک \متن‌لاتین{DAG} است و کوتاه‌ترین مسیر از $(s,0)$ به $(t,k)$ را بیابید.
+%\زیرمسئله[5] % مسئلۀ ۱آ
+%فرض کنید وزن‌ها مثبت هستند.
+%بخش قبلی را با این تفاوت که تعداد یال‌های مسیرها \underline{حداقل} $k$ باشد، حل کنید. الگوریتم‌تان باید از مرتبۀ 
+%$O(|V|\log |V| + k|V| + k|E|)$
+%باشد.
+%
+%\پایان{زیرمسائل}
+
+\شروع‌مسئله[30]
+یک گراف همبند $G$ با یال‌های وزن‌دار بدون جهت داریم که یال‌ها فقط وزن مثبت دارند. همچنین این گراف دقیقاً یک دور دارد. الگوریتمی با زمان $O(n)$ طراحی کنید که کوتاه‌ترین مسیر از $s$ به $t$ را پیدا کند. در این مسئله لازم است راه‌حل خود را به صورت کامل بیان و اثبات کنید.
+
+\پاسخ{
+%	Given two vertices in a weighted tree containing only positive weight edges, there is a unique simple path between them which is also the minimum weight path. A depth-first search from a source vertex s in the tree results in a directed DFS tree in O(|V |) time (since |E| = |V |−1). Then relaxing edges in topological sort order of the directed DFS tree computes minimum weight paths from s in O(|V |) time. Since G has one cycle, our strategy will be to break the cycle by removing an edge, and then compute the minimum weight path from s to t in the resultant tree.
+%	First, we find the vertex v on the cycle closest to s by running depth-first search from s in O(|V |) time (since |E| = |V |). To find v, one edge of the cycle will be the only DFS back edge e1, and will terminate at vertex v, with the other edge of the cycle incident to v being a single outgoing DFS tree edge e2. If s is on the cycle, v = s; otherwise the unique path from s to v does not contain e1 or e2. A shortest path from s to t cannot traverse both edges e1 and e2, or else the path would visit v at least twice, traversing a cycle of positive weight. Removing either e1 or e2 results in a tree, at least one of which contains the minimum weight path from s to t. Thus, find the minimum weight path from s to t in each tree using the algorithm described above, returning the minimum of the two in O(|V |) time.
+%	Rubric:
+%	• 12 points for a correct O(|V |) time algorithm • 3 points for running time analysis
+%	• Partial credit may be awarded	
+	
+}
+
+

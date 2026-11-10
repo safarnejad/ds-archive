@@ -1,0 +1,62 @@
+% !TEX encoding = UTF-8 Unicode
+% !TeX program = xelatex
+% !TEX TS-program = XeLaTeX
+%
+% CE254 Problem Set Template
+%
+\documentclass[11pt,twoside,a4paper]{article}
+\newif\ifHideSolutions
+
+%برای پنهان کردن جواب به جای false نوشته شود true.
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{hyperref}
+\usepackage[style=verbose]{biblatex}
+\usepackage{filecontents}
+
+\input{macros-ce254}
+\فرمان‌نو{\theproblemsetnum}{اوّل}
+\فرمان‌نو{\releasedate}{۶ اسفند ۹۹}
+\فرمان‌نو{\partaduedate}{۲۴ اسفند ۹۹}
+\title{مقدمه و تحلیل الگوریتم‌ها}
+
+\begin{document}
+
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=north,yshift=-2.5cm] at (current page.north) {\rl{به نام خدا}};
+\end{tikzpicture}%
+
+\handout{\theproblemsetnum}{مقدمه و تحلیل الگوریتم‌ها}{\releasedate}
+\متن‌سیاه{زمان تحویل این تمرین {\سیاه \partaduedate} می‌باشد. سؤالات را با دقت بخوانید و روی همه آن‌ها وقت بگذارید. تمرین‌های تئوری تحویل گرفته نمی‌شوند اما از آن‌ها سؤالات کوییز مشخص می‌شود. بنابراین روی سؤالات به خوبی فکر کنید و در کلاس‌های حل تمرین مربوطه شرکت کنید.}
+
+\مقداربعد{\تورفتگی‌سربند}{0pt}
+
+% این دستورات برای نوشتن جواب تمرین توسط دانشجویان است.
+%\پرش‌متوسط\پرخط‌ا\پرش‌متوسط
+%{\سیاه نام و نام‌خانوادگی:} نام شما
+%\پرش‌متوسط
+%{\سیاه نام افرادی که با هم تمرین‌ها را حل کردید:} نام اول, نام دوم 
+
+\پرش‌متوسط\پرخط‌ا
+
+\شروع{مسائل}
+
+\ورودی{src/linear-search-statement}
+\صفحه‌جدید
+\ورودی{src/majority-element-statement}
+%\صفحه‌جدید
+\ورودی{src/circle-statement}
+%\صفحه‌جدید
+\ورودی{src/analysis-1-statement}
+%\صفحه‌جدید
+\ورودی{src/order-recursive-statement}
+%\صفحه‌جدید
+\ورودی{src/code-analysis-statement}
+
+\begin{flushleft}
+موفق باشید	
+\end{flushleft}
+\پایان{مسائل}
+\end{document}
+

@@ -1,0 +1,154 @@
+<h3>آدرس‌دهی باز</h3>
+<ul>
+<li>در آدرس‌دهی باز (open addressing) به جای زنجیره همۀ اشیا را در خود جدول ذخیره می‌کنیم. اندازۀ جدول را <span class="m"><i>m</i> ≥ 2<i>n</i></span> می‌گیریم.</li>
+<li>دنبالۀ وارسی (probe sequence) شیء <span class="m"><i>x</i></span>: <span class="m"><i>h</i>(<i>x</i>, 0), <i>h</i>(<i>x</i>, 1), …, <i>h</i>(<i>x</i>, <i>m</i> − 1)</span> که باید جایگشتی از خانه‌های جدول باشد.</li>
+<li>درج: خانه‌ها را به ترتیب دنبالۀ وارسی نگاه می‌کنیم و <span class="m"><i>x</i></span> را در اولین خانۀ خالی درج می‌کنیم.</li>
+<li>جست‌وجو: خانه‌ها را به ترتیب دنبالۀ وارسی نگاه می‌کنیم تا یا <span class="m"><i>x</i></span> را پیدا کنیم یا به یک خانۀ خالی برسیم که یعنی <span class="m"><i>x</i></span> در جدول نیست.</li>
+<li>حذف دقت بیشتری می‌خواهد: اگر خانۀ شیء حذف‌شده را خالی کنیم، جست‌وجوهای بعدی ممکن است زودتر از موعد به خانۀ خالی برسند و درست کار نکنند. پس در خانه می‌نویسیم «حذف‌شده». خانۀ حذف‌شده در جست‌وجو مثل خانۀ پر و در درج مثل خانۀ خالی است. (البته قبل از درج باید جست‌وجو کنیم، وگرنه ممکن است یک کلید دو بار در جدول بیاید.)</li>
+<li>اگر تعداد خانه‌های «حذف‌شده» به ۱۰ درصد جدول رسید، جدول را دوباره می‌سازیم. هزینۀ سرشکن هنوز <span class="m"><i>O</i>(1)</span> می‌ماند.</li>
+<li>در کد زیر وارسی خطی (پایین‌تر) و تابع <code>universal_hash</code> جلسۀ ۱۴ به کار رفته است. با عوض کردن خط محاسبۀ <code>j</code> روش‌های دیگر وارسی به دست می‌آیند.</li>
+</ul>
+<pre>
+DELETED = 'deleted'
+
+def oa_new(m):
+  return SimpleNamespace(m=m, n=0, d=0, h=universal_hash(m), slots=[None] * m)
+
+def oa_rebuild(T, m):
+  items = [s for s in T.slots if s is not None and s is not DELETED]
+  T.m, T.n, T.d, T.h = m, 0, 0, universal_hash(m)
+  T.slots = [None] * m
+  for k, v in items:
+    oa_insert(T, k, v)
+
+def oa_search(T, k):
+  for i in range(T.m):
+    j = (T.h(k) + i) % T.m
+    s = T.slots[j]
+    if s is None:
+      return None
+    if s is not DELETED and s[0] == k:
+      return s[1]
+  return None
+
+def oa_insert(T, k, v):
+  free = None
+  for i in range(T.m):
+    j = (T.h(k) + i) % T.m
+    s = T.slots[j]
+    if s is None or s is DELETED:
+      if free is None:
+        free = j
+      if s is None:
+        break
+    elif s[0] == k:
+      T.slots[j] = (k, v)
+      return
+  if T.slots[free] is DELETED:
+    T.d -= 1
+  T.slots[free] = (k, v)
+  T.n += 1
+  if 2 * T.n &gt; T.m:
+    oa_rebuild(T, 2 * T.m)
+
+def oa_delete(T, k):
+  for i in range(T.m):
+    j = (T.h(k) + i) % T.m
+    s = T.slots[j]
+    if s is None:
+      return
+    if s is not DELETED and s[0] == k:
+      T.slots[j] = DELETED
+      T.n -= 1
+      T.d += 1
+      if 10 * T.d &gt;= T.m:
+        oa_rebuild(T, T.m)
+      return
+</pre>
+
+<h3>روش‌های وارسی</h3>
+<ul>
+<li>وارسی خطی (linear probing): <span class="m"><i>h</i>(<i>x</i>, <i>i</i>) = (<i>h</i>′(<i>x</i>) + <i>i</i>) mod <i>m</i></span>.
+<ul>
+<li>مشابه پارک کردن ماشین در خیابان: اگر جا پر است، جای بعدی را امتحان می‌کنیم.</li>
+<li>مشکل خوشه‌ها: خوشه دنباله‌ای از خانه‌های متوالی پر است. هر چه خوشه بزرگ‌تر باشد، احتمال رشد آن بیشتر است. خوشه‌هایی به اندازۀ <span class="m">Θ(log <i>n</i>)</span> به وجود می‌آیند که زمان جست‌وجو و درج را زیاد می‌کنند.</li>
+<li>ثابت شده است وارسی خطی با یک تابع درهم‌سازی ۵-مستقل خوب کار می‌کند و توابع ۴-مستقلی هستند که با آن‌ها بد کار می‌کند.</li>
+</ul></li>
+<li>وارسی درجۀ دو (quadratic probing): <span class="m"><i>h</i>(<i>x</i>, <i>i</i>) = (<i>h</i>′(<i>x</i>) + <i>a i</i><sup>2</sup> + <i>b i</i>) mod <i>m</i></span>.</li>
+<li>درهم‌سازی دوگانه (double hashing): <span class="m"><i>h</i>(<i>x</i>, <i>i</i>) = (<i>h</i><sub>1</sub>(<i>x</i>) + <i>i</i> · <i>h</i><sub>2</sub>(<i>x</i>)) mod <i>m</i></span>.
+<ul>
+<li><span class="m"><i>h</i><sub>2</sub>(<i>x</i>)</span> و <span class="m"><i>m</i></span> باید نسبت به هم اول باشند تا دنبالۀ وارسی همۀ خانه‌ها را ببیند.</li>
+<li>یک راه: <span class="m"><i>m</i></span> عدد اول و <span class="m"><i>h</i><sub>2</sub>(<i>x</i>)</span> بین <span class="m">1</span> و <span class="m"><i>m</i> − 1</span>. راه بهتر: <span class="m"><i>m</i></span> توانی از ۲ و <span class="m"><i>h</i><sub>2</sub>(<i>x</i>)</span> فرد.</li>
+</ul></li>
+</ul>
+
+<h3>فرض درهم‌سازی یکنواخت</h3>
+<ul>
+<li>با فرض درهم‌سازی یکنواخت ساده (جلسۀ ۱۴) اشتباه نشود.</li>
+<li>فرض درهم‌سازی یکنواخت (uniform hashing): دنبالۀ وارسی هر کلید یکی از <span class="m"><i>m</i>!</span> جایگشت ممکن است که تصادفی و مستقل انتخاب می‌شود.</li>
+<li>به طور کامل درست نیست، ولی درهم‌سازی دوگانه تا حد خوبی به آن نزدیک است. تحلیل زمان آدرس‌دهی باز با این فرض در جلسۀ بعد می‌آید.</li>
+</ul>
+
+<h3>تطابق رشته‌ها</h3>
+<ul>
+<li>ورودی: دو رشتۀ <span class="m"><i>s</i></span> و <span class="m"><i>t</i></span>. هدف: پیدا کردن وقوع‌های <span class="m"><i>s</i></span> به عنوان زیررشتۀ <span class="m"><i>t</i></span> (کجا و چند بار).</li>
+<li>کاربردهای فراوان دارد، مثل جست‌وجو در کل ایمیل‌ها یا دستور <code>grep</code>.</li>
+<li>الگوریتم بدیهی همه‌جای <span class="m"><i>t</i></span> را امتحان می‌کند و زمان آن <span class="m"><i>O</i>(|<i>s</i>| · (|<i>t</i>| − |<i>s</i>| + 1)) = <i>O</i>(|<i>s</i>| · |<i>t</i>|)</span> است.</li>
+<li>الگوریتم‌های سریعی مثل KMP و بویر-مور با زمان <span class="m"><i>O</i>(|<i>s</i>| + |<i>t</i>|)</span> وجود دارند، اما کمی پیچیده‌اند.</li>
+<li>الگوریتم کارپ-رابین (Karp-Rabin) هم زمان مورد انتظار <span class="m"><i>O</i>(|<i>s</i>| + |<i>t</i>|)</span> دارد و از درهم‌سازی استفاده می‌کند. بسیار ساده است و روش آن بسیار پرکاربرد است.</li>
+</ul>
+
+<h3>الگوریتم کارپ-رابین</h3>
+<ul>
+<li>مقدار <span class="m"><i>h</i>(<i>s</i>)</span> را با <span class="m"><i>h</i>(<i>t</i>[<i>i</i> … <i>i</i> + |<i>s</i>| − 1])</span> به ازای <span class="m"><i>i</i></span>های مختلف مقایسه می‌کنیم.
+<ul>
+<li>اگر نامساوی بودند، قطعاً <span class="m"><i>s</i></span> در این مکان از <span class="m"><i>t</i></span> نیامده است.</li>
+<li>اگر مساوی بودند، به احتمال زیاد <span class="m"><i>s</i></span> در این مکان آمده است. روش محتاطانه: برای اطمینان دو رشته را مقایسه می‌کنیم. روش مبتنی بر اعتماد: فرض می‌کنیم برابرند.</li>
+</ul></li>
+<li>اگر تابع درهم‌سازی مناسب باشد، احتمال خطا در هر مکان حدود <span class="m">1/<i>m</i></span> است.</li>
+<li>زمان اجرا <span class="m"><i>O</i>(|<i>s</i>| + |<i>t</i>| + (|<i>t</i>| − |<i>s</i>| + 2) · cost(<i>h</i>))</span> است، پس باید درهم‌سازی هر پنجره را در <span class="m"><i>O</i>(1)</span> از روی پنجرۀ قبلی حساب کنیم.</li>
+</ul>
+
+<h3>درهم‌سازی چرخشی</h3>
+<ul>
+<li>واسط درهم‌سازی چرخشی (rolling hash) روی رشتۀ <span class="m"><i>x</i></span> این عملیات را دارد:
+<ul>
+<li><code>r()</code>: مقدار <span class="m"><i>h</i>(<i>x</i>)</span> را برگرداند.</li>
+<li><code>r.append(c)</code>: حرف <span class="m"><i>c</i></span> را به انتهای <span class="m"><i>x</i></span> اضافه کند.</li>
+<li><code>r.skip(c)</code>: حرف <span class="m"><i>c</i></span> را از ابتدای <span class="m"><i>x</i></span> حذف کند.</li>
+</ul></li>
+<li>داده‌ساختار: رشتۀ <span class="m"><i>x</i></span> را یک عدد <span class="m">|<i>x</i>|</span>رقمی <span class="m"><i>u</i></span> در مبنای <span class="m"><i>a</i></span> (تعداد حروف الفبا) در نظر می‌گیریم و با روش تقسیم درهم می‌کنیم: <code>r()</code> مقدار <span class="m"><i>u</i> mod <i>p</i></span> را برمی‌گرداند که <span class="m"><i>p</i></span> یک عدد اول تصادفی و به اندازۀ کافی بزرگ (حداقل در حدود <span class="m">|<i>s</i>|</span> یا <span class="m">|<i>t</i>|</span>) است.</li>
+<li>داده‌ساختار خود <span class="m"><i>u</i></span> را نگه نمی‌دارد؛ فقط <span class="m">|<i>x</i>|</span> و <span class="m"><i>u</i> mod <i>p</i></span> را نگه می‌دارد.</li>
+<li>بعد از <code>r.append(c)</code>: <span class="m">(<i>u</i> · <i>a</i> + <i>c</i>) mod <i>p</i> = [(<i>u</i> mod <i>p</i>) · <i>a</i> + <i>c</i>] mod <i>p</i></span>، که با اطلاعات موجود در <span class="m"><i>O</i>(1)</span> حساب می‌شود.</li>
+<li>بعد از <code>r.skip(c)</code>: <span class="m">(<i>u</i> − <i>c</i> · <i>a</i><sup>|<i>x</i>|−1</sup>) mod <i>p</i> = [(<i>u</i> mod <i>p</i>) − <i>c</i> · (<i>a</i><sup>|<i>x</i>|−1</sup> mod <i>p</i>)] mod <i>p</i></span>، که آن هم در <span class="m"><i>O</i>(1)</span> حساب می‌شود (اگر <span class="m"><i>a</i><sup>|<i>x</i>|−1</sup> mod <i>p</i></span> را نگه داریم).</li>
+<li>بنابراین الگوریتم کارپ-رابین در زمان <span class="m"><i>O</i>(|<i>s</i>| + |<i>t</i>|)</span> اجرا می‌شود و احتمال خطای آن در هر مکان حدود <span class="m">1/<i>p</i></span> است.</li>
+</ul>
+<pre>
+def rh_new(a=256, p=1000000007):
+  return SimpleNamespace(a=a, p=p, h=0, size=0)
+
+def rh_append(r, c):
+  r.h = (r.h * r.a + ord(c)) % r.p
+  r.size += 1
+
+def rh_skip(r, c):
+  r.h = (r.h - ord(c) * pow(r.a, r.size - 1, r.p)) % r.p  # a**(size-1) mod p can be kept to make this O(1)
+  r.size -= 1
+
+def karp_rabin(s, t):
+  if len(s) &gt; len(t):
+    return []
+  rs, rt = rh_new(), rh_new()
+  for c in s:
+    rh_append(rs, c)
+  for c in t[:len(s)]:
+    rh_append(rt, c)
+  found = []
+  for i in range(len(t) - len(s) + 1):
+    if rs.h == rt.h and t[i:i + len(s)] == s:
+      found.append(i)
+    if i + len(s) &lt; len(t):
+      rh_skip(rt, t[i])
+      rh_append(rt, t[i + len(s)])
+  return found
+</pre>

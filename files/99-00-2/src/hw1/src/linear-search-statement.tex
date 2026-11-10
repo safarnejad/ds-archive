@@ -1,0 +1,161 @@
+%قبل از شروع مسئله ترجیحاً چیزی ننویسید. اما اگر خواستید بنویسید، در قالب لیستی (فقرات و شمارش) بنویسید.
+%برای اضافه کردن نمره، بعدی از شروع‌مسئله، [x] را اضافه کنید و به جای x  نمره مورد نظر را قرار دهید. برای زیرمسئله‌ها هم به همین صورت است.
+%\شروع‌مسئله[10]
+\شروع‌مسئله
+% صورت اصلی مسئله را در این‌جا بنویسید.
+فرض کنید یک آرایه $n$ عضوی به نام $A$ و یک عنصر
+ $x \in A$
+  داریم که جایگاه دقیق آن را نمی‌دانیم. می‌خواهیم اندیس $i$ را پیدا کنیم، به طوریکه
+  $A[i] = x$. 
+با توجه به نکات ذکر شده به دو قسمت زیر پاسخ دهید.
+  
+%اگر مسئله چند قسمت داشت به این صورت عمل کنید:
+\شروع{زیرمسائل}
+\زیرمسئله % مسئلۀ ۱آ
+فرض کنید می‌دانیم احتمال اینکه $x$ در نیمه اول آرایه باشد، $p$
+ برابر این است که در نیمه دوم آرایه باشد($p \geq 1$). همچنین احتمال حضور آن در هر جایگاه برای هر دو نیمه یکسان است. پیچیدگی زمانی جستجوی خطی را در بدترین و بهترین حالت و حالت متوسط حساب کنید.
+
+
+
+\زیرمسئله % مسئلۀ ۱ب
+فرض کنید که آرایه $A$ را به صورت مرتب شده به ما داده‌اند. پیچیدگی زمانی جستجوی دودویی را در بدترین و بهترین حالت و حالت متوسط حساب کنید. الگوریتم جستجوی دودویی در زیر آورده شده است.
+
+\lr{
+	\begin{algorithm}
+		\begin{algorithmic}
+			\State $A \leftarrow sorted\;array$
+			\State $x \leftarrow value\;to\;be\;searched$
+			\State $binary\_search(1, Array\_Size)$
+			\Procedure{$binary\_search(low, up)$}{}
+			\State $mid = \frac{(low + up)}{2}$
+			\If{$up < low$}
+			\State $return \; "not \; found"$
+			\EndIf
+			\If{$A[mid] < x$}
+			\State $return \; binary\_search(mid + 1, up)$
+			\EndIf
+			\If{$A[mid] > x$}
+			\State $return \; binary\_search(low, mid - 1)$
+			\EndIf
+			\If{$A[mid] = x$}
+			\State $return \; "x \; is \; at \; location" \; mid$
+			\EndIf
+			\EndProcedure
+		\end{algorithmic}
+	\end{algorithm}
+}
+
+%\زیرمسئله % مسئلۀ ۱پ
+%\زیرمسئله % مسئلۀ ۱ت
+\پایان{زیرمسائل}
+
+\solution{
+	پاسخ نمونه.
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% برخی دستورات مفید برای تمرین‌ها. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% فرمول‌های نمونه:
+%$f(x) = \Theta(x)$
+%$T(x, y) \leq \log(x) + 2^y + \binom{2n}{n}$
+% {\tt code\_function}
+
+
+% لیست موارد بدون شماره‌گذاری:
+%\شروع{فقرات}
+%    \فقره مورد اول 
+%        \شروع{فقرات}
+%            \فقره مورد اول داخلی 
+%                \شروع{فقرات}
+%                    \فقره اولین مورد خیلی داخلی 
+%                    \فقره دومین مورد خیلی داخلی 
+%                \پایان{فقرات}
+%            \فقره مورد دوم داخلی 
+%        \پایان{فقرات}
+%    \فقره مورد دوم 
+%\پایان{فقرات}
+
+% لیست موارد شماره‌گذاری شده:
+%\شروع{شمارش}
+%    \فقره یک مورد 
+%    \فقره یک مورد دیگر 
+%    \فقره باز هم یک مورد دیگر
+%\پایان{شمارش}
+
+% برای نوشتن یک فرمول چند خطی که یک شماره بخوره. برای حالت‌های دیگر به سایت زیر مراجعه کنید:
+% https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath
+%\begin{align} 
+%    \begin{split}
+%        (x+y)^3 &= (x+y)^2(x+y) \\
+%                &= (x^2+2xy+y^2)(x+y) \\
+%                &= (x^3+2x^2y+xy^2) + (x^2y+2xy^2+y^3) \\
+%                &= x^3+3x^2y+3xy^2+y^3
+%    \end{split}                                 
+%\end{align}
+
+% نوشتن ماتریس و آرایه دوبعدی
+%\begin{align}
+%    A = 
+%    \begin{bmatrix}
+%        A_{11} & A_{21} \\
+%        A_{21} & A_{22}
+%    \end{bmatrix}
+%\end{align}
+
+% اضافه کردن تصویر با شرح. برای اضافه کردن تصویر بدون شرح، فقط دستور درج‌تصویر را استفاده کنید.
+%\شروع{شکل}[h!]
+%\تنظیم‌ازوسط
+%  \درج‌تصویر[پهنا=0.5\پهنای‌متن]{img.jpg}
+%\شرح{شرح تصویر}
+%\برچسب{تصویر:۱}
+%\پایان{شکل}
+%\پایان{زیرمسائل}
+
+%کد زیر را ببینید.
+%%\lstinputlisting{source_filename.py}
+%\begin{latin}
+%\begin{lstlisting}
+%# Import the modules
+%import sys
+%import random
+%
+%ans = True
+%
+%while ans:
+%question = raw_input("Ask the magic 8 ball a question: (press enter to quit) ")
+%
+%answers = random.randint(1,8)
+%
+%if question == "":
+%sys.exit()
+%
+%elif answers == 1:
+%print "It is certain"
+%
+%elif answers == 2:
+%print "Outlook good"
+%
+%elif answers == 3:
+%print "You may rely on it"
+%
+%elif answers == 4:
+%print "Ask again later"
+%
+%elif answers == 5:
+%print "Concentrate and ask again"
+%
+%elif answers == 6:
+%print "Reply hazy, try again"
+%
+%elif answers == 7:
+%print "My reply is no"
+%
+%elif answers == 8:
+%print "My sources say no"
+%\end{lstlisting}
+%\end{latin}

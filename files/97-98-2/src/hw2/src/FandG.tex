@@ -1,0 +1,170 @@
+%قبل از شروع مسئله ترجیحاً چیزی ننویسید. اما اگر خواستید بنویسید، در قالب لیستی (فقرات و شمارش) بنویسید.
+%برای اضافه کردن نمره، بعدی از شروع‌مسئله، [x] را اضافه کنید و به جای x  نمره مورد نظر را قرار دهید. برای زیرمسئله‌ها هم به همین صورت است.
+%\شروع‌مسئله[10]
+\شروع‌مسئله [8]
+% صورت اصلی مسئله را در این‌جا بنویسید.
+دو تابع $F$ و $G$ زیر را به کمک درخت بازگشت به صورت مجانبی تحلیل کنید. 
+\begin{align*}
+	F(0) &= G(0) = 0 \\
+	F(n) &= F(\lfloor \frac{2n}{3} \rfloor) + G(n) \\
+	G(n) &= F(\lfloor \frac{n}{3} \rfloor) + n
+\end{align*}
+%اگر مسئله چند قسمت داشت به این صورت عمل کنید:
+%\شروع{زیرمسائل}
+%\زیرمسئله[0] % مسئلۀ ۱آ
+%\زیرمسئله % مسئلۀ ۱ب
+%\زیرمسئله % مسئلۀ ۱پ
+%\زیرمسئله % مسئلۀ ۱ت
+%\پایان{زیرمسائل}
+\solution{
+	با جایگذاری رابطه دوم در رابطه اول داریم
+	\begin{equation*}
+		F(n) = F(\lfloor \frac{2n}{3} \rfloor) + F(\lfloor \frac{n}{3} \rfloor) + n 
+	\end{equation*}
+	برای تحلیل مجانبی تابع بالا می‌توانیم، رابطه بالا را به شکل زیر بازنویسی کنیم
+	\begin{equation*}
+		F(n) = F(\frac{2n}{3}) + F(\frac{n}{3}) + n
+	\end{equation*}
+	درخت بازگشت این رابطه را می‌توان به شکل زیر ترسیم کرد.
+\شروع{شکل}[h!]
+\تنظیم‌ازوسط
+  \درج‌تصویر[پهنا=0.5\پهنای‌متن]{src/p1_fig.png}
+\شرح{درخت بازگشت $F$}
+\برچسب{درخت بازگشت}
+\پایان{شکل}	
+دقت کنیم که عمق برگ‌های این درخت حداکثر
+$\log_{\frac{3}{2}} n$
+و حداقل 
+$\log_3 n$
+است. پس به سادگی می‌توان دید
+\begin{equation*}
+\underbrace{n + n + \cdots + n}_{\log_3 n} 	\leq F(n) \leq \underbrace{n + n + \cdots + n}_{\log_\frac{3}{2} n}\end{equation*}
+به عبارت دیگر
+\begin{equation*}
+n \log_3 n	\leq F(n) \leq n\log \log_\frac{3}{2} n
+\end{equation*}
+پس بنا بر رابطه تغییر پایه در لگاریتم‌ها داریم
+\begin{equation*}
+c_1n \log_2 n	\leq F(n) \leq c_2 \log_2 n
+\end{equation*}
+که نشان می‌دهد $F(n) \in \Theta(nlgn)$.
+همچنین با توجه به رابطه‌ای که برای $G$ داریم
+\begin{equation*}
+c_1\frac{n}{3} \log_2 \frac{n}{3} + n	\leq G(n) = F(\frac{n}{3}) + n \leq c_1\frac{n}{3} \log_2 \frac{n}{3} + n
+\end{equation*}
+که نشان می‌دهد
+\begin{equation*}
+\frac{c_1}{3} n \log_2 n - c_1'n	\leq G(n)  \leq \frac{c_2}{3} n \log_2 n - c_2'n	
+\end{equation*}
+پس 
+\begin{equation*}
+	G(n) \in \Theta(nlgn)
+\end{equation*}
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% برخی دستورات مفید برای تمرین‌ها. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% فرمول‌های نمونه:
+%$f(x) = \Theta(x)$
+%$T(x, y) \leq \log(x) + 2^y + \binom{2n}{n}$
+% {\tt code\_function}
+
+
+% لیست موارد بدون شماره‌گذاری:
+%\شروع{فقرات}
+%    \فقره مورد اول 
+%        \شروع{فقرات}
+%            \فقره مورد اول داخلی 
+%                \شروع{فقرات}
+%                    \فقره اولین مورد خیلی داخلی 
+%                    \فقره دومین مورد خیلی داخلی 
+%                \پایان{فقرات}
+%            \فقره مورد دوم داخلی 
+%        \پایان{فقرات}
+%    \فقره مورد دوم 
+%\پایان{فقرات}
+
+% لیست موارد شماره‌گذاری شده:
+%\شروع{شمارش}
+%    \فقره یک مورد 
+%    \فقره یک مورد دیگر 
+%    \فقره باز هم یک مورد دیگر
+%\پایان{شمارش}
+
+% برای نوشتن یک فرمول چند خطی که یک شماره بخوره. برای حالت‌های دیگر به سایت زیر مراجعه کنید:
+% https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath
+%\begin{align} 
+%    \begin{split}
+%        (x+y)^3 &= (x+y)^2(x+y) \\
+%                &= (x^2+2xy+y^2)(x+y) \\
+%                &= (x^3+2x^2y+xy^2) + (x^2y+2xy^2+y^3) \\
+%                &= x^3+3x^2y+3xy^2+y^3
+%    \end{split}                                 
+%\end{align}
+
+% نوشتن ماتریس و آرایه دوبعدی
+%\begin{align}
+%    A = 
+%    \begin{bmatrix}
+%        A_{11} & A_{21} \\
+%        A_{21} & A_{22}
+%    \end{bmatrix}
+%\end{align}
+
+% اضافه کردن تصویر با شرح. برای اضافه کردن تصویر بدون شرح، فقط دستور درج‌تصویر را استفاده کنید.
+%\شروع{شکل}[h!]
+%\تنظیم‌ازوسط
+%  \درج‌تصویر[پهنا=0.5\پهنای‌متن]{img.jpg}
+%\شرح{شرح تصویر}
+%\برچسب{تصویر:۱}
+%\پایان{شکل}
+%\پایان{زیرمسائل}
+
+%کد زیر را ببینید.
+%%\lstinputlisting{source_filename.py}
+%\begin{latin}
+%\begin{lstlisting}
+%# Import the modules
+%import sys
+%import random
+%
+%ans = True
+%
+%while ans:
+%question = raw_input("Ask the magic 8 ball a question: (press enter to quit) ")
+%
+%answers = random.randint(1,8)
+%
+%if question == "":
+%sys.exit()
+%
+%elif answers == 1:
+%print "It is certain"
+%
+%elif answers == 2:
+%print "Outlook good"
+%
+%elif answers == 3:
+%print "You may rely on it"
+%
+%elif answers == 4:
+%print "Ask again later"
+%
+%elif answers == 5:
+%print "Concentrate and ask again"
+%
+%elif answers == 6:
+%print "Reply hazy, try again"
+%
+%elif answers == 7:
+%print "My reply is no"
+%
+%elif answers == 8:
+%print "My sources say no"
+%\end{lstlisting}
+%\end{latin}

@@ -1,0 +1,168 @@
+<ul>
+<li>یادآوری گراف، پیمایش گراف و لیست مجاورت.</li>
+<li>یادآوری جست‌وجوی سطح اول یا سطح به سطح (جلسۀ ۲۳).</li>
+</ul>
+
+<h3>جست‌وجوی عمق اول (DFS)</h3>
+<ul>
+<li>مشابه حل باغ هزارتو (ماز)، یک مسیر را پیش می‌گیریم و از رفتن مسیر تکراری و قطع کردن مسیر خودداری می‌کنیم.</li>
+<li>اگر به بن‌بست خوردیم، مسیر را تا جایی برمی‌گردیم که یک راه جدید باز شود.</li>
+<li>اگر رأس‌هایی مانده بود که ندیده بودیم، جست‌وجو را از یکی از این رأس‌ها ادامه می‌دهیم.</li>
+</ul>
+<pre>
+def DFS(V, Adj):
+  parent = {}
+  def visit(u):
+    for v in Adj[u]:
+      if v not in parent:
+        parent[v] = u
+        visit(v)
+  for s in V:
+    if s not in parent:
+      parent[s] = None
+      visit(s)
+  return parent
+</pre>
+<ul>
+<li>مثال اجرای DFS روی یک گراف.</li>
+<li>یال‌های هر رأس به <code>parent</code> آن درخت DFS (در واقع جنگل DFS) را تشکیل می‌دهند.</li>
+<li>زمان اجرا: <code>visit</code> برای هر رأس دقیقاً یک بار صدا زده می‌شود و هر <code>visit</code> به اندازۀ تعداد همسایه‌های آن رأس طول می‌کشد. بنابراین زمان اجرای جست‌وجوی عمق اول نیز <span class="m">Θ(<i>n</i> + <i>e</i>)</span> است.</li>
+<li>BFS مثل داده‌ساختار صف (رویکرد FIFO) رأس‌ها را پیمایش می‌کند و DFS مثل داده‌ساختار پشته (رویکرد LIFO).</li>
+</ul>
+
+<h3>زمان شروع و پایان و دسته‌بندی یال‌ها</h3>
+<ul>
+<li>زمان شروع <code>start[u]</code> لحظۀ صدا زدن <code>visit(u)</code> و زمان پایان <code>finish[u]</code> لحظۀ تمام شدن آن است. این زمان‌ها کاربردهای فراوانی دارند.</li>
+<li>بازه‌های <span class="m">[<i>start</i>[<i>u</i>], <i>finish</i>[<i>u</i>]]</span> یا تودرتو هستند یا جدا از هم: <span class="m"><i>v</i></span> از نوادگان <span class="m"><i>u</i></span> در درخت DFS است اگر و تنها اگر بازۀ <span class="m"><i>v</i></span> درون بازۀ <span class="m"><i>u</i></span> باشد.</li>
+<li>دسته‌بندی یال‌های گراف، برای یال <span class="m">(<i>u</i>, <i>v</i>)</span>:
+<ul>
+<li>۱. یال درخت: یال‌های درخت DFS (<span class="m"><i>v</i></span> اولین بار از همین یال دیده شد).</li>
+<li>۲. یال رو به جلو: از یک رأس به یکی از نوادگانش که یال درخت نیست.</li>
+<li>۳. یال بازگشتی: از یک رأس به یکی از اجدادش.</li>
+<li>۴. یال متقاطع: بقیۀ یال‌ها، بین دو رأس که هیچ‌کدام جد دیگری نیست.</li>
+</ul></li>
+<li>در گراف‌های بدون جهت یال رو به جلو و متقاطع وجود ندارد. اثبات: اگر <span class="m"><i>u</i></span> زودتر دیده شود، <span class="m"><i>v</i></span> قبل از پایان <code>visit(u)</code> دیده می‌شود، پس <span class="m"><i>v</i></span> از نوادگان <span class="m"><i>u</i></span> است و یال یا یال درخت است یا (وقتی از سمت <span class="m"><i>v</i></span> دیده شود) یال بازگشتی.</li>
+</ul>
+<pre>
+def DFS_times(V, Adj):
+  parent, start, finish = {}, {}, {}
+  time = [0]
+  def visit(u):
+    start[u] = time[0]
+    time[0] += 1
+    for v in Adj[u]:
+      if v not in parent:
+        parent[v] = u
+        visit(v)
+    finish[u] = time[0]
+    time[0] += 1
+  for s in V:
+    if s not in parent:
+      parent[s] = None
+      visit(s)
+  return parent, start, finish
+
+def edge_type(u, v, parent, start, finish):
+  if parent[v] == u:
+    return "tree"
+  if start[u] &lt; start[v] and finish[v] &lt; finish[u]:
+    return "forward"
+  if start[v] &lt;= start[u] and finish[u] &lt;= finish[v]:
+    return "back"
+  return "cross"
+</pre>
+<ul>
+<li>(در گراف جهت‌دار؛ طوقۀ <span class="m">(<i>u</i>, <i>u</i>)</span> را یال بازگشتی حساب می‌کنیم.)</li>
+</ul>
+
+<h3>کاربردهای جست‌وجوی عمق اول</h3>
+<ul>
+<li>پیدا کردن دور، بررسی دوبخشی بودن گراف، مرتب‌سازی توپولوژیکی گراف جهت‌دار بدون دور، مؤلفه‌های قویاً همبند گراف‌های جهت‌دار (جلسۀ ۲۵)، مؤلفه‌های دوهمبند گراف‌های بدون جهت، رأس‌ها و یال‌های برشی گراف‌های بدون جهت و …</li>
+</ul>
+
+<h3>پیدا کردن دور</h3>
+<ul>
+<li>گراف دور دارد اگر و تنها اگر در DFS یال بازگشتی وجود داشته باشد. این حکم هم در گراف‌های جهت‌دار و هم در گراف‌های بدون جهت برقرار است (در گراف بدون جهت، یال به خود <code>parent</code> را یال بازگشتی حساب نمی‌کنیم).</li>
+<li>اثبات:
+<ul>
+<li>⇐: یال بازگشتی <span class="m">(<i>u</i>, <i>v</i>)</span> همراه با مسیر درختی از <span class="m"><i>v</i></span> به <span class="m"><i>u</i></span> یک دور است.</li>
+<li>⇒: یک دور دلخواه <span class="m">(<i>v</i><sub>0</sub>, <i>v</i><sub>1</sub>, …, <i>v</i><sub><i>k</i></sub>)</span> را درنظر بگیرید که <span class="m"><i>v</i><sub>0</sub></span> اولین رأس دیده‌شده از این دور در DFS باشد. اگر یال <span class="m">(<i>v</i><sub><i>i</i></sub>, <i>v</i><sub><i>i</i>+1</sub>)</span> در گراف باشد و <span class="m"><i>v</i><sub><i>i</i>+1</sub></span> هنوز دیده نشده باشد، قبل از این‌که <code>visit(v<sub>i</sub>)</code> تمام شود <code>visit(v<sub>i+1</sub>)</code> اجرا می‌شود. پس قبل از پایان <code>visit(v<sub>0</sub>)</code>، <code>visit(v<sub>k</sub>)</code> اجرا می‌شود و <span class="m"><i>v</i><sub><i>k</i></sub></span> از نوادگان <span class="m"><i>v</i><sub>0</sub></span> است. بنابراین یال <span class="m">(<i>v</i><sub><i>k</i></sub>, <i>v</i><sub>0</sub>)</span> یک یال بازگشتی است.</li>
+</ul></li>
+<li>در پیاده‌سازی، رأس‌هایی را که <code>visit</code> آن‌ها شروع شده و هنوز تمام نشده (روی پشتۀ بازگشت هستند) علامت می‌زنیم؛ یالی به چنین رأسی یال بازگشتی است:</li>
+</ul>
+<pre>
+def has_cycle(V, Adj):
+  parent, active = {}, set()
+  def visit(u):
+    active.add(u)
+    for v in Adj[u]:
+      if v in active:
+        return True  # back edge
+      if v not in parent:
+        parent[v] = u
+        if visit(v):
+          return True
+    active.remove(u)
+    return False
+  for s in V:
+    if s not in parent:
+      parent[s] = None
+      if visit(s):
+        return True
+  return False
+</pre>
+<ul>
+<li>این کد برای گراف جهت‌دار است. در گراف بدون جهت کافی است یال برگشت به <code>parent[u]</code> را نادیده بگیریم.</li>
+</ul>
+
+<h3>بررسی دوبخشی بودن</h3>
+<ul>
+<li>گراف بدون جهت دوبخشی است اگر بتوان رأس‌ها را با دو رنگ رنگ کرد طوری که دو سر هر یال رنگ متفاوت داشته باشند؛ یعنی اگر و تنها اگر دور فرد نداشته باشد.</li>
+<li>در DFS (یا BFS) هر رأس را با رنگ مخالف <code>parent</code> آن رنگ می‌کنیم. گراف دوبخشی است اگر و تنها اگر هیچ یالی دو سر هم‌رنگ نداشته باشد.</li>
+</ul>
+<pre>
+def is_bipartite(V, Adj):
+  color = {}
+  def visit(u):
+    for v in Adj[u]:
+      if v not in color:
+        color[v] = 1 - color[u]
+        if not visit(v):
+          return False
+      elif color[v] == color[u]:
+        return False
+    return True
+  for s in V:
+    if s not in color:
+      color[s] = 0
+      if not visit(s):
+        return False
+  return True
+</pre>
+
+<h3>مرتب‌سازی توپولوژیکی گراف جهت‌دار بدون دور</h3>
+<ul>
+<li>تعدادی کار داریم که بعضی پیش‌نیاز بعضی دیگرند. ترتیبی از کارها ارائه دهید که پیش‌نیاز هر کار قبل از آن اجرا شده باشد. این مسئله فقط برای گراف جهت‌دار بدون دور (DAG) جواب دارد.</li>
+<li>تلاش ناموفق برای حل مسئله با BFS: ترتیب لایه‌ها لزوماً ترتیب پیش‌نیازها را رعایت نمی‌کند.</li>
+<li>اگر رأس‌ها را بر اساس عکس ترتیب زمان پایان مرتب کنیم، نتیجۀ دلخواه به دست می‌آید.</li>
+<li>اثبات: اگر یال <span class="m">(<i>u</i>, <i>v</i>)</span> در گراف باشد، <code>visit(v)</code> قبل از پایان <code>visit(u)</code> اجرا و تمام می‌شود (چون گراف دور ندارد، <span class="m"><i>v</i></span> نمی‌تواند روی پشتۀ بازگشت باشد). پس <code>finish[v] &lt; finish[u]</code> و <span class="m"><i>u</i></span> در ترتیب نهایی قبل از <span class="m"><i>v</i></span> می‌آید.</li>
+<li>یک مثال از مرتب‌سازی توپولوژیک با این روش.</li>
+</ul>
+<pre>
+def topological_sort(V, Adj):
+  parent, order = {}, []
+  def visit(u):
+    for v in Adj[u]:
+      if v not in parent:
+        parent[v] = u
+        visit(v)
+    order.append(u)  # u finishes
+  for s in V:
+    if s not in parent:
+      parent[s] = None
+      visit(s)
+  return order[::-1]
+</pre>
+<ul>
+<li>زمان اجرای همۀ این کاربردها مثل خود DFS، <span class="m">Θ(<i>n</i> + <i>e</i>)</span> است.</li>
+</ul>

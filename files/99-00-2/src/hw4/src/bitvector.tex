@@ -1,0 +1,150 @@
+%قبل از شروع مسئله ترجیحاً چیزی ننویسید. اما اگر خواستید بنویسید، در قالب لیستی (فقرات و شمارش) بنویسید.
+%برای اضافه کردن نمره، بعدی از شروع‌مسئله، [x] را اضافه کنید و به جای x  نمره مورد نظر را قرار دهید. برای زیرمسئله‌ها هم به همین صورت است.
+%\شروع‌مسئله[10]
+\شروع‌مسئله
+
+% صورت اصلی مسئله را در این‌جا بنویسید.
+
+یک آرایه بیتی (صفر و یکی) $m$ تایی فضای بسیار کمتری از آرایه‌ای از $m$ پوینتر می‌گیرد. در صورتی که عناصری که داریم، داده اضافی همراه خود نداشته باشند و صرفا مقادیری بین $0$ تا $m-1$ داشته باشند، نشان دهید چگونه روش آدرس‌دهی مستقیم را می‌توان با آرایه بیتی پیاده سازی کرد.
+\solution{
+این کار به شکل بسیار ساده قابل انجام است. فرض کنید یک آرایه بیتی $20$ تایی داریم و مقادیر $2,4,6,10,15$ در آن قرار گرفته باشند. این را به راحتی با مقدار زیر می‌توان نمایش داد:
+$$00101010001000010000$$
+
+بر این اساس، اگر بدانیم فضای حالت ما به اندازه کافی کوچک است، روش آدرس‌دهی مستقیم از طریق این توابع قابل پیاده سازی خواهد بود؛ توجه کنید که $V$ همان آرایه بیتی ما است:
+
+
+\begin{latin}
+	\begin{algorithm}[H]
+		\begin{algorithmic}
+			
+			\Procedure{$Bitmap\_Search(V,k)$}{}
+			\If {$V[k] \neq 0$}
+			\Return k
+			\EndIf
+			\Return Null
+			\EndProcedure
+			
+			
+			\Procedure{$Bitmap\_Insert(V,k)$}{}
+			\State $V[k] = 1$
+			\EndProcedure
+			
+		\Procedure{$Bitmap\_Delete(V,k)$}{}
+		\State $V[k] = 0$
+		\EndProcedure
+			
+		\end{algorithmic}
+	\end{algorithm}	
+	
+\end{latin}
+
+
+
+
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% برخی دستورات مفید برای تمرین‌ها. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% فرمول‌های نمونه:
+%$f(x) = \Theta(x)$
+%$T(x, y) \leq \log(x) + 2^y + \binom{2n}{n}$
+% {\tt code\_function}
+
+
+% لیست موارد بدون شماره‌گذاری:
+%\شروع{فقرات}
+%    \فقره مورد اول 
+%        \شروع{فقرات}
+%            \فقره مورد اول داخلی 
+%                \شروع{فقرات}
+%                    \فقره اولین مورد خیلی داخلی 
+%                    \فقره دومین مورد خیلی داخلی 
+%                \پایان{فقرات}
+%            \فقره مورد دوم داخلی 
+%        \پایان{فقرات}
+%    \فقره مورد دوم 
+%\پایان{فقرات}
+
+% لیست موارد شماره‌گذاری شده:
+%\شروع{شمارش}
+%    \فقره یک مورد 
+%    \فقره یک مورد دیگر 
+%    \فقره باز هم یک مورد دیگر
+%\پایان{شمارش}
+
+% برای نوشتن یک فرمول چند خطی که یک شماره بخوره. برای حالت‌های دیگر به سایت زیر مراجعه کنید:
+% https://www.overleaf.com/learn/latex/Aligning_equations_with_amsmath
+%\begin{align} 
+%    \begin{split}
+%        (x+y)^3 &= (x+y)^2(x+y) \\
+%                &= (x^2+2xy+y^2)(x+y) \\
+%                &= (x^3+2x^2y+xy^2) + (x^2y+2xy^2+y^3) \\
+%                &= x^3+3x^2y+3xy^2+y^3
+%    \end{split}                                 
+%\end{align}
+
+% نوشتن ماتریس و آرایه دوبعدی
+%\begin{align}
+%    A = 
+%    \begin{bmatrix}
+%        A_{11} & A_{21} \\
+%        A_{21} & A_{22}
+%    \end{bmatrix}
+%\end{align}
+
+% اضافه کردن تصویر با شرح. برای اضافه کردن تصویر بدون شرح، فقط دستور درج‌تصویر را استفاده کنید.
+%\شروع{شکل}[h!]
+%\تنظیم‌ازوسط
+%  \درج‌تصویر[پهنا=0.5\پهنای‌متن]{img.jpg}
+%\شرح{شرح تصویر}
+%\برچسب{تصویر:۱}
+%\پایان{شکل}
+%\پایان{زیرمسائل}
+
+%کد زیر را ببینید.
+%%\lstinputlisting{source_filename.py}
+%\begin{latin}
+%\begin{lstlisting}
+%# Import the modules
+%import sys
+%import random
+%
+%ans = True
+%
+%while ans:
+%question = raw_input("Ask the magic 8 ball a question: (press enter to quit) ")
+%
+%answers = random.randint(1,8)
+%
+%if question == "":
+%sys.exit()
+%
+%elif answers == 1:
+%print "It is certain"
+%
+%elif answers == 2:
+%print "Outlook good"
+%
+%elif answers == 3:
+%print "You may rely on it"
+%
+%elif answers == 4:
+%print "Ask again later"
+%
+%elif answers == 5:
+%print "Concentrate and ask again"
+%
+%elif answers == 6:
+%print "Reply hazy, try again"
+%
+%elif answers == 7:
+%print "My reply is no"
+%
+%elif answers == 8:
+%print "My sources say no"
+%\end{lstlisting}
+%\end{latin}
