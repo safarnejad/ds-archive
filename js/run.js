@@ -31,7 +31,8 @@
       el('path', { class: 'dj-head', d: `M${x},${y}L${bx - ty * 4.5},${by + tx * 4.5}L${x - tx * 8},${y - ty * 8}L${bx + ty * 4.5},${by - tx * 4.5}z` }, g);
     }
     if (e.w !== undefined) {
-      const lx = 0.25 * p0[0] + 0.5 * cx + 0.25 * p2[0], ly = 0.25 * p0[1] + 0.5 * cy + 0.25 * p2[1];
+      const t = e.lp || 0.5, q = (a, c, b) => (1 - t) * (1 - t) * a + 2 * (1 - t) * t * c + t * t * b;
+      const lx = q(p0[0], cx, p2[0]), ly = q(p0[1], cy, p2[1]);
       el('circle', { cx: lx, cy: ly, r: 10, class: 'dj-wbg' }, g);
       el('text', { x: lx, y: ly + 4, class: 'dj-w' }, g).textContent = fa(e.w);
     }
@@ -51,7 +52,7 @@
     }
   }
 
-  // cfg: {view: [w, h], code: [lines] | null, steps: [{line, msg, nodes: {id: {x, y, label, cls, badge, pos, ch}}, edges: [{a, b, w, dir, cls, c}], state}]}
+  // cfg: {view: [w, h], code: [lines] | null, steps: [{line, msg, nodes: {id: {x, y, label, cls, badge, pos, ch}}, edges: [{a, b, w, dir, cls, c, lp}], state}]}
   window.AlgoRun = function (root, cfg) {
     const many = cfg.steps.length > 1;
     root.innerHTML = `<div class="dj-panes"><svg class="dj-graph" viewBox="0 0 ${cfg.view[0]} ${cfg.view[1]}" style="width:${cfg.view[0]}px"></svg>`

@@ -9,7 +9,7 @@ info = {
     'courseTitle': 'ساختمان داده‌ها و الگوریتم‌ها',
     'courseNum': '۴۰۲۵۴',
     'department': 'دانشگاه صنعتی شریف، دانشکدۀ مهندسی کامپیوتر',
-    'semester': 'آرشیو ترم‌های بهار ۹۷-۹۸ تا پاییز ۱۴۰۱-۱۴۰۲',
+    'semester': 'آرشیو ترم‌های بهار ۱۳۹۸ تا پاییز ۱۴۰۱',
     'professor': 'مهدی صفرنژاد',
     'inPersonClass': 'هفت ترم، از بهمن ۱۳۹۷ تا دی ۱۴۰۱. درس‌نامۀ کامل جلسه به جلسه، و تمرین‌ها، کوئیزها، امتحان‌ها و چالش‌های هر ترم.',
     'homepages': [
@@ -21,7 +21,7 @@ info = {
         {'link': 'https://fatemi.ir/book/داده%E2%80%8Cساختارها-و-مبانی-الگوریتم%E2%80%8Cها',
          'title': 'داده‌ساختارها و مبانی الگوریتم‌ها', 'note': '، محمد قدسی، انتشارات فاطمی، ۱۳۸۸.'},
         {'link': 'https://en.wikipedia.org/wiki/Introduction_to_Algorithms', 'title': 'Introduction to Algorithms',
-         'note': ' (3rd Edition), Charles E. Leiserson, Clifford Stein, Ronald Rivest, and Thomas H. Cormen, MIT Press, 2009.',
+         'note': ' (3rd Edition), Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein, MIT Press, 2009.',
          'isLatin': True},
     ],
     'rulePage': 'rules.html',
@@ -35,7 +35,7 @@ ORDINAL = ['اول', 'دوم', 'سوم', 'چهارم', 'پنجم', 'ششم', 'ه
 
 # union of the grading schemes of the terms whose sites survive (97-98-2, 99-00-2, 01-02-1)
 marks = [
-    {'name': 'تمرین‌های نظری', 'mark': '۰ تا ۳٫۵', 'note': 'در ترم‌های آخر بدون نمره؛ کوئیزها از روی آن‌ها طرح می‌شد'},
+    {'name': 'تمرین‌های نظری', 'mark': '۰ تا ۳٫۵', 'note': 'در ترم‌های آخر بدون نمره'},
     {'name': 'تمرین‌های عملی', 'mark': '۳٫۵ تا ۵'},
     {'name': 'کوئیزها', 'mark': '۱ تا ۴', 'note': 'با اطلاع قبلی'},
     {'name': 'میان‌ترم', 'mark': '۵ تا ۶'},

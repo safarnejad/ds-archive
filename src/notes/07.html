@@ -7,7 +7,7 @@
 <li><code>insert(v)</code></li>
 <li><code>find_max()</code> و <code>delete_max()</code>، یا در صف اولویت کمینه <code>find_min()</code> و <code>delete_min()</code></li>
 </ul></li>
-<li>برخی کاربردهای صف اولویت: مرتب‌سازی و الگوریتم دایسترا (جلسۀ ۲۸).</li>
+<li>برخی کاربردهای صف اولویت: مرتب‌سازی و الگوریتم دکسترا (جلسۀ ۲۸).</li>
 <li>مرتب‌سازی با صف اولویت: همۀ اعضا را درج می‌کنیم و سپس <span class="m"><i>n</i></span> بار بیشینه را حذف می‌کنیم و از آخر آرایه می‌چینیم (یا با صف کمینه از اول آرایه).</li>
 </ul>
 <pre>
@@ -25,7 +25,7 @@ def max_pq_sort(A):
 <li>آرایۀ مرتب: <code>find_max</code> و <code>delete_max</code> در <span class="m"><i>O</i>(1)</span> ولی <code>insert</code> در <span class="m"><i>O</i>(<i>n</i>)</span>.</li>
 </ul></li>
 <li>هرم دودویی: <code>len</code> در <span class="m"><i>O</i>(1)</span>، <code>insert</code> در <span class="m"><i>O</i>(log <i>n</i>)</span>، <code>find_max</code> در <span class="m"><i>O</i>(1)</span> و <code>delete_max</code> در <span class="m"><i>O</i>(log <i>n</i>)</span>.</li>
-<li>داده‌ساختارهای دیگری مثل هرم فیبوناچی هم برای صف اولویت وجود دارند: <code>insert</code> و <code>find_max</code> در <span class="m"><i>O</i>(1)</span> و <code>delete_max</code> به صورت سرشکن در <span class="m"><i>O</i>(log <i>n</i>)</span>. افزایش کلید هم در آن سرشکن <span class="m"><i>O</i>(1)</span> است و به همین دلیل دایسترا را از نظر تئوری سریع‌تر می‌کند. ولی ثابت‌های آن بزرگ است و در عمل از هرم دودویی استفاده می‌شود؛ هرم فیبوناچی بیشتر ارزش نظری دارد.</li>
+<li>داده‌ساختارهای دیگری مثل هرم فیبوناچی هم برای صف اولویت وجود دارند: <code>insert</code> و <code>find_max</code> در <span class="m"><i>O</i>(1)</span> و <code>delete_max</code> به صورت سرشکن در <span class="m"><i>O</i>(log <i>n</i>)</span>. افزایش کلید هم در آن سرشکن <span class="m"><i>O</i>(1)</span> است و به همین دلیل دکسترا را از نظر تئوری سریع‌تر می‌کند. ولی ثابت‌های آن بزرگ است و در عمل از هرم دودویی استفاده می‌شود؛ هرم فیبوناچی بیشتر ارزش نظری دارد.</li>
 </ul>
 
 <h3>هرم دودویی</h3>

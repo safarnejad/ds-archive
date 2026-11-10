@@ -38,7 +38,7 @@ def bellman_ford(V, E, w, s):
   for round in range(len(V) - 1):
     for u, v in E:
       relax(u, v, w, d, parent)
-  # 1st approach: check for negative weight cycles
+  # check for a negative cycle reachable from s
   for u, v in E:
     if d[v] &gt; d[u] + w(u, v):  # This edge can still be relaxed
       raise ValueError("There's a negative cycle reachable from s!")

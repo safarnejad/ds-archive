@@ -174,14 +174,14 @@
   EX.bellman = () => {
     const E = [['t', 'x', 5], ['t', 'y', 8], ['t', 'z', -4], ['x', 't', -2], ['y', 'x', -3], ['y', 'z', 9], ['z', 'x', 7], ['z', 's', 2], ['s', 't', 6], ['s', 'y', 7]];
     const code = ['def bellman_ford(V, E, w, s):', '  d = {v: math.inf for v in V}', '  parent = {v: None for v in V}', '  d[s] = 0',
-      '  for round in range(len(V) - 1):', '    for u, v in E:', '      relax(u, v, w, d, parent)', '  # 1st approach: check for negative weight cycles',
+      '  for round in range(len(V) - 1):', '    for u, v in E:', '      relax(u, v, w, d, parent)', '  # check for a negative cycle reachable from s',
       '  for u, v in E:', '    if d[v] > d[u] + w(u, v):  # This edge can still be relaxed', '      raise ValueError("There\'s a negative cycle reachable from s!")', '  return d, parent'];
     const V = Object.keys(SP), d = {}, par = {}, steps = [];
     V.forEach(v => { d[v] = Infinity; par[v] = null; });
     let hot = null, ch = null, round = null;
     const snap = (line, msg) => steps.push({ line, msg,
       nodes: nodesOf(SP, v => ({ badge: d[v], pos: SP[v][1] > 145 ? 'b' : 't', ch: v === ch, cls: d[v] < Infinity ? 'seen' : '' })),
-      edges: E.map(([a, b, w]) => ({ a, b, w, dir: true, c: a === 'z' && b === 's' ? zs : null,
+      edges: E.map(([a, b, w]) => ({ a, b, w, dir: true, c: a === 'z' && b === 's' ? zs : null, lp: a + b === 'tz' || a + b === 'yx' ? 0.3 : 0.5,
         cls: hot && hot[0] === a && hot[1] === b ? 'hot' : par[b] === a ? 'tree' : '' })),
       state: round === null ? '' : `دور ${fa(round + 1)} از ${fa(V.length - 1)}` });
     d.s = 0; snap(3, 'فقط فاصلۀ <i>s</i> صفر است و بقیه ∞.');

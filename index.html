@@ -205,23 +205,11 @@
         <a href="https://creativecommons.org/licenses/by/3.0/deed.fa"
           rel="license"><img width="15" src="img/cc.png"
             alt="CC Attribution 3.0 Unported" /></a>
+        <br />
+        <small><a href="https://github.com/safarnejad/ds-archive">کد منبع در گیت‌هاب</a><template v-if="updated"> - آخرین به‌روزرسانی: {{ updated }}</template></small>
       </div>
     </div>
 
-      <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async
-        src="https://www.googletagmanager.com/gtag/js?id=UA-134050452-1">
-    </script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-
-      gtag('config', 'UA-134050452-1');
-    </script>
   </body>
 
   <script>
@@ -233,11 +221,16 @@
           marks,
           terms,
           termsNewest: [...terms].reverse(),
-          open: location.hash.slice(1) || terms[terms.length - 1].id
+          open: location.hash.slice(1) || terms[terms.length - 1].id,
+          updated: ''
         };
       },
       created() {
         document.title = info.pageTitle;
+        fetch('https://api.github.com/repos/safarnejad/ds-archive/commits?per_page=1')
+          .then(r => r.json())
+          .then(c => { this.updated = new Date(c[0].commit.committer.date).toLocaleDateString('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' }); })
+          .catch(() => {});
         addEventListener('hashchange', () => { this.open = location.hash.slice(1); });
       }
     };
